@@ -65,12 +65,17 @@
 
 <style>
   html { scroll-behavior: smooth; }
+  html, body { overflow-x: hidden; max-width: 100%; }
   body {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     color: #14092E;
     background: #FAFAF5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  img { max-width: 100%; height: auto; }
+  @media (max-width: 1023px) {
+    body { padding-bottom: 88px; }
   }
   .font-display { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
   .italic-display { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
@@ -246,11 +251,11 @@
 <div class="bg-deep text-teal py-2.5 text-center text-xs md:text-sm font-semibold relative overflow-hidden">
   <div class="marquee">
     <div class="marquee-track">
-      <span class="flex items-center gap-2">✨ Frother GRÁTIS com sua assinatura</span>
+      <span class="flex items-center gap-2">✨ Mix GRÁTIS com sua assinatura</span>
       <span class="flex items-center gap-2">🌙 Frete grátis acima de R$200</span>
       <span class="flex items-center gap-2">🛡️ Garantia de 60 dias</span>
       <span class="flex items-center gap-2">💜 +1 milhão de noites transformadas</span>
-      <span class="flex items-center gap-2">✨ Frother GRÁTIS com sua assinatura</span>
+      <span class="flex items-center gap-2">✨ Mix GRÁTIS com sua assinatura</span>
       <span class="flex items-center gap-2">🌙 Frete grátis acima de R$200</span>
       <span class="flex items-center gap-2">🛡️ Garantia de 60 dias</span>
       <span class="flex items-center gap-2">💜 +1 milhão de noites transformadas</span>
@@ -264,9 +269,7 @@
 <nav class="bg-paper/95 backdrop-blur-lg border-b border-purple-100 sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
     <a href="./advertorial-1.html" class="flex items-center gap-2">
-      <div class="bg-deep text-paper px-3 py-1.5 rounded-lg font-display italic text-xl font-bold">
-        gudreams
-      </div>
+      <img src="./assets/logo-gudreams-dark.png" alt="Gudreams" class="h-8 md:h-9 w-auto" />
     </a>
     <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-ink">
       <a href="./advertorial-1.html" class="hover:text-purple-600 transition">Início</a>
@@ -291,9 +294,7 @@
 
     <!-- Breadcrumb -->
     <nav class="text-xs text-ink/50 mb-6 flex items-center gap-2">
-      <a href="./advertorial-1.html" class="hover:text-purple-600">Home</a>
-      <i data-lucide="chevron-right" class="w-3 h-3"></i>
-      <span>Sleep Drink Mix</span>
+      <a href="./advertorial-1.html" class="hover:text-purple-600">Gudreams</a>
       <i data-lucide="chevron-right" class="w-3 h-3"></i>
       <span class="text-deep font-medium" x-text="flavors[selectedFlavor].name"></span>
     </nav>
@@ -303,11 +304,11 @@
       <!-- =========== GALLERY =========== -->
       <div class="relative">
         <!-- Main image -->
-        <div class="relative rounded-[2rem] overflow-hidden bg-white shadow-[0_20px_80px_rgba(75,47,174,.12)] aspect-square grain">
-          <!-- Free frother badge -->
-          <div class="absolute top-5 right-5 z-20 burst">
+        <div class="relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-purple-50 to-cream-light shadow-[0_20px_80px_rgba(75,47,174,.12)] aspect-square grain">
+          <!-- Free mix badge (só com assinatura) -->
+          <div class="absolute top-5 right-5 z-20 burst" x-show="subscribe" x-transition.opacity>
             <div class="bg-teal text-deep w-24 h-24 rounded-full flex flex-col items-center justify-center font-display italic font-bold text-sm shadow-2xl rotate-12 animate-float">
-              <span>Frother</span>
+              <span>Mix</span>
               <span class="text-base -mt-1">GRÁTIS</span>
             </div>
           </div>
@@ -320,17 +321,17 @@
           </div>
           <!-- Image -->
           <img :src="galleryImages[activeImage]"
-               :alt="'Gudreams ' + flavors[selectedFlavor].name"
-               class="w-full h-full object-cover transition-opacity duration-300" />
+               :alt="'Gudreams ' + flavors[selectedFlavor].name + ' — ' + packs[selectedPack].qty + ' pote(s)'"
+               class="w-full h-full object-contain p-6 transition-opacity duration-300" />
         </div>
 
         <!-- Thumbnails -->
-        <div class="flex gap-3 mt-4">
-          <template x-for="(img, i) in galleryImages" :key="i">
+        <div class="flex gap-3 mt-4 overflow-x-auto pb-1 -mx-1 px-1">
+          <template x-for="(img, i) in galleryImages" :key="img">
             <button @click="activeImage = i"
                     :class="{ 'active': activeImage === i }"
-                    class="thumb w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-white flex-shrink-0">
-              <img :src="img" :alt="'Thumb ' + i" class="w-full h-full object-cover" />
+                    class="thumb w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-gradient-to-br from-purple-50 to-cream-light flex-shrink-0">
+              <img :src="img" :alt="'Thumb ' + (i+1)" class="w-full h-full object-contain p-1.5" />
             </button>
           </template>
         </div>
@@ -445,7 +446,7 @@
                 <p class="font-bold text-deep">Assinar e economizar <span class="text-teal-deep" x-text="packs[selectedPack].subDiscount"></span></p>
               </div>
               <ul class="text-xs text-ink/70 space-y-1.5 ml-7">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Frother GRÁTIS no 1º pedido (R$89)</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Mix GRÁTIS no 1º pedido (R$89)</li>
                 <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Frete grátis e rápido</li>
                 <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Brindes surpresa periódicos</li>
                 <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Pause ou cancele quando quiser</li>
@@ -512,17 +513,10 @@
     function pdp() {
       return {
         activeImage: 0,
-        galleryImages: [
-          './assets/hero-product.png',
-          './assets/pdp-hero.webp',
-          './assets/sabores.webp',
-          './assets/ingredientes.webp',
-          './assets/passos.webp',
-        ],
         flavors: [
-          { name: 'Chocolate Quente', emoji: '🍫', tag: 'Mais vendido' },
-          { name: 'Morango',          emoji: '🍓', tag: 'Clássico' },
-          { name: 'Doce de Leite',    emoji: '🥛', tag: 'Novo!' },
+          { name: 'Chocolate Quente', emoji: '🍫', tag: 'Mais vendido', file: 'CHOCOLATE' },
+          { name: 'Morango',          emoji: '🍓', tag: 'Clássico',     file: 'MORANGO' },
+          { name: 'Doce de Leite',    emoji: '🥛', tag: 'Novo!',        file: 'DOCE DE LEITE' },
         ],
         selectedFlavor: 0,
         packs: [
@@ -532,6 +526,19 @@
         ],
         selectedPack: 1,
         subscribe: true,
+
+        get skuImage() {
+          const flavor = this.flavors[this.selectedFlavor].file;
+          const qty = this.packs[this.selectedPack].qty;
+          return './assets/' + encodeURIComponent(flavor + ' ' + qty) + '.png';
+        },
+        get galleryImages() {
+          return [
+            this.skuImage,
+            './assets/brew.webp',
+            './assets/timeline.webp',
+          ];
+        },
 
         get currentPrice() {
           const p = this.packs[this.selectedPack];
@@ -553,6 +560,8 @@
         },
         init() {
           setTimeout(() => lucide.createIcons(), 50);
+          this.$watch('selectedFlavor', () => { this.activeImage = 0; });
+          this.$watch('selectedPack',   () => { this.activeImage = 0; });
         },
       };
     }
@@ -575,7 +584,7 @@
     <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10 items-start">
       <!-- Ingredients image -->
       <div class="relative" data-aos="fade-right">
-        <img src="./assets/beneficios.webp" alt="Supplement Facts Gudreams" class="w-full rounded-[2rem] shadow-xl" />
+        <img src="./assets/brew.webp" alt="Gudreams infusão quente" class="w-full rounded-[2rem] shadow-xl" />
       </div>
 
       <!-- Supp facts table -->
@@ -630,8 +639,8 @@
 <!-- ONLY ESSENTIALS                               -->
 <!-- ============================================= -->
 <section class="relative bg-gradient-to-b from-paper to-cream-light py-20 md:py-24 grain overflow-hidden">
-  <div class="max-w-6xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-14 items-center">
-    <div data-aos="fade-right">
+  <div class="max-w-4xl mx-auto px-5 md:px-8">
+    <div data-aos="fade-up">
       <p class="chip bg-teal/20 text-teal-deep mb-4">Simples e honesto</p>
       <h2 class="font-display text-4xl md:text-5xl leading-[1.05] text-deep mb-6">
         Só o <span class="italic-display text-purple-600">essencial</span>.<br/>
@@ -675,10 +684,6 @@
       </div>
     </div>
 
-    <div class="relative" data-aos="fade-left">
-      <div class="absolute -inset-8 bg-gradient-to-br from-purple-300/30 to-teal/20 rounded-[3rem] blur-2xl"></div>
-      <img src="./assets/essenciais.webp" alt="Gudreams — só o essencial" class="relative rounded-[2rem] shadow-2xl shadow-purple-900/20 w-full" />
-    </div>
   </div>
 </section>
 
@@ -688,8 +693,8 @@
 <section class="relative mesh-purple text-paper py-20 md:py-28 grain overflow-hidden">
   <div class="absolute top-10 right-10 w-80 h-80 bg-teal/10 rounded-full blur-3xl"></div>
 
-  <div class="max-w-7xl mx-auto px-5 md:px-8 relative">
-    <div class="text-center mb-14" data-aos="fade-up">
+  <div class="max-w-5xl mx-auto px-5 md:px-8 relative">
+    <div class="text-center mb-12" data-aos="fade-up">
       <p class="chip bg-white/10 backdrop-blur text-teal mb-4">60 segundos de ritual</p>
       <h2 class="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
         Seu novo ritual <br/>
@@ -697,51 +702,9 @@
       </h2>
     </div>
 
-    <div class="grid md:grid-cols-4 gap-5">
-      <div class="relative text-center" data-aos="fade-up" data-aos-delay="0">
-        <div class="relative rounded-[2rem] overflow-hidden bg-white/5 backdrop-blur border border-white/10 aspect-[3/4] mb-4">
-          <div class="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-transparent"></div>
-          <div class="absolute top-4 left-4 w-12 h-12 rounded-full bg-teal text-deep font-display italic font-bold text-2xl flex items-center justify-center">1</div>
-          <div class="absolute bottom-0 left-0 right-0 p-6">
-            <i data-lucide="droplets" class="w-12 h-12 text-teal mb-2"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-2xl font-bold mb-1">Meça</h3>
-        <p class="text-paper/70 text-sm">1 scoop de Gudreams<br/>no seu copo favorito</p>
-      </div>
-      <div class="relative text-center" data-aos="fade-up" data-aos-delay="100">
-        <div class="relative rounded-[2rem] overflow-hidden bg-white/5 backdrop-blur border border-white/10 aspect-[3/4] mb-4">
-          <div class="absolute inset-0 bg-gradient-to-br from-teal/30 to-transparent"></div>
-          <div class="absolute top-4 left-4 w-12 h-12 rounded-full bg-teal text-deep font-display italic font-bold text-2xl flex items-center justify-center">2</div>
-          <div class="absolute bottom-0 left-0 right-0 p-6">
-            <i data-lucide="rotate-cw" class="w-12 h-12 text-teal mb-2"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-2xl font-bold mb-1">Mexa</h3>
-        <p class="text-paper/70 text-sm">200ml de água quente<br/>+ frother Gudreams</p>
-      </div>
-      <div class="relative text-center" data-aos="fade-up" data-aos-delay="200">
-        <div class="relative rounded-[2rem] overflow-hidden bg-white/5 backdrop-blur border border-white/10 aspect-[3/4] mb-4">
-          <div class="absolute inset-0 bg-gradient-to-br from-purple-400/30 to-transparent"></div>
-          <div class="absolute top-4 left-4 w-12 h-12 rounded-full bg-teal text-deep font-display italic font-bold text-2xl flex items-center justify-center">3</div>
-          <div class="absolute bottom-0 left-0 right-0 p-6">
-            <i data-lucide="coffee" class="w-12 h-12 text-teal mb-2"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-2xl font-bold mb-1">Saboreie</h3>
-        <p class="text-paper/70 text-sm">30-60 minutos<br/>antes de dormir</p>
-      </div>
-      <div class="relative text-center" data-aos="fade-up" data-aos-delay="300">
-        <div class="relative rounded-[2rem] overflow-hidden bg-white/5 backdrop-blur border border-white/10 aspect-[3/4] mb-4">
-          <div class="absolute inset-0 bg-gradient-to-br from-deep/50 to-transparent"></div>
-          <div class="absolute top-4 left-4 w-12 h-12 rounded-full bg-teal text-deep font-display italic font-bold text-2xl flex items-center justify-center">4</div>
-          <div class="absolute bottom-0 left-0 right-0 p-6">
-            <i data-lucide="moon-star" class="w-12 h-12 text-teal mb-2"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-2xl font-bold mb-1">Durma</h3>
-        <p class="text-paper/70 text-sm">Magnésio e superfoods<br/>fazem o trabalho 🌙</p>
-      </div>
+    <div class="relative" data-aos="fade-up">
+      <div class="absolute -inset-8 bg-gradient-to-br from-purple-500/30 to-teal/20 rounded-[3rem] blur-2xl"></div>
+      <img src="./assets/timeline.webp" alt="Seu novo ritual em 4 passos" class="relative rounded-[2rem] shadow-2xl shadow-purple-900/40 w-full" />
     </div>
   </div>
 </section>
@@ -1091,19 +1054,19 @@
           O ritual noturno de magnésio e superfoods que transformou como 1 milhão de pessoas dormem.
         </p>
       </div>
-      <div class="grid grid-cols-2 gap-10 text-sm">
+      <div class="flex gap-8 text-sm">
         <div>
           <p class="font-bold text-white mb-3">Shop</p>
           <ul class="space-y-2">
-            <li><a href="#" class="hover:text-teal transition">Chocolate Quente</a></li>
-            <li><a href="#" class="hover:text-teal transition">Morango</a></li>
-            <li><a href="#" class="hover:text-teal transition">Doce de Leite</a></li>
+            <li><a href="./pdp.html" class="hover:text-teal transition">Chocolate Quente</a></li>
+            <li><a href="./pdp.html" class="hover:text-teal transition">Morango</a></li>
+            <li><a href="./pdp.html" class="hover:text-teal transition">Doce de Leite</a></li>
           </ul>
         </div>
         <div>
           <p class="font-bold text-white mb-3">Info</p>
           <ul class="space-y-2">
-            <li><a href="#faq" class="hover:text-teal transition">FAQ</a></li>
+            <li><a href="#" class="hover:text-teal transition">FAQ</a></li>
             <li><a href="#" class="hover:text-teal transition">Blog</a></li>
             <li><a href="#" class="hover:text-teal transition">Contato</a></li>
           </ul>
