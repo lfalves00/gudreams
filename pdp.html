@@ -113,14 +113,14 @@
     border-radius: 999px;
     font-weight: 700;
     font-size: 1rem;
-    color: #14092E;
-    background: linear-gradient(135deg, #7EF0DD 0%, #5EEAD4 100%);
-    box-shadow: 0 4px 0 0 #14B8A6, 0 10px 30px -8px rgba(20,184,166,.6), inset 0 1px 0 rgba(255,255,255,.4);
+    color: #FAFAF5;
+    background: linear-gradient(135deg, #6B4FD6 0%, #4B2FAE 100%);
+    box-shadow: 0 4px 0 0 #2E1B7A, 0 10px 30px -8px rgba(75,47,174,.6), inset 0 1px 0 rgba(255,255,255,.2);
     transition: all .15s ease;
     letter-spacing: -.01em;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 #14B8A6, 0 16px 40px -8px rgba(20,184,166,.7), inset 0 1px 0 rgba(255,255,255,.4); }
-  .btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #14B8A6, 0 4px 12px -4px rgba(20,184,166,.6); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 #2E1B7A, 0 16px 40px -8px rgba(75,47,174,.75), inset 0 1px 0 rgba(255,255,255,.25); }
+  .btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #2E1B7A, 0 4px 12px -4px rgba(75,47,174,.6); }
   .btn-primary::after {
     content: '';
     position: absolute; inset: 0;
@@ -142,6 +142,7 @@
 
   .stars-rating { display: inline-flex; gap: 2px; }
   .stars-rating svg { width: 16px; height: 16px; fill: #FCD34D; stroke: #FCD34D; }
+  .stars-rating-lg svg { width: 22px; height: 22px; }
 
   ::-webkit-scrollbar { width: 12px; }
   ::-webkit-scrollbar-track { background: #F4EEE1; }
@@ -249,10 +250,26 @@
   .toggle-switch.on { background: #4B2FAE; }
   .toggle-switch.on::before { transform: translateX(20px); }
 
-  /* Gallery thumbnails */
-  .thumb { transition: all .2s ease; opacity: .6; }
-  .thumb.active { opacity: 1; border-color: #4B2FAE; box-shadow: 0 0 0 2px rgba(75,47,174,.2); }
-  .thumb:hover { opacity: 1; }
+  /* Gallery arrows */
+  .gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px; height: 32px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(6px);
+    color: #1C0E4E;
+    display: inline-flex; align-items: center; justify-content: center;
+    z-index: 20;
+    box-shadow: 0 2px 8px rgba(20,14,46,.12), 0 0 0 1px rgba(20,14,46,.06);
+    transition: all .15s ease;
+  }
+  .gallery-arrow:hover { background: #fff; transform: translateY(-50%) scale(1.06); }
+  .gallery-arrow:active { transform: translateY(-50%) scale(.96); }
+  .gallery-arrow svg { width: 16px; height: 16px; }
+  .gallery-arrow-left  { left: 10px; }
+  .gallery-arrow-right { right: 10px; }
 
   /* FAQ */
   .faq-item { transition: all .2s ease; }
@@ -333,24 +350,17 @@
 <!-- ============================================= -->
 <!-- PDP HERO — GALLERY + BUY BOX                  -->
 <!-- ============================================= -->
-<section class="relative mesh-lilac pt-8 md:pt-12 pb-16 overflow-hidden"
+<section class="relative bg-paper pt-0 pb-16 overflow-hidden"
          x-data="pdp()"
          x-init="init()">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
 
-    <!-- Breadcrumb -->
-    <nav class="text-xs text-ink/50 mb-6 flex items-center gap-2">
-      <a href="./advertorial-1.html" class="hover:text-purple-600">Gudreams</a>
-      <i data-lucide="chevron-right" class="w-3 h-3"></i>
-      <span class="text-deep font-medium" x-text="flavors[primaryFlavor].name"></span>
-    </nav>
-
-    <div class="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-start">
+    <div class="grid lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-16 items-start">
 
       <!-- =========== GALLERY =========== -->
-      <div class="relative">
+      <div class="relative -mx-5 md:mx-0">
         <!-- Main image -->
-        <div class="relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-purple-50 to-cream-light shadow-[0_20px_80px_rgba(75,47,174,.12)] aspect-square grain">
+        <div class="relative rounded-none md:rounded-[2rem] overflow-hidden bg-gradient-to-br from-purple-50 to-cream-light shadow-[0_20px_80px_rgba(75,47,174,.12)] aspect-square grain">
           <!-- Free mix badge (só com assinatura) -->
           <div class="absolute top-5 right-5 z-20 burst" x-show="subscribe" x-transition.opacity>
             <div class="bg-teal text-deep w-24 h-24 rounded-full flex flex-col items-center justify-center font-display italic font-bold text-sm shadow-2xl rotate-12 animate-float">
@@ -368,18 +378,33 @@
           <!-- Image -->
           <img :src="galleryImages[activeImage]"
                :alt="'Gudreams ' + flavors[primaryFlavor].name + ' — ' + packQty + ' pote(s)'"
-               class="w-full h-full object-contain p-6 transition-opacity duration-300" />
-        </div>
+               class="w-full h-full object-contain p-6 md:p-10 transition-opacity duration-300" />
 
-        <!-- Thumbnails -->
-        <div class="flex gap-3 mt-4 overflow-x-auto pb-1 -mx-1 px-1">
-          <template x-for="(img, i) in galleryImages" :key="img">
-            <button @click="activeImage = i"
-                    :class="{ 'active': activeImage === i }"
-                    class="thumb w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-gradient-to-br from-purple-50 to-cream-light flex-shrink-0">
-              <img :src="img" :alt="'Thumb ' + (i+1)" class="w-full h-full object-contain p-1.5" />
-            </button>
-          </template>
+          <!-- Prev arrow -->
+          <button type="button"
+                  @click="prevImage()"
+                  aria-label="Imagem anterior"
+                  class="gallery-arrow gallery-arrow-left">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <!-- Next arrow -->
+          <button type="button"
+                  @click="nextImage()"
+                  aria-label="Próxima imagem"
+                  class="gallery-arrow gallery-arrow-right">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+
+          <!-- Dots indicator -->
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+            <template x-for="(img, i) in galleryImages" :key="i">
+              <button type="button"
+                      @click="activeImage = i"
+                      :class="activeImage === i ? 'w-6 bg-deep' : 'w-1.5 bg-deep/30'"
+                      class="h-1.5 rounded-full transition-all duration-300"
+                      aria-label="Ir para imagem"></button>
+            </template>
+          </div>
         </div>
 
         <!-- Trust badges strip -->
@@ -414,14 +439,14 @@
         <div class="mb-6">
           <!-- Rating -->
           <div class="flex items-center gap-3 mb-3">
-            <div class="stars-rating">
+            <div class="stars-rating stars-rating-lg">
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
             </div>
-            <a href="#reviews" class="text-sm text-ink/60 hover:text-purple-600 underline">30.177 avaliações</a>
+            <a href="#reviews" class="text-base font-semibold text-deep hover:text-purple-600 underline underline-offset-2">30.177 avaliações</a>
           </div>
 
           <!-- Title -->
@@ -644,6 +669,14 @@
             .join(' + ');
         },
 
+        prevImage() {
+          const n = this.galleryImages.length;
+          this.activeImage = (this.activeImage - 1 + n) % n;
+        },
+        nextImage() {
+          const n = this.galleryImages.length;
+          this.activeImage = (this.activeImage + 1) % n;
+        },
         addFlavor(i) {
           if (this.totalSelected >= this.packQty) return;
           const next = [...this.flavorCounts];
