@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gudreams — O pó de magnésio que substitui a melatonina</title>
+<meta name="description" content="O ritual noturno de magnésio + 7 superfoods que transformou como 1 milhão de pessoas dormem. Sem melatonina, sem ressaca, sem dependência." />
+
+<!-- PRECONNECT -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- FONTS: Fraunces (display editorial) + Plus Jakarta Sans (body) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- TAILWIND PLAY CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- AOS (animate on scroll) -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<!-- SWIPER -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- LUCIDE ICONS -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<!-- ALPINE -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          deep:     '#1C0E4E',
+          ink:      '#14092E',
+          purple: {
+            DEFAULT: '#4B2FAE',
+            900: '#1C0E4E',
+            800: '#2E1B7A',
+            700: '#3D2592',
+            600: '#4B2FAE',
+            500: '#6B4FD6',
+            400: '#8B72E3',
+            300: '#B8A9E8',
+            200: '#D4CAF0',
+            100: '#E8E3F5',
+            50:  '#F4F1FA',
+          },
+          cream: {
+            DEFAULT: '#F4EEE1',
+            dark: '#E8DFC9',
+            light: '#FAF6EC',
+          },
+          paper: '#FAFAF5',
+          teal: {
+            DEFAULT: '#5EEAD4',
+            deep: '#14B8A6',
+            bright: '#7EF0DD',
+          },
+          coral: '#FFB8B8',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          sans:    ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        },
+        animation: {
+          'float':       'float 6s ease-in-out infinite',
+          'float-slow':  'float 9s ease-in-out infinite',
+          'twinkle':     'twinkle 3s ease-in-out infinite',
+          'twinkle-slow':'twinkle 5s ease-in-out infinite',
+          'shimmer':     'shimmer 3s linear infinite',
+          'marquee':     'marquee 30s linear infinite',
+          'spin-slow':   'spin 18s linear infinite',
+          'pulse-soft':  'pulseSoft 2.5s ease-in-out infinite',
+        },
+        keyframes: {
+          float: {
+            '0%,100%': { transform: 'translateY(0)' },
+            '50%':     { transform: 'translateY(-16px)' },
+          },
+          twinkle: {
+            '0%,100%': { opacity: '.3', transform: 'scale(.9)' },
+            '50%':     { opacity: '1',  transform: 'scale(1.2)' },
+          },
+          shimmer: {
+            '0%':   { backgroundPosition: '-200% 0' },
+            '100%': { backgroundPosition: '200% 0' },
+          },
+          marquee: {
+            '0%':   { transform: 'translateX(0)' },
+            '100%': { transform: 'translateX(-50%)' },
+          },
+          pulseSoft: {
+            '0%,100%': { transform: 'scale(1)',    boxShadow: '0 0 0 0 rgba(94,234,212,.4)' },
+            '50%':     { transform: 'scale(1.02)', boxShadow: '0 0 0 20px rgba(94,234,212,0)' },
+          },
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  /* ===== BASE TYPOGRAPHY ===== */
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #14092E;
+    background: #FAFAF5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .font-display { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+  .italic-display { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
+
+  /* ===== GRAIN TEXTURE OVERLAY ===== */
+  .grain::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.3 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .08;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  /* ===== ANIMATED STARFIELD ===== */
+  .stars {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .stars span {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 3s ease-in-out infinite;
+    box-shadow: 0 0 6px 1px rgba(255,255,255,.6);
+  }
+
+  /* ===== GRADIENT MESHES ===== */
+  .mesh-purple {
+    background:
+      radial-gradient(at 20% 10%, #6B4FD6 0, transparent 50%),
+      radial-gradient(at 80% 0%,  #8B72E3 0, transparent 40%),
+      radial-gradient(at 50% 100%, #2E1B7A 0, transparent 60%),
+      linear-gradient(180deg, #1C0E4E 0%, #2E1B7A 100%);
+  }
+  .mesh-cream {
+    background:
+      radial-gradient(at 20% 0%,  rgba(184,169,232,.35) 0, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(94,234,212,.15) 0, transparent 50%),
+      #FAF6EC;
+  }
+
+  /* ===== TEXT UNDERLINE WAVY ===== */
+  .underline-wavy {
+    background-image: linear-gradient(90deg, #5EEAD4, #5EEAD4);
+    background-size: 100% 8px;
+    background-repeat: no-repeat;
+    background-position: 0 92%;
+    padding-bottom: 2px;
+  }
+
+  /* ===== GRADIENT TEXT ===== */
+  .gradient-text {
+    background: linear-gradient(135deg, #5EEAD4 0%, #7EF0DD 50%, #B8A9E8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ===== BUTTON MAGIC ===== */
+  .btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: 1.15rem 2.25rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #14092E;
+    background: linear-gradient(135deg, #7EF0DD 0%, #5EEAD4 100%);
+    box-shadow:
+      0 4px 0 0 #14B8A6,
+      0 10px 30px -8px rgba(20,184,166,.6),
+      inset 0 1px 0 rgba(255,255,255,.4);
+    transition: all .15s ease;
+    letter-spacing: -.01em;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 0 0 #14B8A6,
+      0 16px 40px -8px rgba(20,184,166,.7),
+      inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .btn-primary:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 2px 0 0 #14B8A6,
+      0 4px 12px -4px rgba(20,184,166,.6);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+    pointer-events: none;
+  }
+
+  /* ===== CHIP ===== */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .4rem .85rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+  }
+
+  /* ===== MARQUEE ===== */
+  .marquee { overflow: hidden; position: relative; }
+  .marquee-track {
+    display: flex; gap: 4rem;
+    animation: marquee 40s linear infinite;
+    width: max-content;
+  }
+
+  /* ===== CARD HOVERS ===== */
+  .card-tilt { transition: transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s; }
+  .card-tilt:hover { transform: translateY(-6px) rotate(-.5deg); }
+
+  /* ===== SCROLL REVEAL ===== */
+  [data-aos="fade-up"] { transform: translateY(40px); }
+
+  /* ===== RATING STARS ===== */
+  .stars-rating { display: inline-flex; gap: 2px; }
+  .stars-rating svg { width: 16px; height: 16px; fill: #FCD34D; stroke: #FCD34D; }
+
+  /* ===== CUSTOM SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 12px; }
+  ::-webkit-scrollbar-track { background: #F4EEE1; }
+  ::-webkit-scrollbar-thumb { background: #4B2FAE; border-radius: 6px; border: 2px solid #F4EEE1; }
+
+  /* ===== SECTION DIVIDERS ===== */
+  .wavy-divider {
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath fill='%23FAF6EC' d='M0,30 C360,60 720,0 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E");
+    background-size: cover;
+  }
+
+  /* ===== SKU FLAVOR CARDS ===== */
+  .flavor-card { transition: all .3s ease; cursor: pointer; }
+  .flavor-card:hover { transform: translateY(-4px); }
+
+  /* ===== BADGE BURST ===== */
+  .burst {
+    position: relative;
+    display: inline-block;
+  }
+  .burst::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(circle, rgba(94,234,212,.4) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulseSoft 2.5s ease-in-out infinite;
+  }
+
+  /* ===== FOCUS STATE A11Y ===== */
+  *:focus-visible {
+    outline: 3px solid #5EEAD4;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============================================= -->
+<!-- ANNOUNCEMENT BAR                              -->
+<!-- ============================================= -->
+<div class="bg-deep text-teal py-2.5 text-center text-xs md:text-sm font-semibold relative overflow-hidden">
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="flex items-center gap-2">✨ <span>Frother GRÁTIS com sua assinatura (valor R$89)</span></span>
+      <span class="flex items-center gap-2">🌙 <span>Frete grátis acima de R$200</span></span>
+      <span class="flex items-center gap-2">🛡️ <span>Garantia de 60 dias — satisfação ou seu dinheiro de volta</span></span>
+      <span class="flex items-center gap-2">💜 <span>+1 milhão de noites transformadas</span></span>
+      <span class="flex items-center gap-2">✨ <span>Frother GRÁTIS com sua assinatura (valor R$89)</span></span>
+      <span class="flex items-center gap-2">🌙 <span>Frete grátis acima de R$200</span></span>
+      <span class="flex items-center gap-2">🛡️ <span>Garantia de 60 dias — satisfação ou seu dinheiro de volta</span></span>
+      <span class="flex items-center gap-2">💜 <span>+1 milhão de noites transformadas</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================= -->
+<!-- NAV                                           -->
+<!-- ============================================= -->
+<nav x-data="{ scrolled: false }"
+     @scroll.window="scrolled = window.scrollY > 40"
+     :class="scrolled ? 'bg-paper/95 backdrop-blur-lg shadow-sm' : 'bg-transparent'"
+     class="fixed top-[34px] md:top-[38px] left-0 right-0 z-40 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2">
+      <div class="bg-deep text-paper px-3 py-1.5 rounded-lg font-display italic text-xl font-bold">
+        gudreams
+      </div>
+    </a>
+    <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-ink">
+      <a href="#produto" class="hover:text-purple-600 transition">O produto</a>
+      <a href="#ingredientes" class="hover:text-purple-600 transition">Ingredientes</a>
+      <a href="#ciencia" class="hover:text-purple-600 transition">Ciência</a>
+      <a href="#depoimentos" class="hover:text-purple-600 transition">Depoimentos</a>
+    </div>
+    <a href="#comprar" class="btn-primary !py-2.5 !px-5 !text-sm">
+      Comprar
+      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- ============================================= -->
+<!-- HERO                                          -->
+<!-- ============================================= -->
+<section class="relative min-h-screen mesh-purple text-paper overflow-hidden pt-32 pb-20 grain">
+  <!-- Stars -->
+  <div class="stars">
+    <span style="top:10%;left:8%;width:3px;height:3px;animation-delay:.2s"></span>
+    <span style="top:18%;left:88%;width:4px;height:4px;animation-delay:1.1s"></span>
+    <span style="top:30%;left:20%;width:2px;height:2px;animation-delay:.5s"></span>
+    <span style="top:45%;left:92%;width:3px;height:3px;animation-delay:2s"></span>
+    <span style="top:60%;left:5%;width:4px;height:4px;animation-delay:.8s"></span>
+    <span style="top:75%;left:85%;width:2px;height:2px;animation-delay:1.6s"></span>
+    <span style="top:25%;left:50%;width:2px;height:2px;animation-delay:2.4s"></span>
+    <span style="top:80%;left:45%;width:3px;height:3px;animation-delay:.3s"></span>
+    <span style="top:15%;left:65%;width:2px;height:2px;animation-delay:1.8s"></span>
+    <span style="top:55%;left:40%;width:3px;height:3px;animation-delay:2.2s"></span>
+    <span style="top:88%;left:70%;width:4px;height:4px;animation-delay:.6s"></span>
+    <span style="top:35%;left:78%;width:2px;height:2px;animation-delay:1.4s"></span>
+  </div>
+
+  <!-- Glow orbs -->
+  <div class="absolute top-1/4 -left-40 w-96 h-96 bg-teal/20 rounded-full blur-3xl animate-float-slow"></div>
+  <div class="absolute bottom-20 -right-20 w-80 h-80 bg-purple-500/40 rounded-full blur-3xl animate-float"></div>
+
+  <div class="relative max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-10 items-center">
+    <!-- LEFT: TEXT -->
+    <div class="relative z-10" data-aos="fade-right" data-aos-duration="800">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs md:text-sm font-medium mb-6">
+        <span class="w-2 h-2 rounded-full bg-teal animate-pulse"></span>
+        <span>O ritual noturno de +1 milhão de pessoas</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-display text-5xl md:text-6xl lg:text-7xl leading-[.95] tracking-tight mb-6">
+        O pó de magnésio
+        <span class="italic-display text-teal block">que substitui</span>
+        a melatonina.
+      </h1>
+
+      <!-- Subhead -->
+      <p class="text-lg md:text-xl text-paper/80 leading-relaxed mb-8 max-w-lg">
+        Uma bebida quente, cremosa e relaxante pra tomar antes de dormir.
+        <strong class="text-white">145 benefícios. 7 superfoods. 0 melatonina.</strong>
+      </p>
+
+      <!-- Benefits list -->
+      <ul class="space-y-3 mb-10">
+        <li class="flex items-start gap-3">
+          <div class="shrink-0 w-6 h-6 rounded-full bg-teal flex items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+          </div>
+          <span class="text-paper/90">Dormir mais rápido, sem sensação de "nocaute"</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="shrink-0 w-6 h-6 rounded-full bg-teal flex items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+          </div>
+          <span class="text-paper/90">Acordar leve — sem ressaca da melatonina</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <div class="shrink-0 w-6 h-6 rounded-full bg-teal flex items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+          </div>
+          <span class="text-paper/90">Seguro pra tomar toda noite, sem dependência</span>
+        </li>
+      </ul>
+
+      <!-- CTA -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+        <a href="#comprar" class="btn-primary group">
+          Quero dormir melhor hoje
+          <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+        </a>
+        <div class="flex items-center gap-1.5 text-sm text-paper/70">
+          <i data-lucide="shield-check" class="w-4 h-4 text-teal"></i>
+          <span>Garantia de 60 dias</span>
+        </div>
+      </div>
+
+      <!-- Social proof -->
+      <div class="flex items-center gap-5">
+        <div class="flex -space-x-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-200 to-purple-300 border-2 border-deep"></div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 to-orange-300 border-2 border-deep"></div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-teal to-purple-400 border-2 border-deep"></div>
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 border-2 border-deep"></div>
+        </div>
+        <div>
+          <div class="stars-rating mb-0.5">
+            <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
+          </div>
+          <div class="text-xs text-paper/70">
+            <strong class="text-white">30.177</strong> avaliações de clientes felizes
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: PRODUCT -->
+    <div class="relative flex items-center justify-center" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+      <!-- Floating badge -->
+      <div class="absolute top-4 right-4 md:top-0 md:right-0 z-20 burst">
+        <div class="bg-teal text-deep w-24 h-24 md:w-32 md:h-32 rounded-full flex flex-col items-center justify-center font-display italic font-bold text-sm md:text-base shadow-2xl rotate-12 animate-float">
+          <span>Frother</span>
+          <span class="text-lg md:text-xl -mt-1">GRÁTIS</span>
+        </div>
+      </div>
+      <!-- Product image -->
+      <div class="relative animate-float">
+        <div class="absolute inset-0 bg-teal/30 blur-3xl scale-75"></div>
+        <img src="./assets/hero-product.png"
+             alt="Gudreams Sleep Drink Mix — pote roxo ao lado de caneca de chocolate quente"
+             class="relative z-10 w-full max-w-md lg:max-w-lg drop-shadow-2xl"
+             loading="eager" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Imprensa bar -->
+  <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 mt-16 pt-10 border-t border-white/10">
+    <p class="text-center text-xs uppercase tracking-[.2em] text-paper/50 mb-6">Falam sobre Gudreams</p>
+    <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-60">
+      <span class="font-display italic text-xl md:text-2xl">Elle</span>
+      <span class="font-display text-xl md:text-2xl font-bold">FORBES</span>
+      <span class="font-display italic text-xl md:text-2xl">Veja</span>
+      <span class="font-display text-xl md:text-2xl tracking-widest">GQ BRASIL</span>
+      <span class="font-display text-xl md:text-2xl font-semibold">Estadão</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 2 — PAIN                              -->
+<!-- ============================================= -->
+<section class="relative mesh-cream py-24 md:py-32 overflow-hidden grain">
+  <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="chip bg-purple-100 text-purple-700 mb-4">A raiz do problema</p>
+      <h2 class="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight text-deep">
+        Você deita cansada.
+        <span class="italic-display block text-purple-600">Mas sua cabeça não desliga.</span>
+      </h2>
+    </div>
+
+    <!-- Pain diary cards -->
+    <div class="grid md:grid-cols-2 gap-5 md:gap-6 mb-16">
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-purple-100 shadow-[0_4px_30px_rgba(75,47,174,.06)] card-tilt" data-aos="fade-up" data-aos-delay="0">
+        <div class="flex items-start gap-4">
+          <div class="shrink-0 w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="moon" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-purple-500 uppercase tracking-wider mb-1">23h04</p>
+            <p class="text-ink font-medium leading-snug">Você tá exausta — mas quando encosta a cabeça no travesseiro, o cérebro liga.</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-purple-100 shadow-[0_4px_30px_rgba(75,47,174,.06)] card-tilt" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-start gap-4">
+          <div class="shrink-0 w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="pill" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-purple-500 uppercase tracking-wider mb-1">02h47</p>
+            <p class="text-ink font-medium leading-snug">Tomou melatonina, dormiu, mas acordou no meio da noite. De novo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-purple-100 shadow-[0_4px_30px_rgba(75,47,174,.06)] card-tilt" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex items-start gap-4">
+          <div class="shrink-0 w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="cloud-fog" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-purple-500 uppercase tracking-wider mb-1">07h30</p>
+            <p class="text-ink font-medium leading-snug">Acordou mais cansada do que foi dormir. A névoa matinal não vai embora.</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-purple-100 shadow-[0_4px_30px_rgba(75,47,174,.06)] card-tilt" data-aos="fade-up" data-aos-delay="300">
+        <div class="flex items-start gap-4">
+          <div class="shrink-0 w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="coffee" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-purple-500 uppercase tracking-wider mb-1">14h15</p>
+            <p class="text-ink font-medium leading-snug">Terceiro café do dia. E a produtividade continua no chão.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat highlight -->
+    <div class="relative bg-gradient-to-br from-deep via-purple-700 to-purple-600 rounded-[2rem] p-8 md:p-14 text-paper overflow-hidden grain" data-aos="fade-up">
+      <div class="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-teal/20 blur-3xl"></div>
+      <div class="relative z-10 grid md:grid-cols-[auto_1fr] items-center gap-8">
+        <div class="text-center md:text-left">
+          <div class="font-display text-7xl md:text-9xl font-bold leading-none text-teal italic-display">75%</div>
+          <div class="text-xs uppercase tracking-[.2em] text-paper/60 mt-2">dos adultos</div>
+        </div>
+        <div>
+          <p class="text-xl md:text-2xl font-display leading-tight mb-3">
+            têm <span class="underline-wavy text-white">deficiência de magnésio</span> — o mineral mais importante pro sono.
+          </p>
+          <p class="text-paper/70 text-sm md:text-base">
+            Segundo a OMS. A consequência? Cortisol alto, ansiedade noturna, sono interrompido e fadiga crônica no dia seguinte.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Good news -->
+    <p class="text-center mt-12 font-display text-2xl md:text-3xl text-deep max-w-3xl mx-auto" data-aos="fade-up">
+      A boa notícia:
+      <span class="italic-display text-purple-600">a solução não é mais um remédio.</span>
+      É repor o que seu corpo já deveria ter.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 3 — MELATONIN PROBLEM                 -->
+<!-- ============================================= -->
+<section class="relative mesh-purple text-paper py-24 md:py-32 overflow-hidden grain">
+  <div class="stars">
+    <span style="top:15%;left:15%;width:2px;height:2px;animation-delay:.2s"></span>
+    <span style="top:70%;left:85%;width:3px;height:3px;animation-delay:1s"></span>
+    <span style="top:40%;left:75%;width:2px;height:2px;animation-delay:1.8s"></span>
+    <span style="top:85%;left:25%;width:3px;height:3px;animation-delay:.6s"></span>
+  </div>
+  <div class="absolute top-1/3 -right-40 w-96 h-96 bg-teal/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-6xl mx-auto px-5 md:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="chip bg-white/10 backdrop-blur text-teal mb-4">⚠️ O lado escuro da melatonina</p>
+      <h2 class="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight mb-4">
+        O que ninguém te contou
+        <span class="italic-display text-teal block">sobre melatonina.</span>
+      </h2>
+      <p class="text-lg text-paper/70 max-w-2xl mx-auto">
+        Virou moda — mas a maioria dos médicos não recomenda uso contínuo. Por quê?
+      </p>
+    </div>
+
+    <!-- Problem grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 card-tilt" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-14 h-14 rounded-2xl bg-coral/20 border border-coral/30 flex items-center justify-center mb-4">
+          <i data-lucide="cloud-fog" class="w-7 h-7 text-coral"></i>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">Hangover matinal</h3>
+        <p class="text-paper/70 text-sm leading-relaxed">Você acorda grogue, lento, com ressaca de sonífero.</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 card-tilt" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-14 h-14 rounded-2xl bg-coral/20 border border-coral/30 flex items-center justify-center mb-4">
+          <i data-lucide="link-2" class="w-7 h-7 text-coral"></i>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">Dependência</h3>
+        <p class="text-paper/70 text-sm leading-relaxed">Seu corpo para de produzir melatonina sozinho.</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 card-tilt" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-14 h-14 rounded-2xl bg-coral/20 border border-coral/30 flex items-center justify-center mb-4">
+          <i data-lucide="refresh-ccw" class="w-7 h-7 text-coral"></i>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">Efeito rebote</h3>
+        <p class="text-paper/70 text-sm leading-relaxed">Parou de tomar? A insônia volta pior.</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 card-tilt" data-aos="fade-up" data-aos-delay="300">
+        <div class="w-14 h-14 rounded-2xl bg-coral/20 border border-coral/30 flex items-center justify-center mb-4">
+          <i data-lucide="x-circle" class="w-7 h-7 text-coral"></i>
+        </div>
+        <h3 class="font-display font-bold text-xl mb-2">Não é pra uso diário</h3>
+        <p class="text-paper/70 text-sm leading-relaxed">A bula recomenda uso pontual, não noturno contínuo.</p>
+      </div>
+    </div>
+
+    <!-- Gudreams contrast -->
+    <div class="relative bg-gradient-to-br from-teal/20 via-teal/10 to-transparent border border-teal/30 rounded-[2rem] p-8 md:p-14 overflow-hidden" data-aos="fade-up">
+      <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-teal/20 blur-3xl"></div>
+      <div class="relative z-10 max-w-3xl">
+        <p class="chip bg-teal text-deep mb-4 font-bold">✨ O JEITO GUDREAMS</p>
+        <h3 class="font-display text-3xl md:text-5xl leading-tight mb-5">
+          Em vez de <span class="italic-display text-coral line-through decoration-2">forçar</span> seu corpo a dormir,
+          Gudreams <span class="italic-display text-teal">nutre</span> o sistema nervoso pra ele relaxar sozinho.
+        </h3>
+        <p class="text-lg text-paper/80 leading-relaxed">
+          Magnésio de alta absorção, L-teanina, apigenina e adaptógenos. O sono volta a ser natural —
+          <strong class="text-white">você acorda leve e pode tomar todo santo dia sem medo.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 4 — PRODUCT + 4 BLENDS                -->
+<!-- ============================================= -->
+<section id="produto" class="relative mesh-cream py-24 md:py-32 overflow-hidden grain">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="chip bg-purple-100 text-purple-700 mb-4">A fórmula</p>
+      <h2 class="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight text-deep mb-5">
+        Formulado com <span class="italic-display text-purple-600">4 sistemas</span><br />
+        que trabalham juntos.
+      </h2>
+      <p class="text-lg text-ink/70 max-w-2xl mx-auto">
+        Não é só magnésio. Gudreams é um ritual completo de sono — 4 blends sinérgicos que acalmam corpo e mente.
+      </p>
+    </div>
+
+    <!-- 4 blends grid -->
+    <div class="grid md:grid-cols-2 gap-6 mb-16">
+      <!-- Blend 1 -->
+      <div class="group relative bg-white rounded-[2rem] p-8 md:p-10 border border-purple-100 shadow-[0_4px_40px_rgba(75,47,174,.06)] overflow-hidden card-tilt" data-aos="fade-up" data-aos-delay="0">
+        <div class="absolute top-6 right-6 text-6xl font-display text-purple-100 italic-display">01</div>
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center mb-5 shadow-lg shadow-purple-500/30">
+          <i data-lucide="moon" class="w-8 h-8 text-white"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[.2em] text-purple-500 font-semibold mb-2">Blend de Magnésio</p>
+        <h3 class="font-display text-3xl font-bold text-deep mb-3">MagnesiREM™</h3>
+        <p class="text-ink/70 leading-relaxed">
+          Glicinato + Taurato de magnésio — as duas formas <strong class="text-deep">mais absorvíveis</strong> do mercado.
+          Relaxa os músculos, reduz o cortisol e prepara o corpo pra desligar.
+        </p>
+      </div>
+      <!-- Blend 2 -->
+      <div class="group relative bg-white rounded-[2rem] p-8 md:p-10 border border-purple-100 shadow-[0_4px_40px_rgba(75,47,174,.06)] overflow-hidden card-tilt" data-aos="fade-up" data-aos-delay="100">
+        <div class="absolute top-6 right-6 text-6xl font-display text-purple-100 italic-display">02</div>
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-deep to-teal flex items-center justify-center mb-5 shadow-lg shadow-teal/30">
+          <i data-lucide="leaf" class="w-8 h-8 text-white"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[.2em] text-teal-deep font-semibold mb-2">Blend Adaptógeno</p>
+        <h3 class="font-display text-3xl font-bold text-deep mb-3">Reishi + L-Teanina</h3>
+        <p class="text-ink/70 leading-relaxed">
+          Promove sono profundo e reparador. <strong class="text-deep">L-teanina combate a grogueira</strong> no dia seguinte —
+          você acorda descansado, não nocauteado.
+        </p>
+      </div>
+      <!-- Blend 3 -->
+      <div class="group relative bg-white rounded-[2rem] p-8 md:p-10 border border-purple-100 shadow-[0_4px_40px_rgba(75,47,174,.06)] overflow-hidden card-tilt" data-aos="fade-up" data-aos-delay="200">
+        <div class="absolute top-6 right-6 text-6xl font-display text-purple-100 italic-display">03</div>
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-5 shadow-lg shadow-purple-500/30">
+          <i data-lucide="heart-pulse" class="w-8 h-8 text-white"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[.2em] text-purple-500 font-semibold mb-2">Blend Calmante</p>
+        <h3 class="font-display text-3xl font-bold text-deep mb-3">GABA + Zinco + Passiflora</h3>
+        <p class="text-ink/70 leading-relaxed">
+          Diminui ansiedade noturna, ajuda a "desligar o cérebro" e faz você pegar no sono
+          <strong class="text-deep">em até 20 minutos</strong>.
+        </p>
+      </div>
+      <!-- Blend 4 -->
+      <div class="group relative bg-white rounded-[2rem] p-8 md:p-10 border border-purple-100 shadow-[0_4px_40px_rgba(75,47,174,.06)] overflow-hidden card-tilt" data-aos="fade-up" data-aos-delay="300">
+        <div class="absolute top-6 right-6 text-6xl font-display text-purple-100 italic-display">04</div>
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-pink-400 flex items-center justify-center mb-5 shadow-lg shadow-pink-400/30">
+          <i data-lucide="flower-2" class="w-8 h-8 text-white"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[.2em] text-pink-500 font-semibold mb-2">Superfoods</p>
+        <h3 class="font-display text-3xl font-bold text-deep mb-3">Apigenina + L-Triptofano</h3>
+        <p class="text-ink/70 leading-relaxed">
+          O que a natureza criou pra dormir. Apigenina melhora sono profundo. L-Triptofano ajuda o corpo a produzir
+          <strong class="text-deep">sua própria melatonina</strong>, naturalmente.
+        </p>
+      </div>
+    </div>
+
+    <!-- Product image full bleed -->
+    <div class="relative rounded-[2.5rem] overflow-hidden" data-aos="fade-up">
+      <img src="./assets/ingredientes.webp" alt="Gudreams com todos os superfoods" class="w-full" />
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 5 — INGREDIENTS & BENEFITS            -->
+<!-- ============================================= -->
+<section id="ingredientes" class="relative bg-cream py-24 md:py-32 overflow-hidden grain">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-14 items-center">
+    <!-- LEFT: IMAGE -->
+    <div class="relative" data-aos="fade-right">
+      <div class="absolute -inset-8 bg-gradient-to-br from-purple-300/30 to-teal/20 rounded-[3rem] blur-2xl"></div>
+      <img src="./assets/beneficios.webp" alt="Benefícios de Gudreams" class="relative rounded-[2rem] shadow-2xl shadow-purple-900/20 w-full" />
+    </div>
+
+    <!-- RIGHT: BENEFITS -->
+    <div data-aos="fade-left">
+      <p class="chip bg-purple-100 text-purple-700 mb-4">Ingredientes que entregam</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-[1.05] tracking-tight text-deep mb-6">
+        Mais que sono. <br/>
+        <span class="italic-display text-purple-600">Um upgrade no seu corpo.</span>
+      </h2>
+      <p class="text-lg text-ink/70 mb-10 leading-relaxed">
+        <strong class="text-deep">+145 benefícios</strong> comprovados em um único ritual noturno. Cada ingrediente escolhido por uma razão.
+      </p>
+
+      <div class="space-y-4">
+        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition">
+          <div class="shrink-0 w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="bed-double" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-deep text-lg">Sono relaxante</h4>
+            <p class="text-sm text-ink/60">Do Magnésio Glicinato</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition">
+          <div class="shrink-0 w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="brain" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-deep text-lg">Função cognitiva</h4>
+            <p class="text-sm text-ink/60">Impulsionada pelo L-Triptofano</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition">
+          <div class="shrink-0 w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="sparkles" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-deep text-lg">Cabelo, pele e unhas</h4>
+            <p class="text-sm text-ink/60">Com o brilho do Zinco Glicinato</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition">
+          <div class="shrink-0 w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="activity" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-deep text-lg">Suporte digestivo</h4>
+            <p class="text-sm text-ink/60">Através da Camomila</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition">
+          <div class="shrink-0 w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+            <i data-lucide="shield" class="w-6 h-6 text-purple-600"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-deep text-lg">Imunidade</h4>
+            <p class="text-sm text-ink/60">Fortalecida pela L-Teanina</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 6 — US VS THEM                        -->
+<!-- ============================================= -->
+<section id="ciencia" class="relative bg-paper py-24 md:py-32 overflow-hidden">
+  <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="chip bg-teal/20 text-teal-deep mb-4">A diferença</p>
+      <h2 class="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight text-deep mb-4">
+        Gudreams vs. <br/>
+        <span class="italic-display text-purple-600">Melatonina e Tarja Preta.</span>
+      </h2>
+      <p class="text-lg text-ink/70 max-w-xl mx-auto">
+        Soníferos te apagam. Gudreams te nina pra dormir. A diferença tá em como cada um age no seu corpo.
+      </p>
+    </div>
+
+    <!-- Comparison -->
+    <div class="grid md:grid-cols-2 gap-5" data-aos="fade-up">
+      <!-- Gudreams column -->
+      <div class="relative bg-gradient-to-br from-deep via-purple-700 to-purple-600 text-paper rounded-[2rem] p-8 md:p-10 overflow-hidden grain order-2 md:order-1 shadow-2xl shadow-purple-900/30">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-teal/20 rounded-full blur-2xl"></div>
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-teal text-deep font-display italic text-lg font-bold px-3 py-1 rounded-lg">gudreams</div>
+            <span class="chip bg-teal text-deep font-bold">GANHADOR</span>
+          </div>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-7 h-7 rounded-full bg-teal flex items-center justify-center mt-0.5">
+                <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+              </div>
+              <span>Feito com <strong>11 superfoods naturais</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-7 h-7 rounded-full bg-teal flex items-center justify-center mt-0.5">
+                <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+              </div>
+              <span><strong>Sem hangover</strong> na manhã seguinte</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-7 h-7 rounded-full bg-teal flex items-center justify-center mt-0.5">
+                <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+              </div>
+              <span><strong>Sem dependência</strong> ou efeito rebote</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-7 h-7 rounded-full bg-teal flex items-center justify-center mt-0.5">
+                <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+              </div>
+              <span>Pode ser usado <strong>todas as noites</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-7 h-7 rounded-full bg-teal flex items-center justify-center mt-0.5">
+                <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+              </div>
+              <span>Inclui <strong>magnésio de alta absorção</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-7 h-7 rounded-full bg-teal flex items-center justify-center mt-0.5">
+                <i data-lucide="check" class="w-4 h-4 text-deep stroke-[3]"></i>
+              </div>
+              <span>Gostoso — vira um <strong>ritual prazeroso</strong></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Others column -->
+      <div class="bg-white rounded-[2rem] p-8 md:p-10 border-2 border-dashed border-purple-200 order-1 md:order-2">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="bg-ink/10 text-ink/60 font-display text-lg px-3 py-1 rounded-lg line-through">Melatonina</div>
+        </div>
+        <ul class="space-y-4 text-ink/60">
+          <li class="flex items-start gap-3">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-coral/40 flex items-center justify-center mt-0.5">
+              <i data-lucide="x" class="w-4 h-4 text-coral stroke-[3]"></i>
+            </div>
+            <span>Ingredientes sintéticos</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-coral/40 flex items-center justify-center mt-0.5">
+              <i data-lucide="x" class="w-4 h-4 text-coral stroke-[3]"></i>
+            </div>
+            <span>Hangover matinal</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-coral/40 flex items-center justify-center mt-0.5">
+              <i data-lucide="x" class="w-4 h-4 text-coral stroke-[3]"></i>
+            </div>
+            <span>Risco de dependência</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-coral/40 flex items-center justify-center mt-0.5">
+              <i data-lucide="x" class="w-4 h-4 text-coral stroke-[3]"></i>
+            </div>
+            <span>Só pra uso pontual</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-coral/40 flex items-center justify-center mt-0.5">
+              <i data-lucide="x" class="w-4 h-4 text-coral stroke-[3]"></i>
+            </div>
+            <span>Zero magnésio</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="shrink-0 w-7 h-7 rounded-full bg-coral/40 flex items-center justify-center mt-0.5">
+              <i data-lucide="x" class="w-4 h-4 text-coral stroke-[3]"></i>
+            </div>
+            <span>Gosto de remédio</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 7 — SOCIAL PROOF                      -->
+<!-- ============================================= -->
+<section id="depoimentos" class="relative bg-gradient-to-b from-cream to-cream-light py-24 md:py-32 overflow-hidden grain">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <!-- Clinicians -->
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="chip bg-purple-100 text-purple-700 mb-4">Recomendado por médicos</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-[1.05] tracking-tight text-deep mb-4">
+        <span class="italic-display text-purple-600">1.500+ médicos</span><br/>
+        indicam Gudreams pros pacientes.
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 mb-24">
+      <div class="bg-white rounded-3xl p-7 shadow-[0_4px_40px_rgba(75,47,174,.08)] card-tilt" data-aos="fade-up" data-aos-delay="0">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-300 to-purple-500 shrink-0"></div>
+          <div>
+            <p class="font-bold text-deep">Dr. Samuel Feng</p>
+            <p class="text-xs text-ink/60">Clínico Geral</p>
+          </div>
+        </div>
+        <p class="text-ink/80 leading-relaxed text-sm italic">
+          "Alternativa segura a sedativos pra saúde do sono a longo prazo. <strong class="text-deep not-italic">Eu não gosto dos meus pacientes usando melatonina</strong>, porque pode perturbar ciclos naturais e trazer risco de dependência..."
+        </p>
+      </div>
+      <div class="bg-white rounded-3xl p-7 shadow-[0_4px_40px_rgba(75,47,174,.08)] card-tilt" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-teal to-purple-400 shrink-0"></div>
+          <div>
+            <p class="font-bold text-deep">Dra. Larissa Ruffin</p>
+            <p class="text-xs text-ink/60">Medicina de Família</p>
+          </div>
+        </div>
+        <p class="text-ink/80 leading-relaxed text-sm italic">
+          "Magnésio é um dos <strong class="text-deep not-italic">minerais mais importantes pra o sono</strong>. Diferente de soníferos, o L-Triptofano pode encorajar o cérebro a adormecer por conta própria..."
+        </p>
+      </div>
+      <div class="bg-white rounded-3xl p-7 shadow-[0_4px_40px_rgba(75,47,174,.08)] card-tilt" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-pink-300 to-purple-400 shrink-0"></div>
+          <div>
+            <p class="font-bold text-deep">Dra. Kimberly Rogers</p>
+            <p class="text-xs text-ink/60">Medicina Interna</p>
+          </div>
+        </div>
+        <p class="text-ink/80 leading-relaxed text-sm italic">
+          "Combina minerais essenciais com L-Teanina pra um suporte completo de sono. <strong class="text-deep not-italic">Dá aos pacientes um jeito natural de relaxar</strong> enquanto também apoia um sono mais estável..."
+        </p>
+      </div>
+    </div>
+
+    <!-- Customer reviews carousel -->
+    <div class="text-center mb-10" data-aos="fade-up">
+      <p class="chip bg-teal/20 text-teal-deep mb-4">1 milhão de noites felizes</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-[1.05] tracking-tight text-deep mb-4">
+        O que <span class="italic-display text-purple-600">nossos clientes</span> dizem.
+      </h2>
+      <div class="flex items-center justify-center gap-3 mt-4">
+        <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+        <span class="text-sm text-ink/70"><strong>4.9</strong> — 30.177 reviews</span>
+      </div>
+    </div>
+
+    <!-- Swiper reviews -->
+    <div class="swiper reviewsSwiper overflow-visible" data-aos="fade-up">
+      <div class="swiper-wrapper pb-10">
+        <div class="swiper-slide !h-auto">
+          <div class="bg-white rounded-3xl p-6 shadow-[0_4px_40px_rgba(75,47,174,.08)] h-full">
+            <div class="stars-rating mb-3"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+            <h4 class="font-bold text-deep mb-2">Finalmente durmo direto</h4>
+            <p class="text-sm text-ink/70 italic mb-4">"Eu acordava tantas vezes por noite que achei que era normal. Comecei há 3 semanas e agora durmo direto. Sério."</p>
+            <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-200 to-purple-300"></div>
+              <div>
+                <p class="text-xs font-semibold text-deep">Camila R.</p>
+                <p class="text-[10px] text-ink/50">Cliente verificada ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide !h-auto">
+          <div class="bg-white rounded-3xl p-6 shadow-[0_4px_40px_rgba(75,47,174,.08)] h-full">
+            <div class="stars-rating mb-3"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+            <h4 class="font-bold text-deep mb-2">Parei com soníferos</h4>
+            <p class="text-sm text-ink/70 italic mb-4">"Parei com melatonina e zolpidem. Gudreams virou minha rotina. O sabor de chocolate é viciante e durmo como criança."</p>
+            <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-teal to-purple-400"></div>
+              <div>
+                <p class="text-xs font-semibold text-deep">Rafael M.</p>
+                <p class="text-[10px] text-ink/50">Cliente verificado ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide !h-auto">
+          <div class="bg-white rounded-3xl p-6 shadow-[0_4px_40px_rgba(75,47,174,.08)] h-full">
+            <div class="stars-rating mb-3"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+            <h4 class="font-bold text-deep mb-2">Sem aquela névoa</h4>
+            <p class="text-sm text-ink/70 italic mb-4">"Demora uns 20 min pra eu sentir o relaxamento. Durmo mais rápido e acordo sem aquela névoa da melatonina."</p>
+            <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-200 to-orange-300"></div>
+              <div>
+                <p class="text-xs font-semibold text-deep">Beatriz L.</p>
+                <p class="text-[10px] text-ink/50">Cliente verificada ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide !h-auto">
+          <div class="bg-white rounded-3xl p-6 shadow-[0_4px_40px_rgba(75,47,174,.08)] h-full">
+            <div class="stars-rating mb-3"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+            <h4 class="font-bold text-deep mb-2">Virou meu ritual</h4>
+            <p class="text-sm text-ink/70 italic mb-4">"Amo o chocolate quente. Super relaxante à noite e ainda ajuda com minhas cãibras musculares. Recomendo demais."</p>
+            <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-200 to-purple-300"></div>
+              <div>
+                <p class="text-xs font-semibold text-deep">Patty H.</p>
+                <p class="text-[10px] text-ink/50">Cliente verificada ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide !h-auto">
+          <div class="bg-white rounded-3xl p-6 shadow-[0_4px_40px_rgba(75,47,174,.08)] h-full">
+            <div class="stars-rating mb-3"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+            <h4 class="font-bold text-deep mb-2">Acordo descansada</h4>
+            <p class="text-sm text-ink/70 italic mb-4">"Uso há 2 meses. A diferença entre noites com e sem é gritante. Durmo mais profundo e acordo mais descansada."</p>
+            <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-200 to-pink-300"></div>
+              <div>
+                <p class="text-xs font-semibold text-deep">Katelyn M.</p>
+                <p class="text-[10px] text-ink/50">Cliente verificada ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination !-bottom-2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 8 — FINAL CTA                         -->
+<!-- ============================================= -->
+<section id="comprar" class="relative mesh-purple text-paper py-24 md:py-32 overflow-hidden grain">
+  <div class="stars">
+    <span style="top:10%;left:10%;width:3px;height:3px;animation-delay:.5s"></span>
+    <span style="top:30%;left:85%;width:4px;height:4px;animation-delay:1.2s"></span>
+    <span style="top:60%;left:20%;width:2px;height:2px;animation-delay:2s"></span>
+    <span style="top:80%;left:75%;width:3px;height:3px;animation-delay:.3s"></span>
+    <span style="top:20%;left:60%;width:2px;height:2px;animation-delay:1.6s"></span>
+  </div>
+  <div class="absolute top-1/4 -left-40 w-96 h-96 bg-teal/20 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 -right-40 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-6xl mx-auto px-5 md:px-8 text-center">
+    <div data-aos="fade-up">
+      <p class="chip bg-white/10 backdrop-blur text-teal mb-6">🌙 Seu próximo ritual</p>
+      <h2 class="font-display text-5xl md:text-7xl leading-[.95] tracking-tight mb-6">
+        Pronto pra dormir <br/>
+        <span class="italic-display text-teal">como você merece?</span>
+      </h2>
+      <p class="text-xl text-paper/80 max-w-2xl mx-auto mb-12">
+        Gudreams vem em 3 sabores. 1 pote = 30 noites de sono melhor.
+      </p>
+    </div>
+
+    <!-- Flavors cards -->
+    <div class="grid grid-cols-3 gap-3 md:gap-6 max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+      <div class="flavor-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6 hover:bg-white/10 hover:border-teal/50">
+        <div class="text-4xl md:text-5xl mb-3">🍫</div>
+        <p class="font-bold text-white text-sm md:text-base">Chocolate Quente</p>
+        <p class="text-xs text-teal mt-1">Mais vendido</p>
+      </div>
+      <div class="flavor-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6 hover:bg-white/10 hover:border-teal/50">
+        <div class="text-4xl md:text-5xl mb-3">🍓</div>
+        <p class="font-bold text-white text-sm md:text-base">Morango</p>
+        <p class="text-xs text-paper/50 mt-1">Clássico</p>
+      </div>
+      <div class="flavor-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-6 hover:bg-white/10 hover:border-teal/50">
+        <div class="text-4xl md:text-5xl mb-3">🥛</div>
+        <p class="font-bold text-white text-sm md:text-base">Doce de Leite</p>
+        <p class="text-xs text-teal mt-1">Novo!</p>
+      </div>
+    </div>
+
+    <!-- Benefits inline -->
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-paper/70 mb-10" data-aos="fade-up">
+      <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-teal"></i> Garantia de 60 dias</span>
+      <span class="flex items-center gap-2"><i data-lucide="truck" class="w-4 h-4 text-teal"></i> Frete grátis</span>
+      <span class="flex items-center gap-2"><i data-lucide="refresh-ccw" class="w-4 h-4 text-teal"></i> Cancele quando quiser</span>
+      <span class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-teal"></i> Aprovado Anvisa</span>
+    </div>
+
+    <!-- Mega CTA -->
+    <div data-aos="zoom-in" data-aos-delay="200">
+      <a href="./pdp.html" class="btn-primary !text-lg !px-12 !py-5">
+        Escolher meu sabor e começar
+        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+      </a>
+      <p class="mt-5 text-sm text-paper/60 italic-display">
+        Seu melhor sono pode começar amanhã.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- FOOTER                                        -->
+<!-- ============================================= -->
+<footer class="bg-deep text-paper/70 py-14">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10 pb-10 border-b border-white/10">
+      <div class="max-w-sm">
+        <div class="bg-paper/10 text-paper px-3 py-1.5 rounded-lg font-display italic text-2xl font-bold inline-block mb-4">
+          gudreams
+        </div>
+        <p class="text-sm leading-relaxed">
+          O ritual noturno de magnésio e superfoods que transformou como 1 milhão de pessoas dormem.
+        </p>
+      </div>
+      <div class="flex gap-8 text-sm">
+        <div>
+          <p class="font-bold text-white mb-3">Shop</p>
+          <ul class="space-y-2">
+            <li><a href="./pdp.html" class="hover:text-teal transition">Chocolate Quente</a></li>
+            <li><a href="./pdp.html" class="hover:text-teal transition">Morango</a></li>
+            <li><a href="./pdp.html" class="hover:text-teal transition">Doce de Leite</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-bold text-white mb-3">Info</p>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-teal transition">FAQ</a></li>
+            <li><a href="#" class="hover:text-teal transition">Blog</a></li>
+            <li><a href="#" class="hover:text-teal transition">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="text-xs text-paper/40 leading-relaxed">
+      *Este produto não se destina a diagnosticar, tratar, curar ou prevenir qualquer doença. Resultados podem variar.
+      Consulte um médico antes de usar se estiver grávida, amamentando ou em uso de medicação.<br/>
+      © Gudreams 2026 · Todos os direitos reservados
+    </p>
+  </div>
+</footer>
+
+<!-- ============================================= -->
+<!-- STICKY MOBILE CTA                             -->
+<!-- ============================================= -->
+<div x-data="{ show: false }"
+     @scroll.window="show = window.scrollY > 800"
+     x-show="show"
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="translate-y-full opacity-0"
+     x-transition:enter-end="translate-y-0 opacity-100"
+     class="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-paper/95 backdrop-blur-lg border-t border-purple-100 p-4 shadow-2xl">
+  <a href="./pdp.html" class="btn-primary w-full justify-center !text-base">
+    Quero dormir melhor
+    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+  </a>
+</div>
+
+<!-- ============================================= -->
+<!-- SCRIPTS                                       -->
+<!-- ============================================= -->
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // AOS
+  AOS.init({
+    duration: 700,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 60,
+  });
+
+  // Swiper reviews
+  new Swiper('.reviewsSwiper', {
+    slidesPerView: 1.15,
+    spaceBetween: 16,
+    centeredSlides: false,
+    loop: true,
+    autoplay: { delay: 4000, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    breakpoints: {
+      640: { slidesPerView: 2.2, spaceBetween: 20 },
+      1024:{ slidesPerView: 3.2, spaceBetween: 24 },
+    },
+  });
+</script>
+
+</body>
+</html>
