@@ -331,18 +331,16 @@
     border-color: #4B2FAE;
     box-shadow: 0 0 0 3px rgba(75,47,174,.1);
   }
-  /* Flavor circles (emoji + nome) — qty flutua abaixo */
+  /* Flavor circles (só emoji dentro) — nome + qty flutuam abaixo */
   .flavor-circle {
-    width: 86px;
-    height: 86px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: 2px solid #E8E3F5;
     background: white;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 6px;
     transition: all .2s ease;
   }
   .flavor-circle.active {
@@ -350,6 +348,14 @@
     border-color: #4B2FAE;
     box-shadow: 0 0 0 3px rgba(75,47,174,.12);
     transform: translateY(-2px);
+  }
+  .qty-btn-xs {
+    width: 20px; height: 20px;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: .8rem; line-height: 1;
+    transition: all .15s ease;
+    user-select: none;
   }
   .qty-btn-sm {
     width: 24px; height: 24px;
@@ -1517,27 +1523,27 @@
             <div :style="'width: ' + (totalSelected / packQty * 100) + '%'"></div>
           </div>
 
-          <!-- Flavor circles 3-col com +/- flutuantes -->
+          <!-- Flavor circles 3-col — só logo dentro, nome + qty fora -->
           <div class="grid grid-cols-3 gap-2">
             <template x-for="(flavor, i) in flavors" :key="i">
-              <div class="flex flex-col items-center gap-2.5">
+              <div class="flex flex-col items-center gap-1.5">
                 <div class="flavor-circle"
                      :class="flavorCounts[i] > 0 ? 'active' : ''">
-                  <div class="text-2xl leading-none" x-text="flavor.emoji"></div>
-                  <p class="font-bold text-deep text-[11px] leading-tight mt-1 text-center px-1" x-text="flavor.name"></p>
+                  <div class="text-[1.6rem] leading-none" x-text="flavor.emoji"></div>
                 </div>
-                <div class="flex items-center justify-center gap-1.5">
+                <p class="font-bold text-deep text-[10px] leading-tight text-center" x-text="flavor.name"></p>
+                <div class="flex items-center justify-center gap-1">
                   <button type="button"
-                          class="qty-btn qty-btn-sm qty-minus"
+                          class="qty-btn qty-btn-xs qty-minus"
                           :disabled="flavorCounts[i] === 0"
                           @click="removeFlavor(i)"
                           aria-label="Reduzir">−</button>
-                  <span class="w-5 text-center font-bold text-deep tabular-nums text-sm"
+                  <span class="w-4 text-center font-bold text-deep tabular-nums text-xs"
                         x-text="flavorCounts[i]"
                         :class="{ 'bump': flavorCounts[i] > 0 }"
                         :key="flavorCounts[i]"></span>
                   <button type="button"
-                          class="qty-btn qty-btn-sm qty-plus"
+                          class="qty-btn qty-btn-xs qty-plus"
                           :disabled="totalSelected >= packQty"
                           @click="addFlavor(i)"
                           aria-label="Adicionar">+</button>
