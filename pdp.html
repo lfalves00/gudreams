@@ -317,12 +317,27 @@
     transform: translateY(-2px);
   }
 
-  /* Flavor mix rows */
+  /* Flavor mix rows (legado) */
   .flavor-row { transition: all .2s ease; }
   .flavor-row.active {
     background: #F4F1FA;
     border-color: #4B2FAE;
     box-shadow: 0 0 0 3px rgba(75,47,174,.1);
+  }
+  /* Flavor tiles (3-col compacto) */
+  .flavor-tile { transition: all .2s ease; }
+  .flavor-tile.active {
+    background: #F4F1FA;
+    border-color: #4B2FAE;
+    box-shadow: 0 0 0 3px rgba(75,47,174,.1);
+  }
+  .qty-btn-sm {
+    width: 24px; height: 24px;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: .9rem; line-height: 1;
+    transition: all .15s ease;
+    user-select: none;
   }
   .qty-btn {
     width: 32px; height: 32px;
@@ -1482,28 +1497,26 @@
             <div :style="'width: ' + (totalSelected / packQty * 100) + '%'"></div>
           </div>
 
-          <!-- Flavor rows with +/- counters -->
-          <div class="space-y-2">
+          <!-- Flavor tiles 3-col com +/- counters -->
+          <div class="grid grid-cols-3 gap-2">
             <template x-for="(flavor, i) in flavors" :key="i">
-              <div class="flavor-row bg-white border-2 rounded-2xl p-3 flex items-center gap-3"
+              <div class="flavor-tile bg-white border-2 rounded-2xl p-2.5 text-center flex flex-col items-center"
                    :class="flavorCounts[i] > 0 ? 'active' : 'border-purple-100'">
-                <div class="text-3xl leading-none shrink-0" x-text="flavor.emoji"></div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-bold text-deep text-sm leading-tight" x-text="flavor.name"></p>
-                  <p class="text-[11px] text-purple-500 mt-0.5" x-text="flavor.tag"></p>
-                </div>
-                <div class="flex items-center gap-1.5 shrink-0">
+                <div class="text-2xl leading-none" x-text="flavor.emoji"></div>
+                <p class="font-bold text-deep text-[11px] leading-tight mt-1" x-text="flavor.name"></p>
+                <p class="text-[9px] text-purple-500 mt-0.5 leading-none" x-text="flavor.tag"></p>
+                <div class="flex items-center justify-center gap-1 mt-2">
                   <button type="button"
-                          class="qty-btn qty-minus"
+                          class="qty-btn qty-btn-sm qty-minus"
                           :disabled="flavorCounts[i] === 0"
                           @click="removeFlavor(i)"
                           aria-label="Reduzir">−</button>
-                  <span class="w-7 text-center font-bold text-deep tabular-nums text-base"
+                  <span class="w-5 text-center font-bold text-deep tabular-nums text-sm"
                         x-text="flavorCounts[i]"
                         :class="{ 'bump': flavorCounts[i] > 0 }"
                         :key="flavorCounts[i]"></span>
                   <button type="button"
-                          class="qty-btn qty-plus"
+                          class="qty-btn qty-btn-sm qty-plus"
                           :disabled="totalSelected >= packQty"
                           @click="addFlavor(i)"
                           aria-label="Adicionar">+</button>
