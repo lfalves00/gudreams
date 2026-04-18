@@ -425,6 +425,28 @@
   .toggle-switch.on { background: #4B2FAE; }
   .toggle-switch.on::before { transform: translateX(20px); }
 
+  /* Subscription checkbox (substitui o toggle switch) */
+  .sub-checkbox { display: inline-flex; align-items: center; }
+  .sub-checkbox-box {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    border: 2px solid #B8A9E8;
+    background: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #FAFAF5;
+    transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .sub-checkbox:hover .sub-checkbox-box {
+    border-color: #4B2FAE;
+  }
+  .sub-checkbox-box.is-on {
+    background: #4B2FAE;
+    border-color: #4B2FAE;
+    box-shadow: 0 0 0 4px rgba(75,47,174,.15);
+  }
+
   /* Gallery arrows */
   .gallery-arrow {
     position: absolute;
@@ -1580,10 +1602,14 @@
               <span class="bg-deep text-paper w-5 h-5 rounded-full flex items-center justify-center text-[11px]">3</span>
               <p class="font-bold text-deep">Assinar e economizar <span class="text-teal-deep" x-text="packs[selectedPack].subDiscount"></span></p>
             </div>
-            <button @click="subscribe = !subscribe"
-                    :class="{ 'on': subscribe }"
-                    class="toggle-switch shrink-0 mt-0.5"
-                    aria-label="Toggle assinatura"></button>
+            <label class="sub-checkbox shrink-0 mt-0.5 cursor-pointer">
+              <input type="checkbox" x-model="subscribe" class="sr-only peer" />
+              <span class="sub-checkbox-box" :class="subscribe ? 'is-on' : ''">
+                <svg x-show="subscribe" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+            </label>
           </div>
 
           <!-- Kit visual (clicável → lightbox carrossel) -->
@@ -2045,6 +2071,7 @@
           });
           this.$watch('primaryFlavor', () => { this.activeImage = 0; });
           this.$watch('totalSelected', () => setTimeout(() => lucide.createIcons(), 20));
+          this.$watch('subscribe', () => setTimeout(() => lucide.createIcons(), 20));
           this.$watch('kitOpen', (v) => { document.body.style.overflow = v ? 'hidden' : ''; });
         },
       };
