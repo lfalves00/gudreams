@@ -1020,8 +1020,8 @@
   .story:hover { transform: scale(1.05); }
   .story-ring {
     display: block;
-    width: 64px; height: 64px;
-    padding: 2.5px;
+    width: 82px; height: 82px;
+    padding: 3px;
     border-radius: 50%;
     background: linear-gradient(135deg, #FFB8B8 0%, #DC2C7E 50%, #4B2FAE 100%);
   }
@@ -1764,7 +1764,7 @@
         <div class="mt-10 md:mt-12"
              x-data="storiesViewer()"
              x-effect="document.body.style.overflow = storyIdx !== null ? 'hidden' : ''">
-          <h3 class="font-bold text-deep text-sm mb-3">Quem já testou compartilhou no TikTok e Insta</h3>
+          <h3 class="font-bold text-deep text-[15px] mb-3 whitespace-nowrap overflow-hidden text-ellipsis">Quem já testou compartilhou no TikTok e Insta</h3>
           <div class="stories-scroll">
             <template x-for="(s, i) in stories" :key="i">
               <button type="button" class="story" @click="openStory(i)">
