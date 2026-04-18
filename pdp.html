@@ -1815,6 +1815,7 @@
         <div class="mt-10 pt-6 border-t border-purple-100"
              x-data="storiesViewer()"
              x-effect="document.body.style.overflow = storyIdx !== null ? 'hidden' : ''">
+          <p class="text-[10px] uppercase tracking-[.18em] text-ink/45 font-bold mb-1.5">Depoimentos de clientes reais</p>
           <h3 class="font-bold text-deep text-[15px] mb-3 whitespace-nowrap overflow-hidden text-ellipsis">Quem já testou compartilhou no TikTok e Insta</h3>
           <div class="stories-scroll">
             <template x-for="(s, i) in stories" :key="i">
