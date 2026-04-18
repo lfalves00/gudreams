@@ -1016,8 +1016,24 @@
     flex-shrink: 0;
     scroll-snap-align: start;
     transition: transform .15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 82px;
   }
   .story:hover { transform: scale(1.05); }
+  .story-handle {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #1C0E4E;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    max-width: 82px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .story-ring {
     display: block;
     width: 82px; height: 82px;
@@ -1825,6 +1841,7 @@
                     <img :src="s.avatar" :alt="s.name" />
                   </span>
                 </span>
+                <span class="story-handle" x-text="s.user"></span>
               </button>
             </template>
           </div>
