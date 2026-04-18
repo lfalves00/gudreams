@@ -194,12 +194,12 @@
 
   /* Light variant (pra fundo branco/paper) */
   .pay-chip-light {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 5px 11px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
     border-radius: 999px;
     background: #F4F1FA;
     color: #1C0E4E;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     border: 1px solid #E8E3F5;
     letter-spacing: .02em;
@@ -208,8 +208,8 @@
     background: #1C0E4E;
     color: #FAFAF5;
     border-color: transparent;
-    padding: 6px 13px;
-    font-size: 12px;
+    padding: 7px 14px;
+    font-size: 14px;
     box-shadow: 0 2px 8px rgba(28,14,78,.18);
   }
   .pay-chip-light-highlight svg { stroke-width: 2.5; }
@@ -1539,7 +1539,7 @@
         <!-- ============ TRUST UPFRONT: payment + garantia/entrega ============ -->
         <!-- Payment methods -->
         <div>
-          <p class="text-[10px] uppercase tracking-[.16em] text-ink/55 font-bold mb-3">Formas de pagamento</p>
+          <p class="text-xs uppercase tracking-[.16em] text-ink/55 font-bold mb-3">Formas de pagamento</p>
           <template x-if="!subscribe">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="pay-chip-light"><i data-lucide="zap" class="w-3 h-3"></i> Pix</span>
@@ -1560,15 +1560,15 @@
           <div class="flex items-start gap-2.5">
             <i data-lucide="shield-check" class="w-4 h-4 text-teal-deep shrink-0 mt-0.5"></i>
             <div class="min-w-0">
-              <p class="text-xs font-bold text-deep leading-tight">Garantia de 30 dias</p>
-              <p class="text-[10px] text-ink/55 mt-0.5">Devolução total</p>
+              <p class="text-sm font-bold text-deep leading-tight">Garantia de 30 dias</p>
+              <p class="text-xs text-ink/55 mt-0.5">Devolução total</p>
             </div>
           </div>
           <div class="flex items-start gap-2.5">
             <i data-lucide="truck" class="w-4 h-4 text-purple-600 shrink-0 mt-0.5"></i>
             <div class="min-w-0">
-              <p class="text-xs font-bold text-deep leading-tight">2–6 dias úteis</p>
-              <p class="text-[10px] text-ink/55 mt-0.5">Pelos correios</p>
+              <p class="text-sm font-bold text-deep leading-tight">2–6 dias úteis</p>
+              <p class="text-xs text-ink/55 mt-0.5">Pelos correios</p>
             </div>
           </div>
         </div>
