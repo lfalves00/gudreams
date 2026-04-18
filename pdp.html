@@ -1216,6 +1216,34 @@
   .supp-table thead th { background: #F4F1FA; font-weight: 700; color: #1C0E4E; text-transform: uppercase; font-size: .75rem; letter-spacing: .05em; }
   .supp-table td:last-child, .supp-table th:last-child { text-align: right; }
 
+  /* Sub-itens (4 magnesios filhos do Magnesio Inteligente) — visualmente conectados */
+  .supp-table .mg-sub td { padding-top: .45rem; padding-bottom: .45rem; border-bottom-color: rgba(75,47,174,.06); }
+  .supp-table .mg-sub-last td { border-bottom: 1px solid rgba(75,47,174,.1); }
+  .mg-sub-cell {
+    position: relative;
+    padding-left: 2rem !important;
+  }
+  .mg-sub-cell::before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #D4CAF0;
+  }
+  .mg-sub-first .mg-sub-cell::before { top: 0; }
+  .mg-sub-last .mg-sub-cell::before { bottom: 50%; }
+  .mg-sub-cell::after {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    width: 9px;
+    height: 2px;
+    background: #D4CAF0;
+  }
+
   *:focus-visible {
     outline: 3px solid #5EEAD4;
     outline-offset: 3px;
@@ -2344,11 +2372,14 @@
               <tr><th>Nutriente</th><th>Qtd</th><th>%VD</th></tr>
             </thead>
             <tbody>
-              <tr><td class="font-semibold text-deep">Magnésio Inteligente™</td><td>57mg</td><td class="font-bold text-purple-600">14%</td></tr>
-              <tr><td class="pl-6 text-ink/65 text-xs"><span class="font-semibold text-deep">Glicinato</span> · sono profundo &amp; ansiedade</td><td>—</td><td>—</td></tr>
-              <tr><td class="pl-6 text-ink/65 text-xs"><span class="font-semibold text-deep">Treonato</span> · foco &amp; memória</td><td>—</td><td>—</td></tr>
-              <tr><td class="pl-6 text-ink/65 text-xs"><span class="font-semibold text-deep">Dimalato</span> · energia &amp; recuperação muscular</td><td>—</td><td>—</td></tr>
-              <tr><td class="pl-6 text-ink/65 text-xs"><span class="font-semibold text-deep">Taurato</span> · saúde cardiovascular &amp; ritmo</td><td>—</td><td>—</td></tr>
+              <tr><td class="font-semibold text-deep">
+                Magnésio Inteligente™
+                <span class="block text-[10px] text-ink/55 font-normal mt-0.5">(4 tipos de Magnésio)</span>
+              </td><td>57mg</td><td class="font-bold text-purple-600">14%</td></tr>
+              <tr class="mg-sub mg-sub-first"><td class="mg-sub-cell text-ink/75 text-xs"><span class="font-semibold text-deep">Glicinato</span> · sono profundo &amp; ansiedade</td><td>—</td><td>—</td></tr>
+              <tr class="mg-sub"><td class="mg-sub-cell text-ink/75 text-xs"><span class="font-semibold text-deep">Treonato</span> · foco &amp; memória</td><td>—</td><td>—</td></tr>
+              <tr class="mg-sub"><td class="mg-sub-cell text-ink/75 text-xs"><span class="font-semibold text-deep">Dimalato</span> · energia &amp; recuperação muscular</td><td>—</td><td>—</td></tr>
+              <tr class="mg-sub mg-sub-last"><td class="mg-sub-cell text-ink/75 text-xs"><span class="font-semibold text-deep">Taurato</span> · saúde cardiovascular &amp; ritmo</td><td>—</td><td>—</td></tr>
               <tr><td class="font-semibold text-deep">Zinco Glicinato</td><td>6mg</td><td class="font-bold text-purple-600">55%</td></tr>
               <tr><td class="font-semibold text-deep">L-Teanina</td><td>250mg</td><td>*</td></tr>
               <tr><td class="font-semibold text-deep">Blend Relaxante</td><td>1.180mg</td><td>*</td></tr>
