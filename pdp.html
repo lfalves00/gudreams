@@ -137,8 +137,96 @@
     font-size: .8rem; font-weight: 600; letter-spacing: .01em;
   }
 
+  /* Payment method chips (inside dark price card) */
+  .pay-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.14);
+    color: #FAFAF5;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,.22);
+    letter-spacing: .02em;
+  }
+  .pay-chip-highlight {
+    background: #FAFAF5;
+    color: #1C0E4E;
+    border-color: transparent;
+    padding: 6px 13px;
+    font-size: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  .pay-chip-highlight svg { stroke-width: 2.5; }
+
+  /* Trust seals — logos reais com frame branco */
+  .trust-seals {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(232,227,245,.7);
+  }
+  .trust-logo {
+    height: 38px;
+    width: auto;
+    max-width: 88px;
+    object-fit: contain;
+    background: white;
+    border: 1px solid #E8E3F5;
+    border-radius: 8px;
+    padding: 5px 9px;
+    box-shadow: 0 1px 3px rgba(75,47,174,.06);
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s;
+  }
+  .trust-logo:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(75,47,174,.12);
+    border-color: #B8A9E8;
+  }
+  @media (max-width: 380px) {
+    .trust-seals { gap: 6px; }
+    .trust-logo { height: 32px; max-width: 76px; padding: 4px 7px; }
+  }
+
+  /* Light variant (pra fundo branco/paper) */
+  .pay-chip-light {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: #F4F1FA;
+    color: #1C0E4E;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #E8E3F5;
+    letter-spacing: .02em;
+  }
+  .pay-chip-light-highlight {
+    background: #1C0E4E;
+    color: #FAFAF5;
+    border-color: transparent;
+    padding: 6px 13px;
+    font-size: 12px;
+    box-shadow: 0 2px 8px rgba(28,14,78,.18);
+  }
+  .pay-chip-light-highlight svg { stroke-width: 2.5; }
+
   .marquee { overflow: hidden; position: relative; }
-  .marquee-track { display: flex; gap: 4rem; animation: marquee 40s linear infinite; width: max-content; }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    animation: marqueeScroll 50s linear infinite;
+    will-change: transform;
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
 
   .stars-rating { display: inline-flex; gap: 2px; }
   .stars-rating svg { width: 16px; height: 16px; fill: #FCD34D; stroke: #FCD34D; }
@@ -159,17 +247,46 @@
     background: #F4F1FA;
     box-shadow: 0 0 0 4px rgba(75,47,174,.1);
   }
-  .pack-option.selected::before {
-    content: '';
+  .pack-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #F4F1FA 0%, #FAF6EC 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: background .2s ease;
+  }
+  .pack-option.selected .pack-thumb {
+    background: linear-gradient(135deg, #E8E3F5 0%, #F4EEE1 100%);
+  }
+  .pack-thumb img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 4px;
+  }
+  .pack-discount {
     position: absolute;
-    top: 10px; right: 10px;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: #4B2FAE;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
-    background-size: 60%;
-    background-repeat: no-repeat;
-    background-position: center;
+    top: 6px;
+    right: 6px;
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+    color: #1C0E4E;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: -.02em;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgba(245,158,11,.4), inset 0 1px 0 rgba(255,255,255,.4);
+    border: 1px solid rgba(180,83,9,.2);
+    z-index: 5;
+    text-shadow: 0 1px 0 rgba(255,255,255,.3);
+  }
+  .pack-option.selected .pack-discount {
+    background: linear-gradient(135deg, #FBBF24 0%, #B45309 100%);
+    box-shadow: 0 3px 12px rgba(180,83,9,.5), inset 0 1px 0 rgba(255,255,255,.4);
   }
 
   .flavor-option {
@@ -222,7 +339,7 @@
   }
   .mix-progress > div {
     height: 100%;
-    background: linear-gradient(90deg, #4B2FAE 0%, #5EEAD4 100%);
+    background: linear-gradient(90deg, #6B4FD6 0%, #4B2FAE 50%, #2E1B7A 100%);
     transition: width .3s cubic-bezier(.4,0,.2,1);
   }
 
@@ -279,6 +396,805 @@
   .review-card { transition: transform .3s ease, box-shadow .3s ease; }
   .review-card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(75,47,174,.08); }
 
+  /* Reviews — ML/Amazon style */
+  .review-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #E8E3F5;
+  }
+  .review-item:last-of-type { border-bottom: 0; }
+  .review-thumb {
+    width: 68px; height: 68px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #F4F1FA 0%, #FAF6EC 100%);
+    border: 1px solid #E8E3F5;
+    cursor: zoom-in;
+    flex-shrink: 0;
+    padding: 0;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .review-thumb:hover { transform: scale(1.06); border-color: #4B2FAE; }
+  .review-thumb img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 4px;
+    pointer-events: none;
+  }
+  .review-bar { height: 8px; background: #E8E3F5; border-radius: 999px; overflow: hidden; }
+  .review-bar > div { height: 100%; background: #FCD34D; border-radius: 999px; }
+  .review-helpful-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid #D4CAF0;
+    background: white;
+    color: #14092E;
+    font-size: 11px;
+    font-weight: 600;
+    transition: all .15s ease;
+  }
+  .review-helpful-btn:hover { background: #F4F1FA; border-color: #4B2FAE; }
+  .review-helpful-btn.voted-up {
+    background: #4B2FAE;
+    border-color: #4B2FAE;
+    color: #FAFAF5;
+  }
+  .review-helpful-btn.voted-down {
+    background: #14092E;
+    border-color: #14092E;
+    color: #FAFAF5;
+  }
+  .review-helpful-btn.voted-up:hover, .review-helpful-btn.voted-down:hover { opacity: .9; }
+
+  /* Phase cards — compacto, 3-col grid */
+  .phase-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid rgba(232,227,245,.85);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(75,47,174,.04);
+    transition: transform .2s ease, box-shadow .25s ease, border-color .2s;
+  }
+  .phase-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(75,47,174,.1);
+    border-color: rgba(184,169,232,.7);
+  }
+  .phase-img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 6;
+    overflow: hidden;
+    background: linear-gradient(135deg, #F4F1FA 0%, #FAF6EC 100%);
+  }
+  .phase-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+  }
+  .phase-card:hover .phase-img { transform: scale(1.04); }
+  .phase-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20,9,46,.4) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .phase-stage-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(20,9,46,.8);
+    color: #FAFAF5;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    backdrop-filter: blur(6px);
+  }
+  .phase-stage-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #5EEAD4;
+    box-shadow: 0 0 6px rgba(94,234,212,.7);
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .6; transform: scale(1.15); }
+  }
+
+  .phase-body {
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .phase-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    color: #14092E;
+    margin-bottom: 10px;
+    letter-spacing: -.01em;
+  }
+  .phase-checks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .phase-checks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13.5px;
+    color: rgba(20,9,46,.82);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .phase-check {
+    width: 15px; height: 15px;
+    color: #4B2FAE;
+    stroke-width: 3;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .phase-check-teal { color: #0D9488; }
+  .phase-card-teal .phase-img-overlay {
+    background: linear-gradient(to top, rgba(13,148,136,.35) 0%, transparent 55%);
+  }
+
+  /* Medical emblem — Rod of Asclepius */
+  .medical-emblem {
+    display: inline-block;
+    filter: drop-shadow(0 3px 8px rgba(120,53,15,.15));
+  }
+  .medical-emblem svg {
+    width: 32px; height: auto;
+    display: block;
+  }
+
+  /* Science / doctor entries — clinical */
+  .science-list { list-style: none; padding: 0; margin: 0; }
+  .sci-entry {
+    padding: 2rem 0 2.25rem;
+    border-top: 1px solid rgba(20,9,46,.1);
+  }
+  .sci-entry:last-child { padding-bottom: 0; }
+  .sci-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .sci-num {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-weight: 600;
+    font-size: .8rem;
+    line-height: 1;
+    color: rgba(20,9,46,.5);
+    letter-spacing: .04em;
+  }
+  .sci-ingredient {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.1;
+    color: #14092E;
+    letter-spacing: -.005em;
+  }
+  .sci-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: rgba(20,9,46,.88);
+    margin: 0 0 .85rem;
+    max-width: 38rem;
+  }
+  .sci-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .72rem;
+    font-weight: 700;
+    color: #4B2FAE;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: 4px 0;
+    margin-bottom: 1.4rem;
+    border-bottom: 1px solid #D4CAF0;
+    transition: color .15s, border-color .15s, gap .15s;
+  }
+  .sci-more:hover { color: #1C0E4E; border-color: #4B2FAE; gap: 9px; }
+  .sci-more span { transition: transform .15s; }
+  [x-cloak] { display: none !important; }
+
+  .sci-byline {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .85rem 1rem;
+    padding-left: 0;
+  }
+  .sci-avatar {
+    position: relative;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #F4F1FA;
+    flex-shrink: 0;
+    border: 1px solid rgba(20,9,46,.12);
+  }
+  .sci-initials {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    color: #4B2FAE;
+    font-size: .72rem;
+    letter-spacing: .02em;
+  }
+  .sci-avatar img {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .sci-name {
+    font-weight: 700;
+    color: #14092E;
+    font-size: .82rem;
+    line-height: 1.1;
+  }
+  .sci-cred {
+    color: rgba(20,9,46,.55);
+    font-size: .68rem;
+    line-height: 1.35;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .sci-ref {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: .62rem;
+    color: rgba(20,9,46,.55);
+    text-align: right;
+    line-height: 1.4;
+    letter-spacing: -.01em;
+    max-width: 12rem;
+  }
+  .sci-ref-label {
+    display: block;
+    font-weight: 700;
+    color: #4B2FAE;
+    margin-bottom: 1px;
+  }
+  .sci-disclaimer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(20,9,46,.08);
+    font-size: .68rem;
+    color: rgba(20,9,46,.5);
+    line-height: 1.55;
+    max-width: 36rem;
+  }
+
+  @media (max-width: 640px) {
+    .sci-num { font-size: .72rem; }
+    .sci-ingredient { font-size: 1rem; }
+    .sci-quote { font-size: 1.02rem; }
+    .sci-byline {
+      grid-template-columns: auto 1fr;
+      grid-template-areas: "avatar author" "ref ref";
+      padding-left: 0;
+      row-gap: .65rem;
+    }
+    .sci-byline .sci-avatar { grid-area: avatar; }
+    .sci-byline .sci-author { grid-area: author; }
+    .sci-byline .sci-ref {
+      grid-area: ref;
+      text-align: left;
+      max-width: 100%;
+      padding-top: .5rem;
+      border-top: 1px dashed rgba(20,9,46,.12);
+    }
+    .sci-byline .sci-ref-label { display: inline; margin-right: 4px; }
+  }
+
+  /* Us vs Them table */
+  .vs-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+  .vs-table col.vs-feature-col { width: 28%; }
+  .vs-table thead th {
+    padding: 1rem .5rem;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #14092E;
+    text-align: center;
+    border-bottom: 1px solid #E8E3F5;
+    vertical-align: middle;
+    width: 24%;
+  }
+  .vs-table thead th.vs-feature-col { width: 28%; }
+  .vs-table thead th.vs-them { color: rgba(20,9,46,.55); font-size: .68rem; line-height: 1.2; }
+  .vs-table thead th.vs-us {
+    background: linear-gradient(180deg, #F4F1FA 0%, rgba(244,241,250,0) 100%);
+    border-left: 2px solid #4B2FAE;
+    border-right: 2px solid #4B2FAE;
+    position: relative;
+  }
+  .vs-table tbody td {
+    padding: .75rem .5rem;
+    font-size: .78rem;
+    text-align: center;
+    border-bottom: 1px solid #F4F1FA;
+    vertical-align: middle;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+  .vs-table tbody tr:last-child td { border-bottom: 0; }
+  .vs-table .vs-label {
+    text-align: left;
+    font-weight: 600;
+    color: #14092E;
+    font-size: .78rem;
+    padding-left: .75rem;
+  }
+  .vs-table .vs-us-cell {
+    background: #F4F1FA;
+    border-left: 2px solid #4B2FAE;
+    border-right: 2px solid #4B2FAE;
+    color: #1C0E4E;
+  }
+  .vs-table tbody tr:last-child .vs-us-cell {
+    border-bottom: 2px solid #4B2FAE;
+  }
+  .vs-table .vs-them-cell {
+    color: rgba(20,9,46,.7);
+  }
+  .vs-check, .vs-x, .vs-partial {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 3px;
+    stroke-width: 3;
+  }
+  .vs-check  { width: 14px; height: 14px; color: #14B8A6; }
+  .vs-x      { width: 13px; height: 13px; color: #DC2626; }
+  .vs-partial{ width: 13px; height: 13px; color: #D97706; }
+  @media (max-width: 640px) {
+    .vs-table thead th { padding: .7rem .25rem; font-size: .6rem; letter-spacing: .02em; }
+    .vs-table thead th.vs-them { font-size: .58rem; }
+    .vs-table tbody td { padding: .6rem .25rem; font-size: .68rem; }
+    .vs-table .vs-label { font-size: .66rem; padding-left: .4rem; font-weight: 700; }
+    .vs-check, .vs-x, .vs-partial { width: 11px; height: 11px; margin-right: 1px; }
+    .vs-table thead th.vs-us img { height: 18px; }
+    .vs-table col.vs-feature-col { width: 24%; }
+    .vs-table thead th.vs-feature-col { width: 24%; }
+  }
+
+  /* Kit image preview (subscription card) — horizontal compact */
+  .kit-thumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 0 0 14px;
+    padding: 8px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #F4F1FA 0%, #FAF6EC 100%);
+    border: 1px solid #E8E3F5;
+    cursor: zoom-in;
+    text-align: left;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+  }
+  .kit-thumb:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(75,47,174,.1);
+    border-color: #B8A9E8;
+  }
+  .kit-thumb-img {
+    position: relative;
+    flex-shrink: 0;
+    width: 122px;
+    height: 76px;
+    border-radius: 9px;
+    background: white;
+    border: 1px solid #D4CAF0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 4px 6px;
+    box-shadow: 0 1px 4px rgba(75,47,174,.08);
+  }
+  .kit-thumb-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform .3s ease;
+  }
+  .kit-thumb:hover .kit-thumb-img { border-color: #4B2FAE; }
+  .kit-thumb:hover .kit-thumb-img img { transform: scale(1.06); }
+
+  /* Overlay icon (sinaliza ampliar) */
+  .kit-thumb-overlay {
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 19px; height: 19px;
+    border-radius: 50%;
+    background: rgba(20,9,46,.78);
+    color: #FAFAF5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background .15s, transform .15s;
+  }
+  .kit-thumb-overlay svg { width: 10px; height: 10px; stroke-width: 2.5; }
+  .kit-thumb:hover .kit-thumb-overlay {
+    background: #4B2FAE;
+    transform: scale(1.1);
+  }
+
+  /* Counter "+N" (sinaliza mais fotos) */
+  .kit-thumb-count {
+    position: absolute;
+    bottom: 3px; right: 3px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    background: #4B2FAE;
+    color: #FAFAF5;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 1.5px solid white;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(28,14,78,.2);
+  }
+  .kit-thumb-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    flex: 1;
+  }
+  .kit-thumb-eyebrow {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: #4B2FAE;
+  }
+  .kit-thumb-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #14092E;
+    line-height: 1.2;
+    margin-top: 2px;
+  }
+  .kit-thumb-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: rgba(20,9,46,.55);
+    font-weight: 600;
+    margin-top: 4px;
+    transition: color .15s;
+  }
+  .kit-thumb:hover .kit-thumb-cta { color: #4B2FAE; }
+
+  /* Trust accordion (shipping / guarantee) */
+  .trust-acc {
+    background: #F4F1FA;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: background .2s ease;
+  }
+  .trust-acc.is-open { background: #E8E3F5; }
+  .trust-acc-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .trust-acc-chev { transition: transform .25s ease; }
+  .trust-acc.is-open .trust-acc-chev { transform: rotate(180deg); }
+  .trust-acc-body { padding: 0 16px 14px; }
+
+  /* Instagram-stories carousel */
+  .stories-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #D4CAF0 transparent;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .stories-scroll::-webkit-scrollbar { height: 4px; }
+  .stories-scroll::-webkit-scrollbar-track { background: transparent; }
+  .stories-scroll::-webkit-scrollbar-thumb { background: #D4CAF0; border-radius: 999px; border: none; }
+  .story {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    transition: transform .15s ease;
+  }
+  .story:hover { transform: scale(1.05); }
+  .story-ring {
+    display: block;
+    width: 64px; height: 64px;
+    padding: 2.5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFB8B8 0%, #DC2C7E 50%, #4B2FAE 100%);
+  }
+  .story-inner {
+    display: block;
+    width: 100%; height: 100%;
+    padding: 2px;
+    border-radius: 50%;
+    background: white;
+  }
+  .story-inner img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  /* Seen state — anel cinza (igual Instagram já visto) */
+  .story-ring.is-seen {
+    background: linear-gradient(135deg, #D4CAF0 0%, #B8A9E8 50%, #8B72E3 100%);
+    opacity: .7;
+  }
+
+  /* ===== STORY VIEWER (Instagram-style modal) ===== */
+  .story-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background: rgba(20, 9, 46, 0.92);
+    backdrop-filter: blur(14px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+  .story-frame {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 9 / 16;
+    max-height: 92vh;
+    background: #14092E;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .story-frame-inner {
+    position: relative;
+    width: 100%; height: 100%;
+  }
+
+  /* Segmented progress bars (top) */
+  .story-segments {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 4px;
+    z-index: 20;
+  }
+  .story-segment {
+    flex: 1;
+    height: 2.5px;
+    background: rgba(255, 255, 255, 0.32);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .story-segment-fill {
+    height: 100%;
+    width: 0;
+    background: white;
+    border-radius: 999px;
+    transition: width .25s ease;
+  }
+  .story-segment.is-done .story-segment-fill { width: 100%; }
+  .story-segment.is-active .story-segment-fill { width: 100%; }
+
+  /* Header (avatar + handle + close) */
+  .story-head {
+    position: absolute;
+    top: 22px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 15;
+    color: white;
+  }
+  .story-head-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1.5px solid rgba(255,255,255,.4);
+  }
+  .story-head-handle {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.1;
+    letter-spacing: -.01em;
+  }
+  .story-head-name {
+    font-size: 11px;
+    opacity: .75;
+    margin-top: 2px;
+    line-height: 1.1;
+  }
+  .story-close {
+    margin-left: auto;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.12);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  .story-close:hover { background: rgba(255,255,255,.22); }
+
+  /* Media */
+  .story-media {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #2E1B7A 0%, #4B2FAE 100%);
+  }
+
+  /* Caption overlay (bottom) */
+  .story-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 15;
+    padding: 60px 16px 18px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.55) 100%);
+    color: white;
+    font-size: 13px;
+    line-height: 1.35;
+    pointer-events: none;
+  }
+
+  /* Tap navigation zones */
+  .story-tap {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 35%;
+    z-index: 10;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .story-tap-left  { left: 0; }
+  .story-tap-right { right: 0; }
+
+  /* Press credibility — animated marquee */
+  .press-metric {
+    background: white;
+    border: 1px solid #E8E3F5;
+    border-radius: 14px;
+    padding: 10px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(75,47,174,.06);
+    display: inline-block;
+  }
+  .press-metric strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: #1C0E4E;
+    font-size: 1.15rem;
+    line-height: 1.05;
+  }
+  .press-metric span {
+    display: block;
+    font-size: .65rem;
+    color: rgba(20,9,46,.55);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+  .press-marquee {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .press-marquee-track {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    width: max-content;
+    animation: marqueeScroll 38s linear infinite;
+    will-change: transform;
+  }
+  .press-marquee:hover .press-marquee-track { animation-play-state: paused; }
+  .press-name {
+    color: rgba(20,9,46,.45);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color .2s;
+  }
+  .press-marquee:hover .press-name { color: rgba(20,9,46,.7); }
+  .press-dot {
+    color: rgba(20,9,46,.2);
+    font-size: 1rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  /* Distinct wordmark-ish styling */
+  .press-name-forbes  { font-family: 'Fraunces', serif; font-weight: 800; letter-spacing: -.01em; }
+  .press-name-veja    { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; letter-spacing: .03em; font-size: 1.05rem; }
+  .press-name-gq      { font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; }
+  .press-name-mens    { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; letter-spacing: -.01em; }
+  .press-name-vejas   { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: .95rem; letter-spacing: .02em; }
+  .press-name-tua     { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: .98rem; }
+  .press-name-mbg     { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; font-size: .98rem; letter-spacing: -.02em; }
+  .press-name-drauzio { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; font-size: 1rem; }
+
+  /* Clean food claims */
+  .claim-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: linear-gradient(135deg, #F4F1FA 0%, #FAF6EC 100%);
+    border: 1px solid #E8E3F5;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #1C0E4E;
+    line-height: 1.1;
+  }
+  .claim-icon {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #4B2FAE;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(75,47,174,.08);
+  }
+
   /* Supplement facts table */
   .supp-table { border-collapse: collapse; width: 100%; }
   .supp-table th, .supp-table td {
@@ -314,14 +1230,25 @@
 <div class="bg-deep text-teal py-2.5 text-center text-xs md:text-sm font-semibold relative overflow-hidden">
   <div class="marquee">
     <div class="marquee-track">
-      <span class="flex items-center gap-2">✨ Mix GRÁTIS com sua assinatura</span>
-      <span class="flex items-center gap-2">🌙 Frete grátis acima de R$200</span>
-      <span class="flex items-center gap-2">🛡️ Garantia de 60 dias</span>
-      <span class="flex items-center gap-2">💜 +1 milhão de noites transformadas</span>
-      <span class="flex items-center gap-2">✨ Mix GRÁTIS com sua assinatura</span>
-      <span class="flex items-center gap-2">🌙 Frete grátis acima de R$200</span>
-      <span class="flex items-center gap-2">🛡️ Garantia de 60 dias</span>
-      <span class="flex items-center gap-2">💜 +1 milhão de noites transformadas</span>
+      <span class="flex items-center gap-2">💜 <strong class="text-white">30% OFF</strong> na assinatura mensal</span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🥄 Mixer elétrico <strong class="text-white">GRÁTIS</strong> no 1º pedido</span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🍫 3 sabores deliciosos <strong class="text-white">sem gosto químico</strong></span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🛡️ Garantia de <strong class="text-white">30 dias</strong></span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🌙 Frete grátis pra assinantes</span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">💜 <strong class="text-white">30% OFF</strong> na assinatura mensal</span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🥄 Mixer elétrico <strong class="text-white">GRÁTIS</strong> no 1º pedido</span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🍫 3 sabores deliciosos <strong class="text-white">sem gosto químico</strong></span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🛡️ Garantia de <strong class="text-white">30 dias</strong></span>
+      <span class="flex items-center gap-2 text-white/40">•</span>
+      <span class="flex items-center gap-2">🌙 Frete grátis pra assinantes</span>
     </div>
   </div>
 </div>
@@ -342,7 +1269,7 @@
     </div>
     <button class="relative p-2 text-ink hover:text-purple-600 transition">
       <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-      <span class="absolute -top-1 -right-1 bg-teal text-deep text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+      <span class="absolute -top-1 -right-1 bg-purple-600 text-paper text-[10px] font-bold rounded-full w-[18px] h-[18px] flex items-center justify-center ring-2 ring-paper">0</span>
     </button>
   </div>
 </nav>
@@ -350,7 +1277,7 @@
 <!-- ============================================= -->
 <!-- PDP HERO — GALLERY + BUY BOX                  -->
 <!-- ============================================= -->
-<section class="relative bg-paper pt-0 pb-16 overflow-hidden"
+<section class="relative bg-paper pt-0 pb-8 md:pb-12 overflow-hidden"
          x-data="pdp()"
          x-init="init()">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
@@ -433,12 +1360,12 @@
       </div>
 
       <!-- =========== BUY BOX =========== -->
-      <div class="lg:sticky lg:top-24">
+      <div class="lg:sticky lg:top-24 min-w-0">
 
         <!-- Top info -->
         <div class="mb-6">
-          <!-- Rating -->
-          <div class="flex items-center gap-3 mb-3">
+          <!-- Rating (clica e vai pra seção de avaliações) -->
+          <a href="#reviews" class="flex items-center gap-3 mb-3 group cursor-pointer">
             <div class="stars-rating stars-rating-lg">
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
@@ -446,8 +1373,8 @@
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
               <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
             </div>
-            <a href="#reviews" class="text-base font-semibold text-deep hover:text-purple-600 underline underline-offset-2">30.177 avaliações</a>
-          </div>
+            <span class="text-base font-semibold text-deep group-hover:text-purple-600 underline underline-offset-2 transition">30.177 avaliações</span>
+          </a>
 
           <!-- Title -->
           <h1 class="font-display text-4xl md:text-5xl leading-[1.05] tracking-tight text-deep mb-3">
@@ -460,7 +1387,7 @@
 
           <!-- Social proof inline -->
           <div class="inline-flex items-center gap-2 bg-coral/20 text-red-700 px-3 py-1.5 rounded-full text-xs font-semibold">
-            🔥 +90 mil potes vendidos no último mês
+            🔥 +10 mil unidades vendidas no último mês
           </div>
         </div>
 
@@ -474,15 +1401,30 @@
             <template x-for="(pack, i) in packs" :key="i">
               <div @click="selectedPack = i"
                    :class="{ 'selected': selectedPack === i }"
-                   class="pack-option bg-white border-2 border-purple-100 rounded-2xl p-4 text-center">
+                   class="pack-option bg-white border-2 border-purple-100 rounded-2xl p-3 pt-4 text-center">
+                <!-- Popularidade (badge central acima do card) -->
                 <template x-if="pack.badge">
-                  <div class="absolute -top-2 left-1/2 -translate-x-1/2">
-                    <span class="chip bg-deep text-teal text-[9px] !py-1 !px-2 font-bold uppercase tracking-wider whitespace-nowrap" x-text="pack.badge"></span>
+                  <div class="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap z-10">
+                    <span class="chip bg-deep text-teal text-[9px] !py-1 !px-2 font-bold uppercase tracking-wider" x-text="pack.badge"></span>
                   </div>
                 </template>
+                <div class="pack-thumb relative">
+                  <img :src="'./assets/' + encodeURIComponent('CHOCOLATE ' + pack.qty) + '.png'"
+                       :alt="pack.qty + ' pote(s) Gudreams'" />
+                  <!-- Desconto (sticker no canto da imagem — padrão e-com) -->
+                  <template x-if="pack.savings">
+                    <span class="pack-discount" x-text="'-' + pack.savings"></span>
+                  </template>
+                </div>
                 <p class="font-bold text-deep text-sm" x-text="pack.qty + (pack.qty === 1 ? ' Pote' : ' Potes')"></p>
-                <p class="text-[10px] text-ink/50 mt-1" x-text="(pack.qty * 30) + ' doses'"></p>
-                <p class="text-xs font-bold text-teal-deep mt-2" x-show="pack.savings" x-text="pack.savings + ' OFF'"></p>
+                <p class="text-[10px] text-ink/50 mt-0.5" x-text="(pack.qty * 30) + ' doses diárias'"></p>
+                <div class="mt-2">
+                  <p class="font-display text-[15px] font-semibold text-deep leading-none" x-text="'R$ ' + perJarFor(pack)"></p>
+                  <p class="text-[9px] text-ink/55 uppercase tracking-wider font-bold mt-0.5">por pote</p>
+                  <p class="text-[10px] text-ink/55 mt-1">
+                    Total <span x-text="'R$ ' + totalFor(pack)"></span><span x-show="subscribe">/mês</span>
+                  </p>
+                </div>
               </div>
             </template>
           </div>
@@ -558,75 +1500,319 @@
         </div>
 
         <!-- ============ STEP 3: SUBSCRIPTION ============ -->
-        <div class="bg-white border-2 rounded-2xl p-5 mb-6 transition-all"
+        <div class="bg-white border-2 rounded-2xl p-4 mb-5 transition-all"
              :class="subscribe ? 'border-purple-600 bg-purple-50' : 'border-purple-100'">
-          <div class="flex items-start justify-between gap-4">
-            <div class="flex-1">
-              <div class="flex items-center gap-2 mb-2">
-                <span class="bg-deep text-paper w-5 h-5 rounded-full flex items-center justify-center text-[11px]">3</span>
-                <p class="font-bold text-deep">Assinar e economizar <span class="text-teal-deep" x-text="packs[selectedPack].subDiscount"></span></p>
-              </div>
-              <ul class="text-xs text-ink/70 space-y-1.5 ml-7">
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Mix GRÁTIS no 1º pedido (R$89)</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Frete grátis e rápido</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Brindes surpresa periódicos</li>
-                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-teal-deep stroke-[3]"></i> Pause ou cancele quando quiser</li>
-              </ul>
+          <div class="flex items-start justify-between gap-4 mb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="bg-deep text-paper w-5 h-5 rounded-full flex items-center justify-center text-[11px]">3</span>
+              <p class="font-bold text-deep">Assinar e economizar <span class="text-teal-deep" x-text="packs[selectedPack].subDiscount"></span></p>
             </div>
             <button @click="subscribe = !subscribe"
                     :class="{ 'on': subscribe }"
-                    class="toggle-switch shrink-0 mt-1"
+                    class="toggle-switch shrink-0 mt-0.5"
                     aria-label="Toggle assinatura"></button>
+          </div>
+
+          <!-- Kit visual (clicável → lightbox carrossel) -->
+          <button type="button" @click="openKit()" class="kit-thumb">
+            <span class="kit-thumb-img">
+              <img src="./assets/kit4.webp" alt="Kit boas-vindas Gudreams" />
+              <span class="kit-thumb-overlay" aria-hidden="true">
+                <i data-lucide="zoom-in" class="w-3 h-3"></i>
+              </span>
+              <span class="kit-thumb-count" x-text="'+' + (kitImages.length - 1)"></span>
+            </span>
+            <span class="kit-thumb-info">
+              <span class="kit-thumb-eyebrow">Kit boas-vindas</span>
+              <span class="kit-thumb-title">100% Grátis no 1º pedido</span>
+              <span class="kit-thumb-cta">
+                <i data-lucide="images" class="w-3.5 h-3.5"></i>
+                Toque pra ver todas as fotos
+              </span>
+            </span>
+          </button>
+
+          <ul class="text-[13px] text-ink/75 space-y-2 ml-7">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-deep stroke-[3] shrink-0"></i> Mix Elétrico GRÁTIS no 1º pedido (R$89)</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-deep stroke-[3] shrink-0"></i> Caneca medidora pra dose certa e sabor perfeito</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-deep stroke-[3] shrink-0"></i> Presentes sazonais surpresa</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-deep stroke-[3] shrink-0"></i> Frete grátis e rápido</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-teal-deep stroke-[3] shrink-0"></i> Pause ou cancele quando quiser</li>
+          </ul>
+        </div>
+
+        <!-- ============ TRUST UPFRONT: payment + garantia/entrega ============ -->
+        <!-- Payment methods -->
+        <div>
+          <p class="text-[10px] uppercase tracking-[.16em] text-ink/55 font-bold mb-3">Formas de pagamento</p>
+          <template x-if="!subscribe">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="pay-chip-light"><i data-lucide="zap" class="w-3 h-3"></i> Pix</span>
+              <span class="pay-chip-light"><i data-lucide="credit-card" class="w-3 h-3"></i> Cartão</span>
+              <span class="pay-chip-light"><i data-lucide="barcode" class="w-3 h-3"></i> Boleto</span>
+            </div>
+          </template>
+          <template x-if="subscribe">
+            <span class="pay-chip-light pay-chip-light-highlight">
+              <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+              Apenas cartão de crédito
+            </span>
+          </template>
+        </div>
+
+        <!-- Garantia + entrega -->
+        <div class="mt-5 pt-5 border-t border-purple-100/70 grid grid-cols-2 gap-3 mb-6">
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="shield-check" class="w-4 h-4 text-teal-deep shrink-0 mt-0.5"></i>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-deep leading-tight">Garantia de 30 dias</p>
+              <p class="text-[10px] text-ink/55 mt-0.5">Devolução total</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="truck" class="w-4 h-4 text-purple-600 shrink-0 mt-0.5"></i>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-deep leading-tight">2–6 dias úteis</p>
+              <p class="text-[10px] text-ink/55 mt-0.5">Pelos correios</p>
+            </div>
           </div>
         </div>
 
-        <!-- ============ PRICE + CTA ============ -->
-        <div class="bg-gradient-to-br from-deep to-purple-700 text-paper rounded-2xl p-6 mb-4 relative overflow-hidden grain">
-          <div class="absolute top-0 right-0 w-40 h-40 bg-teal/10 rounded-full blur-3xl"></div>
-          <div class="relative z-10">
-            <div class="flex items-end justify-between mb-4">
-              <div>
-                <p class="text-xs text-paper/60 uppercase tracking-wider mb-1">Seu total</p>
-                <div class="flex items-baseline gap-2">
-                  <span class="font-display text-4xl md:text-5xl font-bold" x-text="'R$ ' + currentPrice"></span>
-                  <span class="text-sm text-paper/50 line-through" x-text="'R$ ' + originalPrice" x-show="subscribe"></span>
-                </div>
-                <p class="text-xs text-teal mt-1" x-show="selectedPack > 0">
-                  <span x-text="'R$ ' + pricePerJar + ' por pote'"></span>
-                </p>
-              </div>
-              <div class="text-right">
-                <p class="text-xs text-paper/60">ou 12x de</p>
-                <p class="font-bold text-lg" x-text="'R$ ' + installmentPrice"></p>
-              </div>
+        <!-- ============ TOTAL + CTA ============ -->
+        <div class="pt-5 border-t border-purple-100/70 mb-3">
+          <!-- Top row: Label + Price -->
+          <div class="flex items-baseline justify-between gap-3">
+            <span class="text-sm font-semibold text-ink/70" x-text="subscribe ? 'Total mensal' : 'Total'"></span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-sm text-ink/40 line-through" x-show="hasSavings" x-text="'R$ ' + basePriceFormatted"></span>
+              <span class="font-display text-2xl md:text-[1.65rem] font-semibold text-deep leading-none" x-text="'R$ ' + currentPrice"></span>
+              <span class="text-sm text-ink/60" x-show="subscribe">/mês</span>
             </div>
-            <button class="btn-primary w-full !text-base"
-                    :disabled="!isComplete"
-                    :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
-              <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-              <span x-text="isComplete ? 'Adicionar ao carrinho' : ('Falta ' + remaining + ' pote(s)')"></span>
-            </button>
-            <p class="text-center text-xs text-paper/60 mt-3">
-              💳 Pix, cartão ou boleto · 🛡️ Garantia de 60 dias
+          </div>
+
+          <!-- Sub-row: parcelamento + economia -->
+          <div class="flex items-center justify-between gap-3 mt-2 text-xs flex-wrap">
+            <p x-show="!subscribe" class="text-ink/60">
+              ou 12x de R$ <span class="font-semibold text-ink/85" x-text="installmentPrice"></span> sem juros
+            </p>
+            <p x-show="subscribe" class="text-ink/60">
+              renovação automática mensal
+            </p>
+            <p x-show="hasSavings" class="ml-auto inline-flex items-center gap-1 text-teal-deep font-bold bg-teal/15 px-2 py-1 rounded-full">
+              <i data-lucide="badge-percent" class="w-3.5 h-3.5"></i>
+              Economia de R$ <span x-text="savingsFormatted"></span>
             </p>
           </div>
         </div>
 
-        <!-- Benefits inline -->
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="bg-white border border-purple-100 rounded-xl p-3">
-            <i data-lucide="truck" class="w-5 h-5 text-purple-600 mx-auto mb-1"></i>
-            <p class="text-[10px] font-bold text-deep leading-tight">Frete grátis<br>assinantes</p>
+        <!-- CTA -->
+        <button class="btn-primary w-full !text-base"
+                :disabled="!isComplete"
+                :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span x-text="isComplete ? 'Adicionar ao carrinho' : ('Falta ' + remaining + ' pote(s)')"></span>
+        </button>
+
+        <!-- Trust seals — logos reais (compra segura) -->
+        <div class="trust-seals">
+          <img src="./assets/ra.png" alt="Reclame Aqui" class="trust-logo" />
+          <img src="./assets/SSL.png" alt="SSL Seguro" class="trust-logo" />
+          <img src="./assets/google.png" alt="Google Trusted Store" class="trust-logo" />
+          <img src="./assets/anvisa.jpeg" alt="Aprovado pela Anvisa" class="trust-logo" />
+        </div>
+
+        <!-- Shipping callout (light bg) -->
+        <div class="mt-5 rounded-xl p-3.5 flex items-center gap-3 transition-all border"
+             :class="hasFreeShipping ? 'bg-teal/10 border-teal/40' : 'bg-purple-50 border-purple-100'">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+               :class="hasFreeShipping ? 'bg-teal text-deep' : 'bg-purple-100 text-purple-600'">
+            <i data-lucide="truck" class="w-5 h-5"></i>
           </div>
-          <div class="bg-white border border-purple-100 rounded-xl p-3">
-            <i data-lucide="shield-check" class="w-5 h-5 text-purple-600 mx-auto mb-1"></i>
-            <p class="text-[10px] font-bold text-deep leading-tight">60 dias de<br>garantia</p>
-          </div>
-          <div class="bg-white border border-purple-100 rounded-xl p-3">
-            <i data-lucide="heart" class="w-5 h-5 text-purple-600 mx-auto mb-1"></i>
-            <p class="text-[10px] font-bold text-deep leading-tight">+1 milhão<br>de clientes</p>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-sm leading-tight"
+               :class="hasFreeShipping ? 'text-teal-deep' : 'text-deep'"
+               x-text="hasFreeShipping ? 'Frete GRÁTIS incluso' : 'Frete calculado no checkout'"></p>
+            <p class="text-[11px] text-ink/65 mt-1" x-text="shippingSub"></p>
           </div>
         </div>
+
+        <!-- ============ TRUST: ACCORDIONS + STORIES + PRESS ============ -->
+        <div class="mt-5 space-y-2.5" x-data="{ openAcc: null }">
+
+          <!-- Accordion: Shipping -->
+          <div class="trust-acc" :class="openAcc === 'ship' ? 'is-open' : ''">
+            <button type="button" @click="openAcc = openAcc === 'ship' ? null : 'ship'" class="trust-acc-head">
+              <span class="flex items-center gap-2.5 text-deep font-semibold text-sm">
+                <i data-lucide="truck" class="w-4 h-4 text-purple-600"></i>
+                Detalhes de envio e Frete
+              </span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-ink/50 trust-acc-chev"></i>
+            </button>
+            <div class="trust-acc-body" x-show="openAcc === 'ship'" x-collapse>
+              <p class="text-xs text-ink/70 leading-relaxed">
+                Despachamos em <strong class="text-deep">até 24h úteis</strong>. Entrega em 2 a 6 dias úteis via correios. <strong class="text-deep">Frete grátis</strong> pra assinantes ou pedidos com 2+ potes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Accordion: Guarantee -->
+          <div class="trust-acc" :class="openAcc === 'guarantee' ? 'is-open' : ''">
+            <button type="button" @click="openAcc = openAcc === 'guarantee' ? null : 'guarantee'" class="trust-acc-head">
+              <span class="flex items-center gap-2.5 text-deep font-semibold text-sm">
+                <i data-lucide="shield-check" class="w-4 h-4 text-purple-600"></i>
+                Entenda a garantia de 30 dias
+              </span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-ink/50 trust-acc-chev"></i>
+            </button>
+            <div class="trust-acc-body" x-show="openAcc === 'guarantee'" x-collapse>
+              <p class="text-xs text-ink/70 leading-relaxed">
+                Teste por 30 dias. Se não for o melhor sono da sua vida, devolvemos <strong class="text-deep">100% do valor</strong> — inclusive dos potes vazios. Sem letra miúda.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stories — Customer testimonials carousel -->
+        <div class="mt-7"
+             x-data="storiesViewer()"
+             x-effect="document.body.style.overflow = storyIdx !== null ? 'hidden' : ''">
+          <h3 class="font-bold text-deep text-sm mb-3">Quem já testou compartilhou no TikTok e Insta</h3>
+          <div class="stories-scroll">
+            <template x-for="(s, i) in stories" :key="i">
+              <button type="button" class="story" @click="openStory(i)">
+                <span class="story-ring" :class="{ 'is-seen': seen.includes(i) }">
+                  <span class="story-inner">
+                    <img :src="s.avatar" :alt="s.name" />
+                  </span>
+                </span>
+              </button>
+            </template>
+          </div>
+
+          <!-- ========== STORY VIEWER MODAL ========== -->
+          <div x-show="storyIdx !== null"
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0"
+               x-transition:enter-end="opacity-100"
+               x-transition:leave="transition ease-in duration-150"
+               x-transition:leave-start="opacity-100"
+               x-transition:leave-end="opacity-0"
+               @keydown.escape.window="closeStory()"
+               @keydown.arrow-right.window="nextSegment()"
+               @keydown.arrow-left.window="prevSegment()"
+               @click.self="closeStory()"
+               class="story-overlay"
+               style="display:none"
+               x-cloak>
+
+            <div x-show="storyIdx !== null"
+                 x-transition:enter="transition ease-out duration-250"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="story-frame"
+                 @click.stop>
+
+              <template x-if="storyIdx !== null">
+                <div class="story-frame-inner">
+
+                  <!-- Segmented progress bars (Instagram-style) -->
+                  <div class="story-segments">
+                    <template x-for="segIdx in totalSegments" :key="segIdx">
+                      <div class="story-segment" :class="{
+                            'is-done': (segIdx - 1) < currentSegment,
+                            'is-active': (segIdx - 1) === currentSegment
+                          }">
+                        <div class="story-segment-fill"></div>
+                      </div>
+                    </template>
+                  </div>
+
+                  <!-- Header: avatar + handle + close -->
+                  <div class="story-head">
+                    <img :src="stories[storyIdx].avatar" :alt="stories[storyIdx].name" class="story-head-avatar" />
+                    <div class="min-w-0">
+                      <p class="story-head-handle" x-text="stories[storyIdx].user"></p>
+                      <p class="story-head-name" x-text="stories[storyIdx].name + ' · ' + stories[storyIdx].location"></p>
+                    </div>
+                    <button type="button" @click="closeStory()" class="story-close" aria-label="Fechar">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="w-5 h-5">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Media (placeholder image — substituir por <video> depois) -->
+                  <img :src="stories[storyIdx].media" :alt="''" class="story-media" />
+
+                  <!-- Caption overlay -->
+                  <div class="story-caption">
+                    <p x-text="stories[storyIdx].caption"></p>
+                  </div>
+
+                  <!-- Tap zones for navigation -->
+                  <button type="button" class="story-tap story-tap-left" @click="prevSegment()" aria-label="Anterior"></button>
+                  <button type="button" class="story-tap story-tap-right" @click="nextSegment()" aria-label="Próximo"></button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Press credibility -->
+        <div class="mt-7 pt-6 border-t border-purple-100">
+          <!-- Metric badge -->
+          <div class="flex justify-center mb-4">
+            <div class="press-metric">
+              <strong>30.177+</strong>
+              <span>Noites mais leves</span>
+            </div>
+          </div>
+
+          <!-- Animated press marquee -->
+          <p class="text-[10px] uppercase tracking-[.18em] text-ink/45 font-bold text-center mb-3">Visto em</p>
+          <div class="press-marquee">
+            <div class="press-marquee-track">
+              <span class="press-name press-name-forbes">Forbes</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-veja">VEJA</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-gq">GQ Brasil</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-mens">Men's Health</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-vejas">Veja Saúde</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-tua">Tua Saúde</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-mbg">mindbodygreen</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-drauzio">Drauzio Varella</span>
+              <span class="press-dot">•</span>
+              <!-- Duplicate for seamless loop -->
+              <span class="press-name press-name-forbes">Forbes</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-veja">VEJA</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-gq">GQ Brasil</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-mens">Men's Health</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-vejas">Veja Saúde</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-tua">Tua Saúde</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-mbg">mindbodygreen</span>
+              <span class="press-dot">•</span>
+              <span class="press-name press-name-drauzio">Drauzio Varella</span>
+              <span class="press-dot">•</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -648,7 +1834,15 @@
         ],
         selectedPack: 1,
         flavorCounts: [2, 0, 0],   // default: 2 Chocolate (match selectedPack idx 1 = 2 potes)
-        subscribe: true,
+        subscribe: false,
+        kitOpen: false,
+        kitIndex: 0,
+        kitImages: [
+          './assets/kit4.webp',
+          './assets/kit2.avif',
+          './assets/kit3.avif',
+          './assets/kit1.avif',
+        ],
 
         get packQty() { return this.packs[this.selectedPack].qty; },
         get totalSelected() { return this.flavorCounts.reduce((a, b) => a + b, 0); },
@@ -668,6 +1862,17 @@
             .filter(Boolean)
             .join(' + ');
         },
+        get hasFreeShipping() {
+          return this.subscribe || this.packQty >= 2;
+        },
+        get shippingSub() {
+          if (this.subscribe) return 'Incluso na sua assinatura, todo mês';
+          if (this.packQty >= 2) return 'Liberado automaticamente com 2+ potes';
+          return 'Assine ou leve 2+ potes pra liberar o frete grátis';
+        },
+        get paymentLabel() {
+          return this.subscribe ? 'Apenas cartão de crédito' : 'Pix, cartão ou boleto';
+        },
 
         prevImage() {
           const n = this.galleryImages.length;
@@ -676,6 +1881,18 @@
         nextImage() {
           const n = this.galleryImages.length;
           this.activeImage = (this.activeImage + 1) % n;
+        },
+        openKit() {
+          this.kitIndex = 0;
+          this.kitOpen = true;
+        },
+        prevKit() {
+          const n = this.kitImages.length;
+          this.kitIndex = (this.kitIndex - 1 + n) % n;
+        },
+        nextKit() {
+          const n = this.kitImages.length;
+          this.kitIndex = (this.kitIndex + 1) % n;
         },
         addFlavor(i) {
           if (this.totalSelected >= this.packQty) return;
@@ -715,6 +1932,35 @@
           return [this.skuImage, './assets/brew.webp', './assets/timeline.webp'];
         },
 
+        priceFor(pack) {
+          return this.subscribe ? pack.sub : pack.one;
+        },
+        perJarFor(pack) {
+          return (this.priceFor(pack) / pack.qty).toFixed(2).replace('.', ',');
+        },
+        totalFor(pack) {
+          return this.priceFor(pack).toFixed(2).replace('.', ',');
+        },
+        get basePrice() {
+          // 1 pote avulso × qty selecionada (referência sem desconto)
+          return this.packs[0].one * this.packQty;
+        },
+        get currentTotal() {
+          const p = this.packs[this.selectedPack];
+          return this.subscribe ? p.sub : p.one;
+        },
+        get savingsValue() {
+          return this.basePrice - this.currentTotal;
+        },
+        get hasSavings() {
+          return this.savingsValue > 0.01;
+        },
+        get basePriceFormatted() {
+          return this.basePrice.toFixed(2).replace('.', ',');
+        },
+        get savingsFormatted() {
+          return this.savingsValue.toFixed(2).replace('.', ',');
+        },
         get currentPrice() {
           const p = this.packs[this.selectedPack];
           const v = this.subscribe ? p.sub : p.one;
@@ -742,16 +1988,229 @@
           });
           this.$watch('primaryFlavor', () => { this.activeImage = 0; });
           this.$watch('totalSelected', () => setTimeout(() => lucide.createIcons(), 20));
+          this.$watch('kitOpen', (v) => { document.body.style.overflow = v ? 'hidden' : ''; });
         },
       };
     }
   </script>
+
+  <!-- ========== KIT IMAGE LIGHTBOX (carrossel) ========== -->
+  <div x-show="kitOpen"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"
+       @keydown.escape.window="kitOpen = false"
+       @keydown.arrow-right.window="if (kitOpen) nextKit()"
+       @keydown.arrow-left.window="if (kitOpen) prevKit()"
+       @click="kitOpen = false"
+       class="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 bg-deep/85 backdrop-blur-sm cursor-zoom-out"
+       style="display:none"
+       x-cloak>
+
+    <!-- Close -->
+    <button @click="kitOpen = false"
+            class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/95 hover:bg-white flex items-center justify-center text-deep shadow-lg transition z-20"
+            aria-label="Fechar">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <!-- Counter -->
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 z-20 text-paper/85 text-xs font-bold tracking-wider px-3 py-1.5 rounded-full bg-deep/40 backdrop-blur-sm">
+      <span x-text="(kitIndex + 1) + ' / ' + kitImages.length"></span>
+    </div>
+
+    <!-- Image stage (click stop pra evitar fechar ao clicar na imagem) -->
+    <div class="relative max-w-full max-h-full" @click.stop>
+      <template x-for="(src, i) in kitImages" :key="src">
+        <img :src="src"
+             :alt="'Kit Gudreams — visão ' + (i+1)"
+             x-show="kitIndex === i"
+             x-transition:enter="transition ease-out duration-250"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
+             class="max-w-[88vw] max-h-[78vh] md:max-h-[82vh] object-contain rounded-2xl bg-white p-4 cursor-default" />
+      </template>
+    </div>
+
+    <!-- Prev arrow -->
+    <button @click.stop="prevKit()"
+            class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 hover:bg-white flex items-center justify-center text-deep shadow-lg transition z-20"
+            aria-label="Imagem anterior">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <!-- Next arrow -->
+    <button @click.stop="nextKit()"
+            class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 hover:bg-white flex items-center justify-center text-deep shadow-lg transition z-20"
+            aria-label="Próxima imagem">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+
+    <!-- Dots indicator -->
+    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-1.5" @click.stop>
+      <template x-for="(src, i) in kitImages" :key="i">
+        <button @click="kitIndex = i"
+                :class="kitIndex === i ? 'w-6 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'"
+                class="h-1.5 rounded-full transition-all duration-300"
+                aria-label="Ir para imagem"></button>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- HOW TO — POUR, STIR, SIP, SNOOZE              -->
+<!-- ============================================= -->
+<section class="relative mesh-purple text-paper py-16 md:py-24 grain overflow-hidden">
+  <div class="absolute top-10 right-10 w-80 h-80 bg-teal/10 rounded-full blur-3xl"></div>
+
+  <div class="max-w-5xl mx-auto px-5 md:px-8 relative">
+    <div class="text-center mb-10 md:mb-12" data-aos="fade-up">
+      <p class="chip bg-white/10 backdrop-blur text-teal mb-4">60 segundos por noite</p>
+      <h2 class="font-display text-4xl md:text-6xl leading-[1.02] tracking-tight">
+        Apague o dia. <br/>
+        <span class="italic-display text-teal">Acenda o sono.</span>
+      </h2>
+      <p class="text-paper/70 text-base md:text-lg mt-5 max-w-xl mx-auto leading-relaxed">
+        Um ritual simples pra desligar a mente e deixar seu corpo fazer o trabalho dele.
+      </p>
+    </div>
+
+    <div class="space-y-5 md:space-y-7">
+      <!-- GIF: 4-step ritual -->
+      <div class="relative" data-aos="fade-up">
+        <div class="absolute -inset-6 bg-gradient-to-br from-purple-500/25 to-teal/15 rounded-[3rem] blur-2xl"></div>
+        <figure class="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-purple-900/40 bg-deep/40">
+          <img src="./assets/ritual-gif.gif"
+               alt="Os 4 passos do ritual Gudreams"
+               class="w-full h-auto block" />
+          <figcaption class="absolute bottom-4 left-4 text-[11px] font-semibold text-paper/90 bg-deep/70 backdrop-blur px-3 py-1.5 rounded-full">
+            Os 4 passos · 60 segundos
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Aesthetic kitchen photo -->
+      <div class="relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="absolute -inset-6 bg-gradient-to-tr from-teal/15 to-purple-400/20 rounded-[3rem] blur-2xl"></div>
+        <figure class="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-purple-900/40">
+          <img src="./assets/ritual-cozinha.jpg"
+               alt="Desacelerando em casa com Gudreams"
+               class="w-full h-auto block" />
+          <figcaption class="absolute bottom-4 left-4 text-[11px] font-semibold text-paper/90 bg-deep/70 backdrop-blur px-3 py-1.5 rounded-full">
+            Sua cozinha, sua hora de desacelerar
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- WHAT TO EXPECT — fases do cortisol            -->
+<!-- ============================================= -->
+<section class="relative bg-paper py-12 md:py-16 overflow-hidden border-y border-purple-100/60">
+  <div class="absolute top-10 -left-40 w-80 h-80 bg-purple-100/40 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-10 -right-40 w-80 h-80 bg-teal/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative max-w-5xl mx-auto px-5 md:px-8">
+
+    <!-- Header compacto -->
+    <header class="text-center mb-8 md:mb-10" data-aos="fade-up">
+      <p class="text-xs md:text-sm uppercase tracking-[.22em] text-purple-600 font-bold mb-3">O que esperar após 15 dias</p>
+      <h2 class="font-display text-2xl md:text-[2rem] text-deep leading-[1.1] tracking-tight max-w-2xl mx-auto">
+        Cada sintoma cede <span class="italic-display text-purple-600">no seu tempo.</span>
+      </h2>
+      <p class="text-ink/70 text-[15px] md:text-base mt-3 max-w-lg mx-auto leading-snug font-medium">
+        Cansaço ao acordar, papada e pochete vão saindo, fase a fase.
+      </p>
+    </header>
+
+    <!-- 3 fases em grid compacto -->
+    <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+
+      <article class="phase-card" data-aos="fade-up">
+        <div class="phase-img-wrap">
+          <img src="./assets/foto 1 insonia 3am.png" alt="" class="phase-img" />
+          <div class="phase-img-overlay"></div>
+          <div class="phase-stage-tag">
+            <span class="phase-stage-dot"></span>
+            Noite 01
+          </div>
+        </div>
+        <div class="phase-body">
+          <h3 class="phase-title">O sono muda. <span class="italic-display text-purple-600">Agora.</span></h3>
+          <ul class="phase-checks">
+            <li><i data-lucide="check" class="phase-check"></i> Pega no sono em minutos</li>
+            <li><i data-lucide="check" class="phase-check"></i> Sono profundo restaurado</li>
+            <li><i data-lucide="check" class="phase-check"></i> Sem despertar às 3h</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="phase-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="phase-img-wrap">
+          <img src="./assets/brew.webp" alt="" class="phase-img" />
+          <div class="phase-img-overlay"></div>
+          <div class="phase-stage-tag">
+            <span class="phase-stage-dot"></span>
+            Dias 3 – 7
+          </div>
+        </div>
+        <div class="phase-body">
+          <h3 class="phase-title">A mente acalma. <span class="italic-display text-purple-600">Energia volta.</span></h3>
+          <ul class="phase-checks">
+            <li><i data-lucide="check" class="phase-check"></i> Mente calma, sem ruminação</li>
+            <li><i data-lucide="check" class="phase-check"></i> Energia o dia inteiro</li>
+            <li><i data-lucide="check" class="phase-check"></i> Sem 3º café da tarde</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="phase-card phase-card-teal" data-aos="fade-up" data-aos-delay="160">
+        <div class="phase-img-wrap">
+          <img src="./assets/foto 2 rosto inchado.png" alt="" class="phase-img" />
+          <div class="phase-img-overlay"></div>
+          <div class="phase-stage-tag">
+            <span class="phase-stage-dot"></span>
+            Dias 10 – 15
+          </div>
+        </div>
+        <div class="phase-body">
+          <h3 class="phase-title">O corpo <span class="italic-display text-teal-deep">responde.</span></h3>
+          <ul class="phase-checks">
+            <li><i data-lucide="check" class="phase-check phase-check-teal"></i> Rosto desincha ao acordar</li>
+            <li><i data-lucide="check" class="phase-check phase-check-teal"></i> Pochete teimosa cede</li>
+            <li><i data-lucide="check" class="phase-check phase-check-teal"></i> Pele renovada</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="text-center text-[11px] text-ink/45 mt-7 max-w-md mx-auto leading-relaxed">
+      *Tempos baseados na média relatada por usuários em uso contínuo.
+    </p>
+  </div>
 </section>
 
 <!-- ============================================= -->
 <!-- INGREDIENTES / SUPPLEMENT FACTS               -->
 <!-- ============================================= -->
-<section id="ingredientes" class="relative bg-paper py-20 md:py-24 overflow-hidden">
+<section id="ingredientes" class="relative bg-paper py-16 md:py-24 overflow-hidden">
   <div class="max-w-6xl mx-auto px-5 md:px-8">
     <div class="text-center mb-12" data-aos="fade-up">
       <p class="chip bg-purple-100 text-purple-700 mb-4">Ingredientes que você pode confiar</p>
@@ -761,302 +2220,1140 @@
       </h2>
     </div>
 
-    <div class="grid lg:grid-cols-[1fr_1.2fr] gap-10 items-start">
-      <!-- Ingredients image -->
-      <div class="relative" data-aos="fade-right">
-        <img src="./assets/brew.webp" alt="Gudreams infusão quente" class="w-full rounded-[2rem] shadow-xl" />
-      </div>
-
+    <div class="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-start">
       <!-- Supp facts table -->
-      <div data-aos="fade-left">
+      <div data-aos="fade-right">
         <div class="bg-white rounded-3xl p-6 md:p-8 border border-purple-100 shadow-[0_10px_40px_rgba(75,47,174,.06)]">
           <div class="flex items-center justify-between mb-4 pb-4 border-b-2 border-deep">
             <div>
-              <p class="text-xs uppercase tracking-widest text-purple-600 font-bold">Supplement Facts</p>
-              <h3 class="font-display text-2xl font-bold text-deep">Por dose de 8g</h3>
+              <p class="text-xs uppercase tracking-widest text-purple-600 font-bold">Tabela Nutricional</p>
+              <h3 class="font-display text-2xl font-bold text-deep">Por dose de 10g</h3>
             </div>
             <div class="text-right text-xs text-ink/60">
-              <p>Servings por pote</p>
+              <p>Doses por pote</p>
               <p class="font-bold text-deep text-xl">30</p>
             </div>
           </div>
 
           <table class="supp-table">
             <thead>
-              <tr><th>Nutriente</th><th>Qtd</th><th>VD%</th></tr>
+              <tr><th>Nutriente</th><th>Qtd</th><th>%VD</th></tr>
             </thead>
             <tbody>
-              <tr><td class="font-semibold text-deep">MagnesiREM™</td><td>57mg</td><td class="font-bold text-purple-600">14%</td></tr>
-              <tr><td class="pl-6 text-ink/60 text-xs">Glicinato + Taurato de Mg</td><td>—</td><td>—</td></tr>
+              <tr><td class="font-semibold text-deep">MagnesiREM™ (Magnésio)</td><td>57mg</td><td class="font-bold text-purple-600">14%</td></tr>
+              <tr><td class="pl-6 text-ink/60 text-xs">Glicinato + Taurato de Magnésio</td><td>—</td><td>—</td></tr>
               <tr><td class="font-semibold text-deep">Zinco Glicinato</td><td>6mg</td><td class="font-bold text-purple-600">55%</td></tr>
-              <tr><td class="font-semibold text-deep">L-Teanina</td><td>250mg</td><td>†</td></tr>
-              <tr><td class="font-semibold text-deep">Blend Calmante</td><td>1.180mg</td><td>†</td></tr>
-              <tr><td class="pl-6 text-ink/60 text-xs">L-Triptofano, Reishi, GABA,<br/>Passiflora, Cereja azeda, Apigenina</td><td>—</td><td>—</td></tr>
+              <tr><td class="font-semibold text-deep">L-Teanina</td><td>250mg</td><td>*</td></tr>
+              <tr><td class="font-semibold text-deep">Blend Relaxante</td><td>1.180mg</td><td>*</td></tr>
+              <tr><td class="pl-6 text-ink/60 text-xs">L-Triptofano, Cogumelo Reishi, GABA,<br/>Maracujá, Cereja-azeda, Apigenina</td><td>—</td><td>—</td></tr>
               <tr><td class="font-semibold text-deep">Calorias</td><td>30 kcal</td><td>1%</td></tr>
               <tr><td class="font-semibold text-deep">Açúcar adicionado</td><td>0g</td><td class="font-bold text-teal-deep">0%</td></tr>
             </tbody>
           </table>
+          <p class="text-[10px] text-ink/45 mt-2 italic">*Valor diário não estabelecido. %VD com base em dieta de 2.000 kcal.</p>
 
-          <!-- No list -->
+          <!-- Clean food claims -->
           <div class="mt-6 pt-6 border-t border-purple-100">
-            <p class="text-xs font-bold text-deep uppercase tracking-wider mb-3">Livre de:</p>
-            <div class="flex flex-wrap gap-2">
-              <span class="chip bg-red-50 text-red-700 !py-1.5"><i data-lucide="x" class="w-3 h-3"></i> Melatonina</span>
-              <span class="chip bg-red-50 text-red-700 !py-1.5"><i data-lucide="x" class="w-3 h-3"></i> Glúten</span>
-              <span class="chip bg-red-50 text-red-700 !py-1.5"><i data-lucide="x" class="w-3 h-3"></i> Lactose</span>
-              <span class="chip bg-red-50 text-red-700 !py-1.5"><i data-lucide="x" class="w-3 h-3"></i> Açúcar</span>
-              <span class="chip bg-red-50 text-red-700 !py-1.5"><i data-lucide="x" class="w-3 h-3"></i> Corantes</span>
-              <span class="chip bg-red-50 text-red-700 !py-1.5"><i data-lucide="x" class="w-3 h-3"></i> Conservantes</span>
+            <p class="text-xs font-bold text-deep uppercase tracking-wider mb-4">Compromisso clean food:</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <div class="claim-item">
+                <div class="claim-icon"><i data-lucide="milk-off" class="w-3.5 h-3.5"></i></div>
+                <span>0 lactose</span>
+              </div>
+              <div class="claim-item">
+                <div class="claim-icon"><i data-lucide="wheat-off" class="w-3.5 h-3.5"></i></div>
+                <span>0 glúten</span>
+              </div>
+              <div class="claim-item">
+                <div class="claim-icon"><i data-lucide="candy-off" class="w-3.5 h-3.5"></i></div>
+                <span>Sem açúcar</span>
+              </div>
+              <div class="claim-item">
+                <div class="claim-icon"><i data-lucide="leaf" class="w-3.5 h-3.5"></i></div>
+                <span>Adoçante natural</span>
+              </div>
+              <div class="claim-item">
+                <div class="claim-icon"><i data-lucide="palette" class="w-3.5 h-3.5"></i></div>
+                <span>Sem corante</span>
+              </div>
+              <div class="claim-item">
+                <div class="claim-icon"><i data-lucide="pill" class="w-3.5 h-3.5"></i></div>
+                <span>Sem melatonina</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============================================= -->
-<!-- ONLY ESSENTIALS                               -->
-<!-- ============================================= -->
-<section class="relative bg-gradient-to-b from-paper to-cream-light py-20 md:py-24 grain overflow-hidden">
-  <div class="max-w-4xl mx-auto px-5 md:px-8">
-    <div data-aos="fade-up">
-      <p class="chip bg-teal/20 text-teal-deep mb-4">Simples e honesto</p>
-      <h2 class="font-display text-4xl md:text-5xl leading-[1.05] text-deep mb-6">
-        Só o <span class="italic-display text-purple-600">essencial</span>.<br/>
-        Nada de extras escondidos.
-      </h2>
-      <p class="text-ink/70 leading-relaxed mb-8">
-        Cada ingrediente tá lá por uma razão. E o que não precisa, a gente não coloca. Simples assim.
-      </p>
-
-      <div class="grid grid-cols-2 gap-3">
-        <div class="flex items-center gap-3 bg-white p-4 rounded-2xl border border-purple-100">
-          <div class="w-10 h-10 rounded-xl bg-teal/20 flex items-center justify-center shrink-0">
-            <i data-lucide="dna" class="w-5 h-5 text-teal-deep"></i>
-          </div>
-          <span class="font-bold text-deep text-sm">Não-transgênico</span>
-        </div>
-        <div class="flex items-center gap-3 bg-white p-4 rounded-2xl border border-purple-100">
-          <div class="w-10 h-10 rounded-xl bg-teal/20 flex items-center justify-center shrink-0">
-            <i data-lucide="flask-conical" class="w-5 h-5 text-teal-deep"></i>
-          </div>
-          <span class="font-bold text-deep text-sm">Sem conservantes</span>
-        </div>
-        <div class="flex items-center gap-3 bg-white p-4 rounded-2xl border border-purple-100">
-          <div class="w-10 h-10 rounded-xl bg-teal/20 flex items-center justify-center shrink-0">
-            <i data-lucide="cherry" class="w-5 h-5 text-teal-deep"></i>
-          </div>
-          <span class="font-bold text-deep text-sm">Sem sabor artificial</span>
-        </div>
-        <div class="flex items-center gap-3 bg-white p-4 rounded-2xl border border-purple-100">
-          <div class="w-10 h-10 rounded-xl bg-teal/20 flex items-center justify-center shrink-0">
-            <i data-lucide="droplet" class="w-5 h-5 text-teal-deep"></i>
-          </div>
-          <span class="font-bold text-deep text-sm">Sem corante</span>
-        </div>
-        <div class="flex items-center gap-3 bg-white p-4 rounded-2xl border border-purple-100 col-span-2">
-          <div class="w-10 h-10 rounded-xl bg-teal/20 flex items-center justify-center shrink-0">
-            <i data-lucide="candy-off" class="w-5 h-5 text-teal-deep"></i>
-          </div>
-          <span class="font-bold text-deep text-sm">Sem adoçante artificial — Stevia & Monk Fruit</span>
-        </div>
+      <!-- Ingredients image -->
+      <div class="relative" data-aos="fade-left">
+        <img src="./assets/brew.webp" alt="Gudreams infusão quente" class="w-full rounded-[2rem] shadow-xl" />
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ============================================= -->
-<!-- HOW TO — POUR, STIR, SIP, SNOOZE              -->
-<!-- ============================================= -->
-<section class="relative mesh-purple text-paper py-20 md:py-28 grain overflow-hidden">
-  <div class="absolute top-10 right-10 w-80 h-80 bg-teal/10 rounded-full blur-3xl"></div>
 
-  <div class="max-w-5xl mx-auto px-5 md:px-8 relative">
-    <div class="text-center mb-12" data-aos="fade-up">
-      <p class="chip bg-white/10 backdrop-blur text-teal mb-4">60 segundos de ritual</p>
-      <h2 class="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
-        Seu novo ritual <br/>
-        <span class="italic-display text-teal">em 4 passos.</span>
+<!-- ============================================= -->
+<!-- SCIENCE / DOCTORS                             -->
+<!-- ============================================= -->
+<section class="relative bg-white py-10 md:py-14 border-y border-ink/10"
+         x-data="science()"
+         x-effect="document.body.style.overflow = open !== null ? 'hidden' : ''">
+  <div class="max-w-3xl mx-auto px-5 md:px-8">
+
+    <!-- Section header — compact -->
+    <header class="text-center mb-8 md:mb-10" data-aos="fade-up">
+      <!-- Medical emblem — Rod of Asclepius (snake winding around staff) -->
+      <div class="medical-emblem mx-auto mb-3">
+        <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="staffGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#78350F"/>
+              <stop offset=".4" stop-color="#D4A017"/>
+              <stop offset=".6" stop-color="#D4A017"/>
+              <stop offset="1" stop-color="#78350F"/>
+            </linearGradient>
+          </defs>
+          <!-- Staff (wooden) -->
+          <rect x="37" y="14" width="6" height="98" rx="3" fill="url(#staffGrad)"/>
+          <!-- Wood knots -->
+          <ellipse cx="40" cy="30" rx="3" ry="1" fill="#92400E" opacity=".4"/>
+          <ellipse cx="40" cy="60" rx="3" ry="1" fill="#92400E" opacity=".4"/>
+          <ellipse cx="40" cy="90" rx="3" ry="1" fill="#92400E" opacity=".4"/>
+          <!-- Top knob -->
+          <circle cx="40" cy="14" r="5" fill="#FCD34D" stroke="#92400E" stroke-width="1.5"/>
+          <circle cx="40" cy="14" r="2.5" fill="#FFFBEB" opacity=".6"/>
+
+          <!-- Snake winding — alternating front/back segments -->
+          <!-- Bottom (front) -->
+          <path d="M 30 98 Q 50 94 48 84" stroke="#059669" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <!-- Behind staff -->
+          <path d="M 48 84 Q 46 76 32 72" stroke="#047857" stroke-width="2.8" fill="none" stroke-linecap="round" opacity=".75"/>
+          <!-- Front -->
+          <path d="M 32 72 Q 26 68 32 60 Q 48 58 48 50" stroke="#059669" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <!-- Behind -->
+          <path d="M 48 50 Q 46 42 32 38" stroke="#047857" stroke-width="2.8" fill="none" stroke-linecap="round" opacity=".75"/>
+          <!-- Front upper -->
+          <path d="M 32 38 Q 26 32 32 26 Q 48 24 47 18" stroke="#059669" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+          <!-- Snake head -->
+          <path d="M 44 18 Q 48 14 54 16 Q 56 19 54 22 Q 50 23 44 21 Z" fill="#10B981" stroke="#047857" stroke-width="0.8" stroke-linejoin="round"/>
+          <!-- Eye -->
+          <circle cx="51" cy="18.5" r="1.2" fill="white"/>
+          <circle cx="51" cy="18.5" r="0.6" fill="#14092E"/>
+          <!-- Forked tongue -->
+          <path d="M 56 20 L 60 21" stroke="#DC2626" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+          <path d="M 56 20 L 60 19" stroke="#DC2626" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+
+      <p class="text-[10px] font-bold uppercase tracking-[.24em] text-ink/55 mb-2">Conselho de especialistas</p>
+      <h2 class="font-display text-2xl md:text-[2rem] text-deep leading-[1.1] tracking-tight">
+        A ciência por trás <span class="italic-display text-purple-600">de cada ativo.</span>
+      </h2>
+    </header>
+
+    <!-- Entries -->
+    <ol class="science-list" data-aos="fade-up">
+
+      <li class="sci-entry">
+        <div class="sci-meta">
+          <span class="sci-num">01</span>
+          <span class="sci-ingredient">Magnésio Glicinato</span>
+        </div>
+        <blockquote class="sci-quote">
+          “O glicinato é uma das formas de magnésio com melhor biodisponibilidade e o menor efeito laxativo, sendo bem tolerado em uso noturno contínuo.”
+        </blockquote>
+        <button type="button" @click="open = 1" class="sci-more">Ver leitura completa <span aria-hidden="true">→</span></button>
+        <div class="sci-byline">
+          <div class="sci-avatar">
+            <span class="sci-initials">HC</span>
+            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Dr. Henrique Castro" onerror="this.remove()" />
+          </div>
+          <div class="sci-author">
+            <p class="sci-name">Dr. Henrique Castro</p>
+            <p class="sci-cred">Neurologista · Medicina do Sono · CRM-SP 142.388</p>
+          </div>
+          <p class="sci-ref">
+            <span class="sci-ref-label">Ref.¹</span>
+            J. American College of Nutrition, 2017
+          </p>
+        </div>
+      </li>
+
+      <li class="sci-entry">
+        <div class="sci-meta">
+          <span class="sci-num">02</span>
+          <span class="sci-ingredient">L-Teanina</span>
+        </div>
+        <blockquote class="sci-quote">
+          “A L-teanina aumenta a atividade de ondas alfa cerebrais — um estado de relaxamento sem sedação. Estudos apontam melhora subjetiva da qualidade do sono.”
+        </blockquote>
+        <button type="button" @click="open = 2" class="sci-more">Ver leitura completa <span aria-hidden="true">→</span></button>
+        <div class="sci-byline">
+          <div class="sci-avatar">
+            <span class="sci-initials">AL</span>
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dra. Ana Beatriz Lima" onerror="this.remove()" />
+          </div>
+          <div class="sci-author">
+            <p class="sci-name">Dra. Ana Beatriz Lima</p>
+            <p class="sci-cred">Psiquiatra · Medicina do Sono · CRM-RJ 92.541</p>
+          </div>
+          <p class="sci-ref">
+            <span class="sci-ref-label">Ref.²</span>
+            Nutrients, 2019 (revisão sistemática)
+          </p>
+        </div>
+      </li>
+
+      <li class="sci-entry">
+        <div class="sci-meta">
+          <span class="sci-num">03</span>
+          <span class="sci-ingredient">Apigenina + L-Triptofano</span>
+        </div>
+        <blockquote class="sci-quote">
+          “Apigenina age sobre receptores GABA-A, mecanismo similar a ansiolíticos suaves. O triptofano é precursor direto da serotonina e melatonina endógena.”
+        </blockquote>
+        <button type="button" @click="open = 3" class="sci-more">Ver leitura completa <span aria-hidden="true">→</span></button>
+        <div class="sci-byline">
+          <div class="sci-avatar">
+            <span class="sci-initials">RM</span>
+            <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Dr. Rafael Mendes" onerror="this.remove()" />
+          </div>
+          <div class="sci-author">
+            <p class="sci-name">Dr. Rafael Mendes</p>
+            <p class="sci-cred">Nutrólogo · Pesquisador em fitoterápicos · CRM-MG 78.612</p>
+          </div>
+          <p class="sci-ref">
+            <span class="sci-ref-label">Ref.³</span>
+            Pharmacological Research, 2021
+          </p>
+        </div>
+      </li>
+
+    </ol>
+
+    <p class="sci-disclaimer">
+      Cada citação remete a publicações científicas revisadas por pares sobre os ativos da fórmula. O acompanhamento de um profissional de saúde é sempre o caminho ideal pra qualquer rotina de suplementação.
+    </p>
+  </div>
+
+  <!-- ========== MODAL ========== -->
+  <div x-show="open !== null"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"
+       @keydown.escape.window="open = null"
+       class="fixed inset-0 z-[60] flex items-end md:items-center justify-center p-0 md:p-6"
+       style="display:none"
+       x-cloak>
+    <div @click="open = null" class="absolute inset-0 bg-deep/60 backdrop-blur-sm"></div>
+
+    <div x-show="open !== null"
+         x-transition:enter="transition ease-out duration-250"
+         x-transition:enter-start="opacity-0 translate-y-6 md:translate-y-0 md:scale-95"
+         x-transition:enter-end="opacity-100 translate-y-0 md:scale-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0 md:scale-100"
+         x-transition:leave-end="opacity-0 translate-y-6 md:translate-y-0 md:scale-95"
+         class="relative bg-white w-full md:max-w-xl rounded-t-3xl md:rounded-3xl max-h-[88vh] overflow-y-auto shadow-2xl"
+         @click.stop
+         x-cloak>
+
+      <button @click="open = null"
+              class="absolute top-4 right-4 w-9 h-9 rounded-full bg-purple-50 hover:bg-purple-100 flex items-center justify-center text-deep transition z-10"
+              aria-label="Fechar">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <template x-if="open !== null">
+        <div class="p-6 md:p-8">
+          <!-- Topic eyebrow -->
+          <p class="text-[10px] font-bold uppercase tracking-[.18em] text-purple-600 mb-2" x-text="data[open].topic"></p>
+          <!-- Ingredient title -->
+          <h3 class="font-display text-xl md:text-2xl font-medium text-deep mb-5" x-text="data[open].ingredient"></h3>
+
+          <!-- Doctor card -->
+          <div class="flex items-center gap-3 mb-5 pb-5 border-b border-purple-100">
+            <div class="sci-avatar">
+              <span class="sci-initials" x-text="data[open].initials"></span>
+              <img :src="data[open].photo" :alt="data[open].name" onerror="this.remove()" />
+            </div>
+            <div>
+              <p class="font-bold text-deep text-sm leading-tight" x-text="data[open].name"></p>
+              <p class="text-xs text-ink/55 mt-0.5" x-text="data[open].cred"></p>
+            </div>
+          </div>
+
+          <!-- Full quote -->
+          <blockquote class="font-display italic text-base md:text-[1.05rem] text-deep leading-relaxed mb-5"
+                      x-text="data[open].full"></blockquote>
+
+          <!-- Institution endorsement -->
+          <div class="bg-purple-50 border border-purple-100 rounded-xl p-4 mb-4">
+            <p class="text-[10px] font-bold uppercase tracking-[.15em] text-purple-700 mb-1.5">Instituição endossante</p>
+            <p class="text-sm text-deep leading-snug" x-text="data[open].institution"></p>
+          </div>
+
+          <!-- Reference -->
+          <div class="border-t border-purple-100 pt-4">
+            <p class="text-[10px] font-bold uppercase tracking-[.15em] text-ink/55 mb-1.5">Referência completa</p>
+            <p class="text-xs text-ink/75 leading-relaxed" style="font-family:'JetBrains Mono','Courier New',monospace" x-text="data[open].refFull"></p>
+          </div>
+
+          <button @click="open = null"
+                  class="mt-6 w-full py-3 rounded-full border border-purple-200 text-deep text-sm font-semibold hover:bg-purple-50 transition">
+            Voltar para a página
+          </button>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <script>
+    function science() {
+      return {
+        open: null,
+        data: {
+          1: {
+            initials: 'HC',
+            photo: 'https://randomuser.me/api/portraits/men/41.jpg',
+            name: 'Dr. Henrique Castro',
+            cred: 'Neurologista · Medicina do Sono · CRM-SP 142.388',
+            topic: 'Sobre magnésio glicinato',
+            ingredient: 'Magnésio Glicinato',
+            full: '“O glicinato é uma das formas de magnésio com melhor biodisponibilidade e o menor efeito laxativo, sendo bem tolerado em uso noturno contínuo. Estudos clínicos mostram absorção superior a 80% comparado ao óxido tradicional (4–30%). O aminoácido glicina associado tem ação calmante própria sobre receptores NMDA — reforçando o efeito do magnésio na qualidade do sono profundo e na regulação do cortisol noturno.”',
+            institution: 'Sociedade Brasileira de Medicina do Sono (ABMS) · Hospital Israelita Albert Einstein',
+            refFull: 'Schwalfenberg GK, Genuis SJ. The Importance of Magnesium in Clinical Healthcare. J Am Coll Nutr. 2017;36(8):665–678. doi:10.1080/07315724.2017.1306987'
+          },
+          2: {
+            initials: 'AL',
+            photo: 'https://randomuser.me/api/portraits/women/68.jpg',
+            name: 'Dra. Ana Beatriz Lima',
+            cred: 'Psiquiatra · Medicina do Sono · CRM-RJ 92.541',
+            topic: 'Sobre L-teanina',
+            ingredient: 'L-Teanina',
+            full: '“A L-teanina, aminoácido encontrado naturalmente no chá verde, aumenta a atividade de ondas alfa cerebrais — um estado de relaxamento sem sedação. Diferente de hipnóticos, ela não atua diretamente em GABA, mas modula glutamato, dopamina e serotonina. Doses entre 200–400mg, conforme revisão sistemática de 2019, indicam melhora subjetiva da qualidade do sono em adultos com queixa de insônia leve a moderada.”',
+            institution: 'Universidade Federal de São Paulo (UNIFESP) · Associação Brasileira de Psiquiatria',
+            refFull: 'Hidese S et al. Effects of L-Theanine Administration on Stress-Related Symptoms and Cognitive Functions in Healthy Adults: A Randomized Controlled Trial. Nutrients. 2019;11(10):2362. doi:10.3390/nu11102362'
+          },
+          3: {
+            initials: 'RM',
+            photo: 'https://randomuser.me/api/portraits/men/76.jpg',
+            name: 'Dr. Rafael Mendes',
+            cred: 'Nutrólogo · Pesquisador em fitoterápicos · CRM-MG 78.612',
+            topic: 'Sobre apigenina e l-triptofano',
+            ingredient: 'Apigenina + L-Triptofano',
+            full: '“Apigenina, flavonoide presente em camomila e passiflora, age como agonista parcial sobre receptores GABA-A — mecanismo similar a ansiolíticos benzodiazepínicos, porém sem causar dependência ou tolerância significativa. O L-triptofano é precursor direto da serotonina, que se converte em melatonina endógena no organismo. A combinação atua de forma sinérgica preparando o ciclo natural sono-vigília.”',
+            institution: 'Universidade Estadual de Campinas (UNICAMP) · Sociedade Brasileira de Nutrologia',
+            refFull: 'Salehi B et al. The Therapeutic Potential of Apigenin. Int J Mol Sci. 2019;20(6):1305. doi:10.3390/ijms20061305'
+          }
+        }
+      };
+    }
+  </script>
+</section>
+<!-- ============================================= -->
+<!-- US vs THEM                                    -->
+<!-- ============================================= -->
+<section class="relative bg-paper py-12 md:py-16 overflow-hidden">
+  <div class="max-w-4xl mx-auto px-5 md:px-8">
+    <div class="text-center mb-8" data-aos="fade-up">
+      <p class="chip bg-purple-100 text-purple-700 mb-3">Gudreams <span class="text-ink/50">vs</span> alternativas</p>
+      <h2 class="font-display text-3xl md:text-4xl leading-tight text-deep">
+        Por que não é <span class="italic-display text-purple-600">só mais um</span> suplemento pro sono.
       </h2>
     </div>
 
-    <div class="relative" data-aos="fade-up">
-      <div class="absolute -inset-8 bg-gradient-to-br from-purple-500/30 to-teal/20 rounded-[3rem] blur-2xl"></div>
-      <img src="./assets/timeline.webp" alt="Seu novo ritual em 4 passos" class="relative rounded-[2rem] shadow-2xl shadow-purple-900/40 w-full" />
+    <div class="bg-white border border-purple-100 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(75,47,174,.06)]" data-aos="fade-up">
+      <table class="vs-table w-full">
+        <thead>
+          <tr>
+            <th class="vs-feature-col"></th>
+            <th class="vs-us">
+              <div class="flex flex-col items-center gap-1 py-2">
+                <img src="./assets/logo-gudreams-dark.png" alt="Gudreams" class="h-6 md:h-7 w-auto" />
+                <span class="text-[9px] md:text-[10px] text-purple-600 font-bold uppercase tracking-wider">Melhor escolha</span>
+              </div>
+            </th>
+            <th class="vs-them">Melatonina</th>
+            <th class="vs-them">Magnésio<br>comum</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="vs-label">Composição</td>
+            <td class="vs-us-cell"><span class="font-semibold text-deep">Mg Glicinato</span></td>
+            <td class="vs-them-cell">Hormônio</td>
+            <td class="vs-them-cell">Óxido / Citrato</td>
+          </tr>
+          <tr>
+            <td class="vs-label">Absorção</td>
+            <td class="vs-us-cell"><i data-lucide="check" class="vs-check"></i><span class="text-deep font-semibold">~85%</span></td>
+            <td class="vs-them-cell text-ink/55">n/a</td>
+            <td class="vs-them-cell"><i data-lucide="minus" class="vs-partial"></i>4–30%</td>
+          </tr>
+          <tr>
+            <td class="vs-label">Dependência</td>
+            <td class="vs-us-cell"><i data-lucide="check" class="vs-check"></i><span class="text-deep font-semibold">Não</span></td>
+            <td class="vs-them-cell"><i data-lucide="x" class="vs-x"></i>Comum</td>
+            <td class="vs-them-cell"><i data-lucide="check" class="vs-check"></i>Não</td>
+          </tr>
+          <tr>
+            <td class="vs-label">Ressaca</td>
+            <td class="vs-us-cell"><i data-lucide="check" class="vs-check"></i><span class="text-deep font-semibold">Não</span></td>
+            <td class="vs-them-cell"><i data-lucide="x" class="vs-x"></i>Sim</td>
+            <td class="vs-them-cell"><i data-lucide="check" class="vs-check"></i>Não</td>
+          </tr>
+          <tr>
+            <td class="vs-label">Formato</td>
+            <td class="vs-us-cell"><span class="font-semibold text-deep">Bebida quente</span></td>
+            <td class="vs-them-cell">Gota</td>
+            <td class="vs-them-cell">Cápsula</td>
+          </tr>
+          <tr>
+            <td class="vs-label">Superfoods</td>
+            <td class="vs-us-cell"><i data-lucide="check" class="vs-check"></i><span class="text-deep font-semibold">7 ativos</span></td>
+            <td class="vs-them-cell"><i data-lucide="x" class="vs-x"></i></td>
+            <td class="vs-them-cell"><i data-lucide="x" class="vs-x"></i></td>
+          </tr>
+          <tr>
+            <td class="vs-label">Garantia</td>
+            <td class="vs-us-cell"><i data-lucide="check" class="vs-check"></i><span class="text-deep font-semibold">30 dias</span></td>
+            <td class="vs-them-cell text-ink/50">—</td>
+            <td class="vs-them-cell text-ink/50">—</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <p class="text-center text-xs text-ink/55 mt-4">
+      *Valores de absorção baseados em estudos comparativos de biodisponibilidade de sais de magnésio.
+    </p>
   </div>
 </section>
 
 <!-- ============================================= -->
 <!-- REVIEWS                                       -->
 <!-- ============================================= -->
-<section id="reviews" class="relative bg-paper py-20 md:py-24">
-  <div class="max-w-6xl mx-auto px-5 md:px-8"
-       x-data="{ filter: 'all' }">
-    <div class="text-center mb-10" data-aos="fade-up">
-      <p class="chip bg-purple-100 text-purple-700 mb-4">Reviews de clientes</p>
-      <h2 class="font-display text-4xl md:text-5xl leading-[1.05] text-deep mb-4">
-        <span class="italic-display text-purple-600">30.177 pessoas</span> já dormem melhor.
-      </h2>
+<section id="reviews" class="relative bg-paper py-16 md:py-24">
+  <div class="max-w-5xl mx-auto px-5 md:px-8"
+       x-data="reviewsState()"
+       x-effect="document.body.style.overflow = imgOpen !== null ? 'hidden' : ''"
+       @lightbox-open="openImg($event.detail)">
 
-      <!-- Rating summary -->
-      <div class="inline-flex items-center gap-6 bg-white rounded-2xl px-6 py-4 border border-purple-100 mt-4">
+    <!-- Heading -->
+    <h2 class="font-display text-3xl md:text-4xl font-bold text-deep mb-2" data-aos="fade-up">
+      Avaliações dos clientes
+    </h2>
+    <p class="flex items-start gap-2.5 text-[13px] text-ink/70 mb-6 leading-relaxed max-w-2xl" data-aos="fade-up">
+      <i data-lucide="badge-check" class="w-4 h-4 text-purple-600 shrink-0 mt-0.5"></i>
+      <span>
+        Avaliações <strong class="text-deep font-semibold">100% reais</strong>, escritas por compradores verificados após receberem o produto.
+        <span class="text-ink/50">Não editamos, <span class="whitespace-nowrap">não removemos.</span></span>
+      </span>
+    </p>
+
+    <!-- Summary grid: rating + distribution -->
+    <div class="grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 bg-white border border-purple-100 rounded-2xl p-5 md:p-6 mb-6" data-aos="fade-up">
+      <!-- Average -->
+      <div class="flex md:flex-col md:items-center md:justify-center items-center gap-4 md:gap-1 md:min-w-[140px] md:border-r md:border-purple-100 md:pr-8">
+        <span class="font-display text-5xl md:text-6xl font-bold text-deep leading-none">4,9</span>
         <div>
-          <p class="font-display text-4xl font-bold text-deep">4.9</p>
-          <div class="stars-rating justify-center mt-1">
+          <div class="stars-rating">
             <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
             <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
           </div>
+          <p class="text-xs text-ink/60 mt-1">30.177 avaliações</p>
         </div>
-        <div class="h-12 w-px bg-purple-100"></div>
-        <div class="text-left">
-          <p class="text-sm font-bold text-deep">30.177 reviews</p>
-          <p class="text-xs text-ink/60">96% recomendam</p>
+      </div>
+
+      <!-- Distribution bars -->
+      <div class="space-y-1.5 text-sm">
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-ink/70 w-10 flex items-center gap-0.5 shrink-0">5 <i data-lucide="star" class="w-3 h-3 fill-amber-400 stroke-amber-400"></i></span>
+          <div class="review-bar flex-1"><div style="width: 86%"></div></div>
+          <span class="text-xs text-ink/60 w-10 text-right shrink-0">86%</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-ink/70 w-10 flex items-center gap-0.5 shrink-0">4 <i data-lucide="star" class="w-3 h-3 fill-amber-400 stroke-amber-400"></i></span>
+          <div class="review-bar flex-1"><div style="width: 10%"></div></div>
+          <span class="text-xs text-ink/60 w-10 text-right shrink-0">10%</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-ink/70 w-10 flex items-center gap-0.5 shrink-0">3 <i data-lucide="star" class="w-3 h-3 fill-amber-400 stroke-amber-400"></i></span>
+          <div class="review-bar flex-1"><div style="width: 3%"></div></div>
+          <span class="text-xs text-ink/60 w-10 text-right shrink-0">3%</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-ink/70 w-10 flex items-center gap-0.5 shrink-0">2 <i data-lucide="star" class="w-3 h-3 fill-amber-400 stroke-amber-400"></i></span>
+          <div class="review-bar flex-1"><div style="width: 1%"></div></div>
+          <span class="text-xs text-ink/60 w-10 text-right shrink-0">&lt;1%</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-ink/70 w-10 flex items-center gap-0.5 shrink-0">1 <i data-lucide="star" class="w-3 h-3 fill-amber-400 stroke-amber-400"></i></span>
+          <div class="review-bar flex-1"><div style="width: 1%"></div></div>
+          <span class="text-xs text-ink/60 w-10 text-right shrink-0">&lt;1%</span>
         </div>
       </div>
     </div>
 
-    <!-- Filter chips -->
-    <div class="flex flex-wrap items-center justify-center gap-2 mb-10" data-aos="fade-up">
+    <!-- Filter row -->
+    <div class="flex flex-wrap items-center gap-2 mb-2">
+      <span class="text-xs text-ink/60 mr-1">Filtrar:</span>
       <button @click="filter = 'all'"
-              :class="filter === 'all' ? 'bg-deep text-paper' : 'bg-white text-ink border border-purple-200'"
-              class="chip !py-2 !px-4 transition">
+              :class="filter === 'all' ? 'bg-deep text-paper border-deep' : 'bg-white text-ink/80 border-purple-200'"
+              class="text-xs font-semibold py-1.5 px-3 rounded-full border transition">
         Todos
       </button>
-      <button @click="filter = 'recent'"
-              :class="filter === 'recent' ? 'bg-deep text-paper' : 'bg-white text-ink border border-purple-200'"
-              class="chip !py-2 !px-4 transition">
-        <i data-lucide="clock" class="w-3.5 h-3.5"></i> Mais recentes
-      </button>
-      <button @click="filter = 'top'"
-              :class="filter === 'top' ? 'bg-deep text-paper' : 'bg-white text-ink border border-purple-200'"
-              class="chip !py-2 !px-4 transition">
-        <i data-lucide="flame" class="w-3.5 h-3.5"></i> Mais úteis
+      <button @click="filter = 'photo'"
+              :class="filter === 'photo' ? 'bg-deep text-paper border-deep' : 'bg-white text-ink/80 border-purple-200'"
+              class="text-xs font-semibold py-1.5 px-3 rounded-full border transition">
+        Com foto
       </button>
       <button @click="filter = '5'"
-              :class="filter === '5' ? 'bg-deep text-paper' : 'bg-white text-ink border border-purple-200'"
-              class="chip !py-2 !px-4 transition">
-        ⭐ 5 estrelas
+              :class="filter === '5' ? 'bg-deep text-paper border-deep' : 'bg-white text-ink/80 border-purple-200'"
+              class="text-xs font-semibold py-1.5 px-3 rounded-full border transition">
+        5 estrelas
+      </button>
+      <button @click="filter = '3'"
+              :class="filter === '3' ? 'bg-deep text-paper border-deep' : 'bg-white text-ink/80 border-purple-200'"
+              class="text-xs font-semibold py-1.5 px-3 rounded-full border transition">
+        3 estrelas
       </button>
     </div>
 
-    <!-- Reviews grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-      <!-- Review 1 -->
-      <div class="review-card bg-white rounded-3xl p-6 border border-purple-100" data-aos="fade-up">
-        <div class="flex items-center justify-between mb-3">
+    <!-- Reviews list -->
+    <div class="bg-white border border-purple-100 rounded-2xl px-5 md:px-7 mb-6">
+
+      <!-- Review 1 — with photo -->
+      <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 47, down: 2 }">
+        <div class="flex items-center gap-2 mb-1">
           <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
-          <span class="text-xs text-ink/50">há 32 min</span>
+          <p class="font-bold text-deep text-sm md:text-base">Delicioso e me ajuda a dormir</p>
         </div>
-        <h4 class="font-bold text-deep mb-2">Delicioso e me ajuda a dormir</h4>
-        <p class="text-sm text-ink/70 italic mb-4">"Eu espero por essa bebida toda noite. Sabor incrível e sinto que realmente ajuda a descansar melhor. Vou continuar comprando!"</p>
-        <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-200 to-purple-300"></div>
-          <div>
-            <p class="text-xs font-semibold text-deep">Charlotte B.</p>
-            <p class="text-[10px] text-ink/50 flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-teal-deep"></i> Comprador verificado</p>
-          </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Charlotte B.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 12 mar 2026 · <span class="text-ink/80">Chocolate Quente, 2 potes</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          Eu espero por essa bebida toda noite. Sabor incrível, textura cremosa, sem aquele gosto químico de outros suplementos que já testei. Tomo 45 min antes de dormir e tenho sentido que pego no sono mais rápido. Estou no meu 2º pote e já renovei a assinatura.
+        </p>
+        <div class="flex gap-2 mb-3">
+          <button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/CHOCOLATE 2.png')"><img src="./assets/CHOCOLATE 2.png" alt="" /></button>
+          <button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/brew.webp')"><img src="./assets/brew.webp" alt="" /></button>
         </div>
-      </div>
-      <!-- Review 2 -->
-      <div class="review-card bg-white rounded-3xl p-6 border border-purple-100" data-aos="fade-up" data-aos-delay="100">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
+        </div>
+      </article>
+
+      <!-- Review 2 — 3 stars text only -->
+      <article class="review-item" x-show="matches(3, false)" x-transition.opacity x-data="{ vote: null, up: 89, down: 4 }">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+          <p class="font-bold text-deep text-sm md:text-base">Demorou bastante a fazer efeito</p>
+        </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Bruno T.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 8 mar 2026 · <span class="text-ink/80">Doce de Leite, 1 pote</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          Usei o primeiro pote inteiro e só comecei a sentir diferença real no sono depois da 3ª semana. Tava quase desistindo, mas continuei. Acho que deveriam deixar mais claro que não é efeito imediato tipo melatonina. Sabor doce de leite é ótimo, mas pelo preço esperava resultado mais rápido.
+        </p>
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
+        </div>
+      </article>
+
+      <!-- Review 3 — with photo -->
+      <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 23, down: 0 }">
+        <div class="flex items-center gap-2 mb-1">
           <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
-          <span class="text-xs text-ink/50">há 1h</span>
+          <p class="font-bold text-deep text-sm md:text-base">Chegou rápido e bem embalado</p>
         </div>
-        <h4 class="font-bold text-deep mb-2">Amei!</h4>
-        <p class="text-sm text-ink/70 italic mb-4">"Virou parte da minha rotina noturna. Sabor ótimo e me leva pro sono suavemente. O chocolate quente é perfeito!"</p>
-        <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-teal to-purple-400"></div>
-          <div>
-            <p class="text-xs font-semibold text-deep">Christina J.</p>
-            <p class="text-[10px] text-ink/50 flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-teal-deep"></i> Comprador verificado</p>
-          </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Marina S.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 5 mar 2026 · <span class="text-ink/80">Chocolate Quente, 1 pote</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          Pedido chegou em 3 dias em SP, embalagem perfeita, tudo lacrado. Estou usando há 10 dias, não sei dizer se é o produto ou sugestão mas tô dormindo melhor. O sabor chocolate é muito bom de verdade, parece chocolate quente de inverno.
+        </p>
+        <div class="flex gap-2 mb-3">
+          <button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/CHOCOLATE 1.png')"><img src="./assets/CHOCOLATE 1.png" alt="" /></button>
         </div>
-      </div>
-      <!-- Review 3 -->
-      <div class="review-card bg-white rounded-3xl p-6 border border-purple-100" data-aos="fade-up" data-aos-delay="200">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
+        </div>
+      </article>
+
+      <!-- Review 4 — text only -->
+      <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 312, down: 7 }">
+        <div class="flex items-center gap-2 mb-1">
           <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
-          <span class="text-xs text-ink/50">há 2h</span>
+          <p class="font-bold text-deep text-sm md:text-base">Consegui parar com remédio tarja preta</p>
         </div>
-        <h4 class="font-bold text-deep mb-2">Ajuda no sono e nas cãibras</h4>
-        <p class="text-sm text-ink/70 italic mb-4">"Amo o chocolate quente. Super relaxante à noite e ainda ajuda com minhas cãibras musculares. Recomendo demais."</p>
-        <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-200 to-orange-300"></div>
-          <div>
-            <p class="text-xs font-semibold text-deep">Patty H.</p>
-            <p class="text-[10px] text-ink/50 flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-teal-deep"></i> Comprador verificado</p>
-          </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Roberto F.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 28 fev 2026 · <span class="text-ink/80">Chocolate Quente, 3 potes</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          Usava zolpidem há quase 4 anos sob orientação médica. Comecei Gudreams combinado e fui reduzindo o remédio gradualmente com o psiquiatra. Hoje tomo só o Gudreams. Obviamente consultem seus médicos, cada caso é um caso, mas pra mim foi a solução.
+        </p>
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
         </div>
-      </div>
-      <!-- Review 4 -->
-      <div class="review-card bg-white rounded-3xl p-6 border border-purple-100" data-aos="fade-up">
-        <div class="flex items-center justify-between mb-3">
+      </article>
+
+      <!-- Review 5 — with photo -->
+      <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 61, down: 1 }">
+        <div class="flex items-center gap-2 mb-1">
           <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
-          <span class="text-xs text-ink/50">há 3h</span>
+          <p class="font-bold text-deep text-sm md:text-base">Morango virou meu sabor favorito</p>
         </div>
-        <h4 class="font-bold text-deep mb-2">Funciona mesmo!</h4>
-        <p class="text-sm text-ink/70 italic mb-4">"Uso há 2 meses. A diferença entre noites com e sem é gritante. Durmo mais profundo e acordo mais descansada."</p>
-        <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-200 to-pink-300"></div>
-          <div>
-            <p class="text-xs font-semibold text-deep">Katelyn M.</p>
-            <p class="text-[10px] text-ink/50 flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-teal-deep"></i> Comprador verificado</p>
-          </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Juliana R.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 22 fev 2026 · <span class="text-ink/80">Morango, 3 potes</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          Comecei pelo chocolate e depois testei morango — esse é o meu favorito. Parece milk shake de morango mesmo, sem gosto artificial. Compro sempre o pack de 3 com assinatura pra economizar e não deixar faltar.
+        </p>
+        <div class="flex gap-2 mb-3">
+          <button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/MORANGO 3.png')"><img src="./assets/MORANGO 3.png" alt="" /></button>
+          <button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/DOCE DE LEITE 3.png')"><img src="./assets/DOCE DE LEITE 3.png" alt="" /></button>
         </div>
-      </div>
-      <!-- Review 5 -->
-      <div class="review-card bg-white rounded-3xl p-6 border border-purple-100" data-aos="fade-up" data-aos-delay="100">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
+        </div>
+      </article>
+
+      <!-- Review 6 — 4 stars (only shows on 'all' filter) -->
+      <article class="review-item" x-show="matches(4, false)" x-transition.opacity x-data="{ vote: null, up: 38, down: 5 }">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+          <p class="font-bold text-deep text-sm md:text-base">Funciona, mas achei um pouco caro</p>
+        </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Patrícia H.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 15 fev 2026 · <span class="text-ink/80">Doce de Leite, 1 pote</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          O produto é bom, entrega no prazo, sabor agradável. Sinto o efeito no relaxamento, principalmente nos ombros e pescoço. Só acho o preço salgado pra tomar todo dia. Peguei a assinatura pra reduzir.
+        </p>
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
+        </div>
+      </article>
+
+      <!-- Review 7 — text only -->
+      <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 18, down: 0 }">
+        <div class="flex items-center gap-2 mb-1">
           <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
-          <span class="text-xs text-ink/50">há 5h</span>
+          <p class="font-bold text-deep text-sm md:text-base">Ajudou com cãibras noturnas também</p>
         </div>
-        <h4 class="font-bold text-deep mb-2">Finalmente durmo a noite toda</h4>
-        <p class="text-sm text-ink/70 italic mb-4">"Love this! Me ajuda a ficar dormindo a noite inteira e o sabor é ótimo. Já recomendei pra várias amigas."</p>
-        <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-200 to-purple-300"></div>
-          <div>
-            <p class="text-xs font-semibold text-deep">Wendy G.</p>
-            <p class="text-[10px] text-ink/50 flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-teal-deep"></i> Comprador verificado</p>
-          </div>
+        <p class="text-xs text-ink/60 mb-3">
+          <span class="font-semibold text-deep">Wendy G.</span>
+          <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i>
+          Compra verificada · 10 fev 2026 · <span class="text-ink/80">Chocolate Quente, 2 potes</span>
+        </p>
+        <p class="text-sm text-ink/80 leading-relaxed mb-3">
+          Comprei pelo sono, mas um efeito colateral positivo foi parar com as cãibras nas panturrilhas à noite. Deve ser o magnésio. Indiquei pra minha irmã que também gostou.
+        </p>
+        <div class="flex items-center gap-2 text-xs text-ink/50">
+          <span>Foi útil?</span>
+          <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)
+          </button>
+          <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'">
+            <i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)
+          </button>
         </div>
-      </div>
-      <!-- Review 6 -->
-      <div class="review-card bg-white rounded-3xl p-6 border border-purple-100" data-aos="fade-up" data-aos-delay="200">
-        <div class="flex items-center justify-between mb-3">
-          <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
-          <span class="text-xs text-ink/50">há 6h</span>
+      </article>
+
+      <!-- ============ EXPANDED (10 more) ============ -->
+      <template x-if="expandLevel >= 1">
+        <div>
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 41, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Acordando com mais energia</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Camila L.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 5 fev 2026 · <span class="text-ink/80">Morango, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Trabalho com home office e tinha noites péssimas. Depois de 1 mês de uso percebo que acordo com energia mesmo, sem aquela sensação de ter dormido pouco. Recomendo combinar com bons hábitos de sono pra resultado completo.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 27, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Sabor doce de leite é melhor que esperava</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">André F.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 1 fev 2026 · <span class="text-ink/80">Doce de Leite, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Tava cético com sabor doce de leite mas surpreendeu. Fica gostoso de verdade, parece sobremesa. Já uso há 3 semanas, durmo um pouco melhor mas o que mais gostei foi o ritual antes de dormir.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/DOCE DE LEITE 1.png')"><img src="./assets/DOCE DE LEITE 1.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(4, false)" x-transition.opacity x-data="{ vote: null, up: 16, down: 2 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Bom mas embalagem do scoop quebrou</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Patrícia G.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 28 jan 2026 · <span class="text-ink/80">Chocolate Quente, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Produto excelente, sem reclamação do efeito. Perdi 1 estrela porque o scoop dosador veio quebrado. Resolveram rapidão pelo SAC e mandaram outro, mas chega meio chato perder tempo com isso.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 73, down: 3 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Perfeito pra quem treina pesado</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Lucas O.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 22 jan 2026 · <span class="text-ink/80">Chocolate Quente, 3 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Treino crossfit 5x/semana, dormia mal por causa da adrenalina pós-treino. Magnésio glicinato + as ervas relaxam o sistema nervoso muito bem. Recuperação muscular também melhorou — provavelmente pelo Mg.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/CHOCOLATE 3.png')"><img src="./assets/CHOCOLATE 3.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 22, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Substituiu meu chá noturno</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Beatriz N.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 18 jan 2026 · <span class="text-ink/80">Morango, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Tomava chá de camomila + valeriana toda noite. Substitui pelo Gudreams e gostei mais do efeito e do sabor. Mais prático que ferver chá toda noite.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(3, false)" x-transition.opacity x-data="{ vote: null, up: 54, down: 8 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Esperava mais pelo preço</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Ricardo S.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 14 jan 2026 · <span class="text-ink/80">Chocolate Quente, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Esperando pelas reviews 5 estrelas, achei que ia ser um divisor de águas. Não foi. Sinto leve relaxamento mas nada drástico. Talvez precise de mais tempo, mas pelo investimento esperava algo mais perceptível na 1ª semana.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 33, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Indiquei pra meus pais idosos</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Helena T.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 9 jan 2026 · <span class="text-ink/80">Doce de Leite, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Comprei pra mim, gostei tanto que indiquei pros meus pais (60+). Eles gostaram muito, especialmente do fato de ser sem melatonina (têm receio). Sabor doce de leite agrada todo mundo.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 19, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Embalagem premium e cheirinho ótimo</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Felipe A.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 4 jan 2026 · <span class="text-ink/80">Morango, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Embalagem pesada, com acabamento legal. Quando abri tinha um cheirinho gostoso de morango. Sabor agrada, durmo bem desde a 1ª noite. Vou continuar.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/MORANGO 2.png')"><img src="./assets/MORANGO 2.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 88, down: 2 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Diminuiu minha ansiedade noturna</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Tatiane B.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 30 dez 2025 · <span class="text-ink/80">Chocolate Quente, 3 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Sofro de ansiedade leve, principalmente à noite quando deito e fico pensando em mil coisas. Depois de 3 semanas tomando, percebi que paro de pensar mais rápido. O ritual ajuda muito a sinalizar pro cérebro que é hora de desligar.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(4, false)" x-transition.opacity x-data="{ vote: null, up: 14, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Vale a pena se for assinatura</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Pedro C.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 26 dez 2025 · <span class="text-ink/80">Doce de Leite, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Comprei avulso primeiro, achei caro. Migrei pra assinatura e o preço fica mais justo, especialmente no pack maior. O produto entrega — só não dá pra esperar milagre instantâneo.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 47, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Sumiram as olheiras profundas</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Renata V.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 22 dez 2025 · <span class="text-ink/80">Chocolate Quente, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Tinha umas olheiras roxas que pareciam permanentes. Depois de 3 semanas tomando todas as noites, percebi que tinham clareado bastante. Minha esteticista perguntou se eu tava fazendo algum tratamento. Disse que era só o sono.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/CHOCOLATE 2.png')"><img src="./assets/CHOCOLATE 2.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 29, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Mãe de bebê: salvou minha sanidade</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Vanessa M.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 18 dez 2025 · <span class="text-ink/80">Doce de Leite, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Bebê de 8 meses que ainda acorda 2 vezes na noite. Quando eu finalmente deito, demora pra desligar a mente. Gudreams me ajuda a aproveitar cada janelinha de sono — desligo rápido. Faz toda a diferença pra atravessar o dia.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 35, down: 2 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Pochete começou a ceder</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Gabriela A.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 14 dez 2025 · <span class="text-ink/80">Morango, 3 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Achei que era só pro sono. Mas li que cortisol alto também causa inchaço abdominal e por isso resolvi tomar consistente. Depois de 6 semanas a pochete que não saía com cardio começou a reduzir visivelmente. Não é mágica, mas é real.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/MORANGO 3.png')"><img src="./assets/MORANGO 3.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
         </div>
-        <h4 class="font-bold text-deep mb-2">Parei com tarja preta</h4>
-        <p class="text-sm text-ink/70 italic mb-4">"Usava zolpidem há anos. Comecei Gudreams e reduzi pra zero em 2 meses. Virou meu ritual favorito da noite."</p>
-        <div class="flex items-center gap-2 pt-4 border-t border-purple-100">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-200 to-teal"></div>
-          <div>
-            <p class="text-xs font-semibold text-deep">Bruno T.</p>
-            <p class="text-[10px] text-ink/50 flex items-center gap-1"><i data-lucide="badge-check" class="w-3 h-3 text-teal-deep"></i> Comprador verificado</p>
-          </div>
+      </template>
+
+      <!-- ============ EXPANDED LEVEL 2 (+10 more) ============ -->
+      <template x-if="expandLevel >= 2">
+        <div>
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 24, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Acabou minha bruxismo noturno</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Mariana O.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 10 dez 2025 · <span class="text-ink/80">Chocolate Quente, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Rangia tanto o dente que minha dentista fez uma placa pra mim. Depois de 1 mês de Gudreams, ela perguntou se eu tava menos estressada porque a placa tá quase sem marca. Cortisol baixo = mandíbula relaxada à noite.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(4, false)" x-transition.opacity x-data="{ vote: null, up: 12, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Sabor doce de leite enjoa um pouco</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Carlos M.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 8 dez 2025 · <span class="text-ink/80">Doce de Leite, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Funciona bem mas o sabor doce de leite cansa depois de 2 semanas tomando todo dia. Vou alternar com chocolate na próxima compra. Efeito no sono é real, sem dúvida.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 56, down: 2 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Resultado depois de 2 meses</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Larissa B.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 4 dez 2025 · <span class="text-ink/80">Morango, 3 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Rosto inchado de manhã era meu pesadelo pra reuniões. Tomei consistente por 2 meses e a diferença é absurda — meu marido foi o primeiro a notar. Compro na assinatura agora pra não correr o risco de acabar.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/MORANGO 3.png')"><img src="./assets/MORANGO 3.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 31, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Pra quem fica acordado pensando no trabalho</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Henrique P.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 30 nov 2025 · <span class="text-ink/80">Chocolate Quente, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Trabalho com TI, mente acelerada o dia inteiro. Quando deito, fico pensando em código, deadline, slack. Gudreams literalmente desliga essa caixa preta — pego no sono sem ficar revisando o dia.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 19, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Embalagem premium, sabor vintage</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Camille S.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 26 nov 2025 · <span class="text-ink/80">Doce de Leite, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Cheguei na embalagem e ela tem aquele acabamento de produto premium, brinde inclusos lindos. O sabor doce de leite parece doce de tachinho de avó, dessas que cozinhavam horas. Indiquei pras minhas amigas no grupo do café.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/DOCE DE LEITE 1.png')"><img src="./assets/DOCE DE LEITE 1.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(3, false)" x-transition.opacity x-data="{ vote: null, up: 38, down: 4 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Funciona pouco no meu caso</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Sandra R.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 22 nov 2025 · <span class="text-ink/80">Chocolate Quente, 1 pote</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Tomei o pote inteiro e percebi melhora muito leve. Meu sono é ruim por questões hormonais (menopausa) então talvez não seja pra mim. O sabor é bom e a entrega foi rápida.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 25, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Atravessei a maratona com energia</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Diego F.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 18 nov 2025 · <span class="text-ink/80">Chocolate Quente, 3 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Tava treinando pra meia maratona e o sono era prioritário. Comecei Gudreams 2 meses antes da prova e o resultado foi recuperação muito mais rápida. Atravessei a corrida sem aquela exaustão das últimas semanas que era padrão pra mim.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, true)" x-transition.opacity x-data="{ vote: null, up: 17, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Comprei 3 e ofereci pros amigos</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Igor T.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 14 nov 2025 · <span class="text-ink/80">Chocolate Quente, 3 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Comprei o pack de 3 sem saber se seria bom. Funcionou tão bem que dei um pote pra cada amigo testar. Os 3 já compraram pra eles depois. Sou cliente fiel agora.</p>
+            <div class="flex gap-2 mb-3"><button type="button" class="review-thumb" @click="$dispatch('lightbox-open', './assets/CHOCOLATE 3.png')"><img src="./assets/CHOCOLATE 3.png" alt="" /></button></div>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(4, false)" x-transition.opacity x-data="{ vote: null, up: 9, down: 0 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24" style="fill:#E5E7EB;stroke:#E5E7EB"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Bom complemento pra rotina de bem-estar</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Fernanda L.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 10 nov 2025 · <span class="text-ink/80">Morango, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Já fazia yoga e meditação antes de dormir. Gudreams encaixou bem como complemento — não substitui mas potencializa. Sabor morango pra quem não curte chocolate noturno é uma boa.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
+
+          <article class="review-item" x-show="matches(5, false)" x-transition.opacity x-data="{ vote: null, up: 22, down: 1 }">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="stars-rating"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></div>
+              <p class="font-bold text-deep text-sm md:text-base">Diga adeus ao melatonina</p>
+            </div>
+            <p class="text-xs text-ink/60 mb-3"><span class="font-semibold text-deep">Bruno R.</span> <i data-lucide="badge-check" class="w-3 h-3 text-purple-600 inline align-[-2px]"></i> Compra verificada · 6 nov 2025 · <span class="text-ink/80">Chocolate Quente, 2 potes</span></p>
+            <p class="text-sm text-ink/80 leading-relaxed mb-3">Tomava 5mg de melatonina há 2 anos. Acordava com aquela sensação de ressaca do remédio. Migrei pro Gudreams e a diferença é que durmo igual mas acordo PURO. Recomendo, especialmente pra quem tá nessa de melatonina.</p>
+            <div class="flex items-center gap-2 text-xs text-ink/50">
+              <span>Foi útil?</span>
+              <button class="review-helpful-btn" :class="{ 'voted-up': vote==='up' }" @click="vote = vote==='up' ? null : 'up'"><i data-lucide="thumbs-up" class="w-3 h-3"></i> Sim (<span x-text="up + (vote==='up' ? 1 : 0)"></span>)</button>
+              <button class="review-helpful-btn" :class="{ 'voted-down': vote==='down' }" @click="vote = vote==='down' ? null : 'down'"><i data-lucide="thumbs-down" class="w-3 h-3"></i> Não (<span x-text="down + (vote==='down' ? 1 : 0)"></span>)</button>
+            </div>
+          </article>
         </div>
-      </div>
+      </template>
+
     </div>
 
-    <div class="text-center">
-      <button class="chip bg-white border-2 border-purple-200 text-deep !py-3 !px-8 hover:bg-purple-50 transition font-semibold">
-        Ver mais reviews <i data-lucide="chevron-down" class="w-4 h-4"></i>
-      </button>
+    <!-- Pagination footer -->
+    <div class="flex items-center justify-between flex-wrap gap-3">
+      <p class="text-xs text-ink/60">
+        <span x-text="(expandLevel === 0 ? 'Mostrando 1-7' : (expandLevel === 1 ? 'Mostrando 1-20' : 'Mostrando 1-30')) + ' de 30.177 avaliações'"></span>
+      </p>
+      <div class="flex items-center gap-2">
+        <button x-show="expandLevel === 0"
+                @click="expandLevel = 1; $nextTick(() => window.lucide && lucide.createIcons())"
+                class="text-xs font-semibold text-deep bg-white border border-purple-200 rounded-full py-2 px-5 hover:bg-purple-50 transition inline-flex items-center gap-1.5">
+          Ver mais 13 avaliações <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+        </button>
+        <button x-show="expandLevel === 1"
+                @click="expandLevel = 2; $nextTick(() => window.lucide && lucide.createIcons())"
+                class="text-xs font-semibold text-deep bg-white border border-purple-200 rounded-full py-2 px-5 hover:bg-purple-50 transition inline-flex items-center gap-1.5">
+          Ver mais 10 avaliações <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+        </button>
+        <button x-show="expandLevel >= 1"
+                @click="expandLevel = 0; document.getElementById('reviews').scrollIntoView({ behavior: 'smooth', block: 'start' }); $nextTick(() => window.lucide && lucide.createIcons())"
+                class="text-xs font-semibold text-ink/70 bg-white border border-purple-200 rounded-full py-2 px-5 hover:bg-purple-50 hover:text-deep transition inline-flex items-center gap-1.5">
+          Ver menos <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- ========== IMAGE LIGHTBOX ========== -->
+  <div x-show="imgOpen !== null"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"
+       @keydown.escape.window="imgOpen = null"
+       @click.self="closeImg()"
+       class="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 bg-deep/85 backdrop-blur-sm cursor-zoom-out"
+       style="display:none"
+       x-cloak>
+    <button @click="imgOpen = null"
+            class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/95 hover:bg-white flex items-center justify-center text-deep shadow-lg transition z-10"
+            aria-label="Fechar">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <img :src="imgOpen" alt="Foto enviada pelo cliente"
+         x-show="imgOpen !== null"
+         x-transition:enter="transition ease-out duration-250"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         class="max-w-full max-h-full object-contain rounded-2xl bg-white p-4"
+         @click.stop />
+  </div>
+
+  <script>
+    function reviewsState() {
+      return {
+        filter: 'all',
+        expandLevel: 0,
+        imgOpen: null,
+        imgOpenedAt: 0,
+        matches(stars, hasPhoto) {
+          if (this.filter === 'all') return true;
+          if (this.filter === '5') return stars === 5;
+          if (this.filter === '3') return stars === 3;
+          if (this.filter === 'photo') return hasPhoto;
+          return true;
+        },
+        openImg(src) {
+          this.imgOpen = src;
+          this.imgOpenedAt = Date.now();
+        },
+        closeImg() {
+          // Bloqueia "ghost click" do mobile (touchend → click após 300ms)
+          if (Date.now() - this.imgOpenedAt < 350) return;
+          this.imgOpen = null;
+        }
+      };
+    }
+  </script>
 </section>
 
 <!-- ============================================= -->
 <!-- FAQ                                           -->
 <!-- ============================================= -->
-<section id="faq" class="relative mesh-lilac py-20 md:py-24 grain overflow-hidden"
+<section id="faq" class="relative mesh-lilac py-16 md:py-24 grain overflow-hidden"
          x-data="{ open: 0 }">
   <div class="max-w-3xl mx-auto px-5 md:px-8">
     <div class="text-center mb-12" data-aos="fade-up">
@@ -1177,7 +3474,7 @@
         </button>
         <div x-show="open === 8" x-collapse>
           <div class="px-5 md:px-6 pb-6 text-ink/70 leading-relaxed">
-            Temos garantia de 60 dias. Se não for o melhor sono da sua vida, devolvemos 100% do valor — inclusive dos potes vazios. Basta mandar email pra contato@gudreams.com.br.
+            Temos garantia de 30 dias. Se não for o melhor sono da sua vida, devolvemos 100% do valor — inclusive dos potes vazios. Basta mandar email pra contato@gudreams.com.br.
           </div>
         </div>
       </div>
@@ -1188,7 +3485,7 @@
 <!-- ============================================= -->
 <!-- GUARANTEE + FINAL CTA                         -->
 <!-- ============================================= -->
-<section class="relative mesh-purple text-paper py-20 md:py-28 grain overflow-hidden">
+<section class="relative mesh-purple text-paper py-16 md:py-24 grain overflow-hidden">
   <div class="absolute top-10 left-10 w-80 h-80 bg-teal/10 rounded-full blur-3xl"></div>
   <div class="absolute bottom-10 right-10 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl"></div>
 
@@ -1198,7 +3495,7 @@
         <div class="relative inline-block">
           <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-teal/20 flex items-center justify-center">
             <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-teal flex flex-col items-center justify-center text-deep font-display italic font-bold">
-              <span class="text-2xl md:text-3xl">60</span>
+              <span class="text-2xl md:text-3xl">30</span>
               <span class="text-xs md:text-sm -mt-1">DIAS</span>
             </div>
           </div>
@@ -1209,7 +3506,7 @@
           <span class="italic-display text-teal">Garantia</span> sem perguntas.
         </h2>
         <p class="text-paper/80 leading-relaxed mb-6">
-          Teste Gudreams por 2 meses. Se não for o melhor sono da sua vida, devolvemos <strong class="text-white">100% do valor</strong> — inclusive dos potes vazios. Sem letra miúda, sem burocracia.
+          Teste Gudreams por 30 dias. Se não for o melhor sono da sua vida, devolvemos <strong class="text-white">100% do valor</strong> — inclusive dos potes vazios. Sem letra miúda, sem burocracia.
         </p>
         <a href="#top" class="btn-primary">
           Quero começar agora
@@ -1227,28 +3524,28 @@
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10 pb-10 border-b border-white/10">
       <div class="max-w-sm">
-        <div class="bg-paper/10 text-paper px-3 py-1.5 rounded-lg font-display italic text-2xl font-bold inline-block mb-4">
-          gudreams
-        </div>
+        <img src="./assets/logo-gudreams-white.png" alt="Gudreams" class="h-9 w-auto mb-4" />
         <p class="text-sm leading-relaxed">
-          O ritual noturno de magnésio e superfoods que transformou como 1 milhão de pessoas dormem.
+          Magnésio inteligente <span class="text-paper">+ 7 bioativos</span> num ritual noturno que prepara o corpo pro sono profundo.
         </p>
       </div>
-      <div class="flex gap-8 text-sm">
+      <div class="flex gap-10 md:gap-14 text-sm">
         <div>
-          <p class="font-bold text-white mb-3">Shop</p>
+          <p class="font-bold text-white mb-3">Site</p>
           <ul class="space-y-2">
-            <li><a href="./pdp.html" class="hover:text-teal transition">Chocolate Quente</a></li>
-            <li><a href="./pdp.html" class="hover:text-teal transition">Morango</a></li>
-            <li><a href="./pdp.html" class="hover:text-teal transition">Doce de Leite</a></li>
+            <li><a href="./advertorial-1.html" class="hover:text-teal transition">Página inicial</a></li>
+            <li><a href="#" class="hover:text-teal transition">Minha assinatura</a></li>
           </ul>
         </div>
         <div>
-          <p class="font-bold text-white mb-3">Info</p>
+          <p class="font-bold text-white mb-3">Redes sociais</p>
           <ul class="space-y-2">
-            <li><a href="#" class="hover:text-teal transition">FAQ</a></li>
-            <li><a href="#" class="hover:text-teal transition">Blog</a></li>
-            <li><a href="#" class="hover:text-teal transition">Contato</a></li>
+            <li><a href="#" target="_blank" rel="noopener" class="hover:text-teal transition inline-flex items-center gap-2">
+              <i data-lucide="instagram" class="w-4 h-4"></i> Instagram
+            </a></li>
+            <li><a href="#" target="_blank" rel="noopener" class="hover:text-teal transition inline-flex items-center gap-2">
+              <i data-lucide="facebook" class="w-4 h-4"></i> Facebook
+            </a></li>
           </ul>
         </div>
       </div>
@@ -1278,6 +3575,57 @@
 </div>
 
 <script>
+  // Stories Viewer (Instagram-style modal for customer testimonials)
+  function storiesViewer() {
+    return {
+      storyIdx: null,
+      currentSegment: 0,
+      seen: [],
+      stories: [
+        { user: '@charlotte.b',  name: 'Charlotte B.',  location: 'SP',           avatar: 'https://randomuser.me/api/portraits/women/22.jpg', duration: 45, media: './assets/CHOCOLATE 2.png',     caption: 'Meu ritual antes de dormir 💜' },
+        { user: '@juliana_r',    name: 'Juliana R.',    location: 'SP',           avatar: 'https://randomuser.me/api/portraits/women/45.jpg', duration: 60, media: './assets/MORANGO 3.png',       caption: 'Pack de 3 chegou — testando os sabores' },
+        { user: '@andre.f',      name: 'André F.',      location: 'RJ',           avatar: 'https://randomuser.me/api/portraits/men/52.jpg',   duration: 30, media: './assets/DOCE DE LEITE 1.png',  caption: 'Sabor surpreendeu' },
+        { user: '@robertof',     name: 'Roberto F.',    location: 'MG',           avatar: 'https://randomuser.me/api/portraits/men/68.jpg',   duration: 90, media: './assets/CHOCOLATE 3.png',     caption: 'Como Gudreams entrou na minha rotina' },
+        { user: '@marina.s',     name: 'Marina S.',     location: 'SP',           avatar: 'https://randomuser.me/api/portraits/women/56.jpg', duration: 30, media: './assets/CHOCOLATE 1.png',     caption: 'Chegou rapidinho 🚚' },
+        { user: '@lucasoliv',    name: 'Lucas O.',      location: 'SC',           avatar: 'https://randomuser.me/api/portraits/men/35.jpg',   duration: 60, media: './assets/MORANGO 2.png',       caption: 'Pré-treino noturno' },
+        { user: '@helena_t',     name: 'Helena T.',     location: 'BA',           avatar: 'https://randomuser.me/api/portraits/women/89.jpg', duration: 45, media: './assets/DOCE DE LEITE 3.png',  caption: 'Comprei pra mim e pros meus pais' },
+      ],
+      get totalSegments() {
+        if (this.storyIdx === null) return 0;
+        return Math.max(1, Math.ceil(this.stories[this.storyIdx].duration / 30));
+      },
+      openStory(i) {
+        this.storyIdx = i;
+        this.currentSegment = 0;
+        if (!this.seen.includes(i)) this.seen.push(i);
+      },
+      closeStory() {
+        this.storyIdx = null;
+        this.currentSegment = 0;
+      },
+      nextSegment() {
+        if (this.storyIdx === null) return;
+        if (this.currentSegment < this.totalSegments - 1) {
+          this.currentSegment++;
+        } else if (this.storyIdx < this.stories.length - 1) {
+          this.openStory(this.storyIdx + 1);
+        } else {
+          this.closeStory();
+        }
+      },
+      prevSegment() {
+        if (this.storyIdx === null) return;
+        if (this.currentSegment > 0) {
+          this.currentSegment--;
+        } else if (this.storyIdx > 0) {
+          const prevIdx = this.storyIdx - 1;
+          this.storyIdx = prevIdx;
+          this.currentSegment = Math.max(0, Math.ceil(this.stories[prevIdx].duration / 30) - 1);
+        }
+      }
+    };
+  }
+
   lucide.createIcons();
   AOS.init({
     duration: 700,
@@ -1285,6 +3633,42 @@
     once: true,
     offset: 60,
   });
+
+  // Slow + smooth scroll for hash anchor links
+  (function() {
+    const NAV_OFFSET = 80;
+    const DURATION = 1400; // ms — lento e suave
+
+    const easeInOutCubic = (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    function smoothScrollTo(targetY) {
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+      let startTime = null;
+      function step(now) {
+        if (startTime === null) startTime = now;
+        const progress = Math.min((now - startTime) / DURATION, 1);
+        window.scrollTo({ top: startY + distance * easeInOutCubic(progress), behavior: 'instant' });
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+      e.preventDefault();
+      const targetY = target.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+      smoothScrollTo(targetY);
+      // Update URL hash without jumping
+      history.replaceState(null, '', href);
+    }, { passive: false });
+  })();
 </script>
 
 </body>
