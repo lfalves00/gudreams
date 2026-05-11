@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slip — Análise de Cenários (LTV / Margem / CAC)</title>
+<meta name="description" content="Calculadora editável de LTV, margem de contribuição e CAC máximo no ciclo de 90 dias da Slip." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          deep:   '#2A1640',
+          ink:    '#1A0E2C',
+          purple: {
+            DEFAULT: '#6B3FA0',
+            900: '#1A0E2C', 800: '#2A1640', 700: '#3A1F58',
+            600: '#6B3FA0', 500: '#5A3A7F', 400: '#8372af',
+            300: '#A89AC9', 200: '#C9B6E0', 100: '#E5D9F0', 50: '#F4EFFA',
+          },
+          cream: { DEFAULT: '#F4EEE1', dark: '#E8DFC9', light: '#FAF6EC' },
+          paper: '#FAFAF5',
+          teal:  { DEFAULT: '#5EEAD4', deep: '#14B8A6', bright: '#7EF0DD' },
+          coral: '#FFB8B8',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          sans:    ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #1A0E2C;
+    background: #FAFAF5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .font-display { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+  .italic-display { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
+
+  .num-input {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    background: #FFFFFF;
+    border: 1px solid #E5D9F0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    width: 100%;
+    text-align: right;
+    font-size: 14px;
+    color: #1A0E2C;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .num-input:focus {
+    outline: none;
+    border-color: #6B3FA0;
+    box-shadow: 0 0 0 3px rgba(107,63,160,.12);
+  }
+  .num-input.invalid { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,.12); }
+
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E5D9F0;
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .card-purple {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F4EFFA 100%);
+    border: 1px solid #C9B6E0;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .pill-purple { background: #F4EFFA; color: #5A3A7F; }
+  .pill-teal   { background: #D1FAF1; color: #047857; }
+  .pill-cream  { background: #F4EEE1; color: #5A3A7F; }
+
+  .num { font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  .label-tiny {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #5A3A7F;
+  }
+
+  table.grid-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  table.grid-table th, table.grid-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #E5D9F0;
+    text-align: right;
+  }
+  table.grid-table th:first-child, table.grid-table td:first-child { text-align: left; }
+  table.grid-table thead th {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+    color: #5A3A7F; font-weight: 700; background: #F4EFFA;
+  }
+  table.grid-table tbody tr:hover { background: #FAFAF5; }
+  table.grid-table tfoot td {
+    font-weight: 700; background: #F4EEE1; color: #2A1640;
+    border-top: 2px solid #C9B6E0;
+  }
+
+  /* Variante compacta pra tabela do cashflow */
+  table.grid-table.compact { font-size: 11.5px; }
+  table.grid-table.compact th,
+  table.grid-table.compact td {
+    padding: 6px 6px;
+    white-space: nowrap;
+  }
+  table.grid-table.compact th {
+    font-size: 9.5px;
+  }
+
+  .chip-scn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid #C9B6E0;
+    background: #FFFFFF;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2A1640;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .chip-scn:hover { background: #F4EFFA; }
+  .chip-scn.active {
+    background: linear-gradient(105deg, #5A3A7F, #2A1640);
+    color: #FFFFFF;
+    border-color: #2A1640;
+  }
+  .chip-scn .x {
+    opacity: .55;
+    border-radius: 999px;
+    width: 16px; height: 16px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .chip-scn .x:hover { opacity: 1; background: rgba(0,0,0,.1); }
+  .chip-scn.active .x:hover { background: rgba(255,255,255,.2); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 600; font-size: 13px;
+    transition: all .15s;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: #2A1640; color: #FFFFFF; }
+  .btn-primary:hover { background: #1A0E2C; }
+  .btn-ghost { background: #FFFFFF; color: #2A1640; border-color: #C9B6E0; }
+  .btn-ghost:hover { background: #F4EFFA; }
+  .btn-danger { background: #FFFFFF; color: #B91C1C; border-color: #FCA5A5; }
+  .btn-danger:hover { background: #FEE2E2; }
+
+  details.collapsible > summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 0;
+  }
+  details.collapsible > summary::-webkit-details-marker { display: none; }
+  details.collapsible > summary .chev { transition: transform .2s; }
+  details.collapsible[open] > summary .chev { transform: rotate(180deg); }
+
+  .row-input { display: grid; grid-template-columns: 1fr 110px 24px; gap: 8px; align-items: center; margin-bottom: 6px; }
+  .row-input label { font-size: 13px; color: #2A1640; }
+  .row-input .suffix { font-size: 12px; color: #8372af; }
+
+  .kpi {
+    background: linear-gradient(135deg, #2A1640 0%, #6B3FA0 100%);
+    color: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(94,234,212,.18), transparent 50%);
+    pointer-events: none;
+  }
+  .kpi .v { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
+  .kpi .l { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; opacity: .8; margin-bottom: 8px; }
+  .kpi .sub { font-size: 12px; opacity: .75; margin-top: 6px; }
+
+  .kpi-light {
+    background: #FFFFFF;
+    border: 1px solid #C9B6E0;
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .kpi-light .v { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; color: #2A1640; line-height: 1; }
+  .kpi-light .l { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #5A3A7F; font-weight: 700; margin-bottom: 6px; }
+  .kpi-light .sub { font-size: 11px; color: #8372af; margin-top: 4px; }
+</style>
+</head>
+
+<body x-data="cenariosApp()" x-init="init()" x-cloak>
+
+<!-- HEADER -->
+<header class="border-b border-purple-100 bg-white sticky top-0 z-40">
+  <div class="max-w-[1400px] mx-auto px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <img
+          src="assets/logos/LOGO - SLIP ROXO PRIMÁRIO.png"
+          alt="Slip"
+          class="h-9 w-auto object-contain"
+        />
+        <div class="border-l border-purple-200 pl-3">
+          <h1 class="font-display text-xl font-semibold text-deep leading-none">Análise de cenários</h1>
+          <p class="text-[11px] text-purple-500 uppercase tracking-wider mt-0.5">LTV · Margem · CAC</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <input
+        type="text"
+        x-model="current.name"
+        @input="persist()"
+        class="num-input text-left font-sans font-medium text-deep"
+        style="width: 200px; text-align:left;"
+        placeholder="Nome do cenário"
+      />
+      <button class="btn btn-ghost" @click="duplicateScenario()">
+        <i data-lucide="copy" class="w-4 h-4"></i> Duplicar
+      </button>
+      <button class="btn btn-ghost" @click="openCompareModal()" x-show="scenarios.length > 1">
+        <i data-lucide="git-compare-arrows" class="w-4 h-4"></i> Comparar cenários
+      </button>
+      <button class="btn btn-primary" @click="newScenario()">
+        <i data-lucide="plus" class="w-4 h-4"></i> Novo cenário
+      </button>
+    </div>
+  </div>
+
+  <!-- Scenario chips -->
+  <div class="max-w-[1400px] mx-auto px-6 pb-3 flex flex-wrap gap-2">
+    <template x-for="(scn, idx) in scenarios" :key="scn.id">
+      <button
+        class="chip-scn"
+        :class="{ active: scn.id === current.id }"
+        @click="loadScenario(scn.id)"
+      >
+        <span x-text="scn.name"></span>
+        <span
+          class="x"
+          x-show="scenarios.length > 1"
+          @click.stop="deleteScenario(scn.id)"
+          title="Excluir cenário"
+        >
+          <i data-lucide="x" class="w-3 h-3"></i>
+        </span>
+      </button>
+    </template>
+    <button class="chip-scn" @click="resetToDefault()" title="Restaurar valores do schema original">
+      <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+      Reset default
+    </button>
+  </div>
+
+  <!-- Sticky in-page nav -->
+  <nav class="border-t border-purple-100 bg-purple-50/50 backdrop-blur">
+    <div class="max-w-[1400px] mx-auto px-6 py-2 flex items-center gap-1 overflow-x-auto">
+      <a href="#premissas" class="px-3 py-1.5 rounded-md text-xs font-semibold text-purple-700 hover:bg-purple-100 whitespace-nowrap transition">
+        <span class="text-purple-400 num mr-1">1.</span> Premissas & unit economics
+      </a>
+      <span class="text-purple-200">·</span>
+      <a href="#projecao" class="px-3 py-1.5 rounded-md text-xs font-semibold text-purple-700 hover:bg-purple-100 whitespace-nowrap transition">
+        <span class="text-purple-400 num mr-1">2.</span> Projeção de caixa
+      </a>
+    </div>
+  </nav>
+</header>
+
+<main class="max-w-[1400px] mx-auto px-6 py-8">
+
+  <!-- SECTION HEADER -->
+  <div class="mb-6">
+    <h2 class="font-display text-2xl font-semibold text-deep">Premissas & unit economics</h2>
+    <p class="text-sm text-purple-500 mt-1 leading-relaxed">
+      Base do <strong>CPA limite</strong>. O cálculo é sempre sobre a janela de <strong>90 dias</strong> de LTV + margem de contribuição.
+      Mesmo que a operação tenha LTV além de 90d (visto na seção de projeção), o CPA limite <strong>não considera isso</strong> — é o piso conservador.
+    </p>
+  </div>
+
+  <!-- KPI strip -->
+  <section id="unit-economics" class="scroll-mt-32 grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="kpi">
+      <div class="l">LTV blended (90d)</div>
+      <div class="v num">R$ <span x-text="fmt(c.ltvBlended)"></span></div>
+      <div class="sub">por novo cliente · ciclo 90 dias</div>
+    </div>
+    <div class="kpi" style="background: linear-gradient(135deg, #047857 0%, #14B8A6 100%);">
+      <div class="l">Margem de contribuição</div>
+      <div class="v num">R$ <span x-text="fmt(c.cmBlended)"></span></div>
+      <div class="sub"><span x-text="fmt(c.cmPct * 100)"></span>% do LTV</div>
+    </div>
+    <div class="kpi-light">
+      <div class="l">CAC máximo (breakeven)</div>
+      <div class="v num">R$ <span x-text="fmt(c.cmBlended)"></span></div>
+      <div class="sub">margem 1:1 — não sobra caixa</div>
+    </div>
+    <div class="kpi-light">
+      <div class="l">CAC alvo (3:1 sobre margem)</div>
+      <div class="v num">R$ <span x-text="fmt(c.cmBlended / 3)"></span></div>
+      <div class="sub">deixa 2x de margem pra reinvestir</div>
+    </div>
+  </section>
+
+  <!-- INPUTS + RESULTS -->
+  <div id="premissas" class="scroll-mt-32 grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+    <!-- INPUTS COLUMN -->
+    <div class="lg:col-span-3 space-y-6">
+
+      <!-- MIX -->
+      <div class="card card-purple">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display text-lg font-semibold text-deep">1. Mix de canal</h2>
+            <p class="text-xs text-purple-500 mt-0.5">Distribuição entre one-time (compra única) e assinatura</p>
+          </div>
+          <span class="pill pill-purple">% do total de pedidos iniciais</span>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <div class="label-tiny mb-1">One-time (compra única)</div>
+            <div class="flex items-center gap-2">
+              <input type="number" min="0" max="100" step="1" class="num-input" x-model.number="i.mixOTP" @input="i.mixSub = 100 - i.mixOTP; persist()">
+              <span class="text-sm text-purple-500">%</span>
+            </div>
+          </div>
+          <div>
+            <div class="label-tiny mb-1">Assinatura</div>
+            <div class="flex items-center gap-2">
+              <input type="number" min="0" max="100" step="1" class="num-input" x-model.number="i.mixSub" @input="i.mixOTP = 100 - i.mixSub; persist()">
+              <span class="text-sm text-purple-500">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTP -->
+      <div class="card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display text-lg font-semibold text-deep">2. One-time purchase</h2>
+            <p class="text-xs text-purple-500 mt-0.5">Ticket por bundle e participação no mix de one-time</p>
+          </div>
+          <span class="pill pill-cream">3 SKUs</span>
+        </div>
+        <table class="grid-table">
+          <thead>
+            <tr>
+              <th>Bundle</th>
+              <th>% do mix one-time</th>
+              <th>Ticket (R$)</th>
+              <th>Por pote (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(t, idx) in i.otp" :key="'otp'+idx">
+              <tr>
+                <td><span class="font-semibold" x-text="t.pots + (t.pots>1?' potes':' pote')"></span></td>
+                <td>
+                  <input type="number" min="0" max="100" step="1" class="num-input" x-model.number="t.mixPct" @input="persist()">
+                </td>
+                <td>
+                  <input type="number" min="0" step="0.01" class="num-input" x-model.number="t.ticket" @input="persist()">
+                </td>
+                <td class="num text-purple-500" x-text="fmt(t.ticket / t.pots)"></td>
+              </tr>
+            </template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Ticket médio one-time</td>
+              <td class="num" x-text="fmt(sumPct(i.otp)) + '%'" :class="Math.abs(sumPct(i.otp)-100) > 0.5 ? 'text-red-600' : ''"></td>
+              <td class="num">R$ <span x-text="fmt(c.avgTicketOTP)"></span></td>
+              <td class="num text-purple-500" x-text="fmt(c.avgPotsOTP) + ' potes'"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- SUB -->
+      <div class="card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display text-lg font-semibold text-deep">3. Assinatura</h2>
+            <p class="text-xs text-purple-500 mt-0.5">Bundle = frequência de renovação. 1p mensal · 2p bimestral · 3p trimestral</p>
+          </div>
+          <span class="pill pill-cream">3 frequências</span>
+        </div>
+        <table class="grid-table">
+          <thead>
+            <tr>
+              <th>Frequência</th>
+              <th>% do mix sub</th>
+              <th>Ticket/cobrança (R$)</th>
+              <th>Por pote (R$)</th>
+              <th>Cobranças em 90d</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(t, idx) in i.sub" :key="'sub'+idx">
+              <tr>
+                <td>
+                  <div class="font-semibold" x-text="t.label"></div>
+                  <div class="text-[11px] text-purple-400" x-text="t.pots + ' pote(s) · cada ' + t.cycleDays + 'd'"></div>
+                </td>
+                <td>
+                  <input type="number" min="0" max="100" step="1" class="num-input" x-model.number="t.mixPct" @input="persist()">
+                </td>
+                <td>
+                  <input type="number" min="0" step="0.01" class="num-input" x-model.number="t.ticket" @input="persist()">
+                </td>
+                <td class="num text-purple-500" x-text="fmt(t.ticket / t.pots)"></td>
+                <td>
+                  <input type="number" min="1" max="10" step="1" class="num-input" x-model.number="t.charges" @input="persist()">
+                </td>
+              </tr>
+            </template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Soma do mix</td>
+              <td class="num" x-text="fmt(sumPct(i.sub)) + '%'" :class="Math.abs(sumPct(i.sub)-100) > 0.5 ? 'text-red-600' : ''"></td>
+              <td colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- DROP CURVES -->
+        <div class="mt-5 p-4 rounded-xl bg-purple-50 border border-purple-100">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <div class="label-tiny">Curvas de retenção (drop entre cobranças)</div>
+              <p class="text-[11px] text-purple-500 mt-1">% que cancela entre uma cobrança e a próxima. Ex: 32% no m0→m1 = 68% renova.</p>
+            </div>
+          </div>
+
+          <template x-for="(t, idx) in i.sub" :key="'drop'+idx">
+            <div class="mb-4 last:mb-0">
+              <div class="text-xs font-semibold text-deep mb-2">
+                <span x-text="t.label"></span>
+                <span class="text-purple-400 font-normal" x-text="'(ciclo ' + ((t.pots === 1) ? '1m' : (t.pots === 2 ? '2m' : '3m')) + ')'"></span>
+              </div>
+
+              <!-- GRUPO 1: drops dentro de 90d (afetam CPA + unit economics) -->
+              <div class="p-2.5 rounded-lg mb-2" style="background:#F4EFFA; border:1px solid #C9B6E0;">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="pill pill-purple" style="font-size:9px; padding:2px 8px;">CPA · 90d</span>
+                  <span class="text-[10px] text-purple-600">drops que afetam o cálculo do CPA limite</span>
+                </div>
+                <div class="flex flex-wrap gap-2 items-center">
+                  <template x-for="(d, dIdx) in t.drops" :key="'cpa'+idx+'-'+dIdx">
+                    <div x-show="dIdx < t.charges - 1" class="flex items-center gap-1">
+                      <span class="text-[10px] text-purple-700 num font-mono font-semibold"
+                            x-text="'m' + (dIdx * ((t.pots === 1) ? 1 : (t.pots === 2 ? 2 : 3))) + '→m' + ((dIdx + 1) * ((t.pots === 1) ? 1 : (t.pots === 2 ? 2 : 3)))"></span>
+                      <input
+                        type="number" min="0" max="100" step="1"
+                        class="num-input" style="width: 60px;"
+                        x-model.number="t.drops[dIdx]"
+                        @input="persist()"
+                      >
+                      <span class="text-[10px] text-purple-500">%</span>
+                    </div>
+                  </template>
+                  <span x-show="t.charges - 1 === 0" class="text-[10px] text-purple-400 italic">
+                    sem drops dentro de 90d (apenas 1 cobrança no ciclo CPA)
+                  </span>
+                </div>
+              </div>
+
+              <!-- GRUPO 2: drops além de 90d (apenas projeção de caixa) -->
+              <div x-show="t.drops.length > t.charges - 1" class="p-2.5 rounded-lg" style="background:#FAFAF5; border:1px dashed #A89AC9;">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="pill" style="background:#E5D9F0; color:#5A3A7F; font-size:9px; padding:2px 8px;">Projeção estendida</span>
+                  <span class="text-[10px] text-purple-500">drops além de 90d — só impactam projeção de caixa</span>
+                </div>
+                <div class="flex flex-wrap gap-2 items-center">
+                  <template x-for="(d, dIdx) in t.drops" :key="'ext'+idx+'-'+dIdx">
+                    <div x-show="dIdx >= t.charges - 1" class="flex items-center gap-1 opacity-80">
+                      <span class="text-[10px] text-purple-500 num font-mono"
+                            x-text="'m' + (dIdx * ((t.pots === 1) ? 1 : (t.pots === 2 ? 2 : 3))) + '→m' + ((dIdx + 1) * ((t.pots === 1) ? 1 : (t.pots === 2 ? 2 : 3)))"></span>
+                      <input
+                        type="number" min="0" max="100" step="1"
+                        class="num-input" style="width: 60px;"
+                        x-model.number="t.drops[dIdx]"
+                        @input="persist()"
+                      >
+                      <span class="text-[10px] text-purple-400">%</span>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </template>
+
+          <div class="mt-3 pt-3 border-t border-purple-200 text-[11px] text-purple-600 leading-relaxed">
+            <strong>Por que dois grupos?</strong> O <strong>CPA limite</strong> só usa drops que caem dentro de 90d (visão conservadora). Os drops "estendidos" só importam quando você projeta o fluxo de caixa em 6/9/12 meses — eles não mudam o CPA limite, só a previsão de receita futura. Os drops crescem/encolhem automaticamente conforme você muda o horizonte da projeção.
+          </div>
+        </div>
+      </div>
+
+      <!-- COGS + welcome kit + tax + admin -->
+      <div class="card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display text-lg font-semibold text-deep">4. Custos & taxas</h2>
+            <p class="text-xs text-purple-500 mt-0.5">Custos diretos + impostos sobre receita. Tudo entra na margem de contribuição.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div>
+            <div class="label-tiny mb-1">Custo por pote</div>
+            <p class="text-[10px] text-purple-500 mb-1.5">CMV: produto + embalagem + frete</p>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-purple-500">R$</span>
+              <input type="number" min="0" step="0.01" class="num-input" x-model.number="i.cogsPerPot" @input="persist()">
+            </div>
+          </div>
+          <div>
+            <div class="label-tiny mb-1">Welcome kit</div>
+            <p class="text-[10px] text-purple-500 mb-1.5">Só pra novos assinantes, só no m0</p>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-purple-500">R$</span>
+              <input type="number" min="0" step="0.01" class="num-input" x-model.number="i.welcomeKitCost" @input="persist()">
+            </div>
+          </div>
+          <div>
+            <div class="label-tiny mb-1">Imposto</div>
+            <p class="text-[10px] text-purple-500 mb-1.5">% sobre receita (Simples ~7-12%)</p>
+            <div class="flex items-center gap-2">
+              <input type="number" min="0" max="100" step="0.1" class="num-input" x-model.number="i.taxPct" @input="persist()">
+              <span class="text-sm text-purple-500">%</span>
+            </div>
+          </div>
+          <div>
+            <div class="label-tiny mb-1">Taxa administrativa</div>
+            <p class="text-[10px] text-purple-500 mb-1.5">Gateway, processadora (~3-5%)</p>
+            <div class="flex items-center gap-2">
+              <input type="number" min="0" max="100" step="0.1" class="num-input" x-model.number="i.adminFeePct" @input="persist()">
+              <span class="text-sm text-purple-500">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BACKEND + REPURCHASE -->
+      <div class="card card-purple">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display text-lg font-semibold text-deep">5. Backend & recompra</h2>
+            <p class="text-xs text-purple-500 mt-0.5">Upsells, orderbumps, post-purchase + comportamento do one-time em 90d</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+          <div>
+            <div class="label-tiny mb-1">Backend médio por venda</div>
+            <p class="text-[11px] text-purple-500 mb-1.5">Soma média de upsells/orderbumps por transação inicial (one-time, recompra one-time e sub na compra inicial)</p>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-purple-500">R$</span>
+              <input type="number" min="0" step="0.01" class="num-input" x-model.number="i.backend.avgValue" @input="persist()" placeholder="0,00">
+            </div>
+          </div>
+          <div>
+            <div class="label-tiny mb-1">Margem do backend</div>
+            <p class="text-[11px] text-purple-500 mb-1.5">% de contribuição do backend (geralmente alto: 70–95%)</p>
+            <div class="flex items-center gap-2">
+              <input type="number" min="0" max="100" step="1" class="num-input" x-model.number="i.backend.marginPct" @input="persist()">
+              <span class="text-sm text-purple-500">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-purple-200">
+          <div class="label-tiny mb-1">Taxa de recompra one-time (em 90d)</div>
+          <p class="text-[11px] text-purple-500 mb-1.5">% dos clientes one-time que voltam e fazem nova compra dentro da janela de 90 dias. Cada recompra paga ticket + backend de novo.</p>
+          <div class="flex items-center gap-2 max-w-[200px]">
+            <input type="number" min="0" max="200" step="1" class="num-input" x-model.number="i.otpRepurchaseRate" @input="persist()">
+            <span class="text-sm text-purple-500">%</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESULTS COLUMN -->
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- BREAKDOWN POR CANAL -->
+      <div class="card">
+        <h3 class="font-display text-lg font-semibold text-deep mb-1">Resultado por canal</h3>
+        <p class="text-xs text-purple-500 mb-4">Por novo cliente, ciclo de 90 dias</p>
+
+        <table class="grid-table">
+          <thead>
+            <tr>
+              <th>Canal</th>
+              <th>LTV</th>
+              <th>Margem</th>
+              <th>Margem %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="font-semibold">One-time</div>
+                <div class="text-[11px] text-purple-400">
+                  <span x-text="fmt(i.mixOTP)+'% mix'"></span>
+                  <span x-show="c.repRate > 0" x-text="' · '+fmt(c.repRate*100)+'% recompra'"></span>
+                </div>
+              </td>
+              <td class="num">R$ <span x-text="fmt(c.ltvOTP)"></span></td>
+              <td class="num">R$ <span x-text="fmt(c.cmOTP)"></span></td>
+              <td class="num text-purple-500" x-text="(c.ltvOTP>0 ? fmt((c.cmOTP/c.ltvOTP)*100) : '0,00')+'%'"></td>
+            </tr>
+            <template x-for="(t, idx) in c.subRows" :key="'sr'+idx">
+              <tr>
+                <td>
+                  <div class="font-semibold" x-text="'Sub · '+t.label"></div>
+                  <div class="text-[11px] text-purple-400" x-text="fmt(i.mixSub * t.mixPct/100)+'% do mix'"></div>
+                </td>
+                <td class="num">R$ <span x-text="fmt(t.ltv)"></span></td>
+                <td class="num">R$ <span x-text="fmt(t.cm)"></span></td>
+                <td class="num text-purple-500" x-text="(t.ltv>0 ? fmt((t.cm/t.ltv)*100) : '0,00')+'%'"></td>
+              </tr>
+            </template>
+            <tr style="background:#F4EFFA;">
+              <td><span class="font-semibold">Sub blended</span></td>
+              <td class="num">R$ <span x-text="fmt(c.ltvSub)"></span></td>
+              <td class="num">R$ <span x-text="fmt(c.cmSub)"></span></td>
+              <td class="num text-purple-500" x-text="(c.ltvSub>0 ? fmt((c.cmSub/c.ltvSub)*100) : '0,00')+'%'"></td>
+            </tr>
+            <tr x-show="c.beAvg > 0" style="background:#FAF6EC;">
+              <td>
+                <div class="font-semibold text-purple-700">↳ dos quais backend</div>
+                <div class="text-[11px] text-purple-400" x-text="'R$ '+fmt(c.beAvg)+' por transação · '+fmt(i.backend.marginPct)+'% margem'"></div>
+              </td>
+              <td class="num">R$ <span x-text="fmt(c.beRevBlended)"></span></td>
+              <td class="num">R$ <span x-text="fmt(c.beCMBlended)"></span></td>
+              <td class="num text-purple-500"></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Blended (one-time + sub)</td>
+              <td class="num">R$ <span x-text="fmt(c.ltvBlended)"></span></td>
+              <td class="num">R$ <span x-text="fmt(c.cmBlended)"></span></td>
+              <td class="num" x-text="fmt(c.cmPct*100)+'%'"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- CAC THRESHOLDS -->
+      <div class="card card-purple">
+        <h3 class="font-display text-lg font-semibold text-deep mb-1">CAC máximo que você pode pagar</h3>
+        <p class="text-xs text-purple-500 mb-4">Baseado na margem blended de R$ <span class="num font-semibold" x-text="fmt(c.cmBlended)"></span> · payback dentro do ciclo de 90d</p>
+
+        <div class="space-y-3">
+          <div class="kpi-light">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="l">Margem 1:1 — Breakeven no ciclo</div>
+                <div class="sub">Iguala a margem. Não sobra caixa pra reinvestir.</div>
+              </div>
+              <div class="v num">R$ <span x-text="fmt(c.cmBlended)"></span></div>
+            </div>
+          </div>
+          <div class="kpi-light">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="l">Margem 2:1 — Payback rápido</div>
+                <div class="sub">Sobra 1x de margem. Bom pra escalar com fluxo de caixa apertado.</div>
+              </div>
+              <div class="v num">R$ <span x-text="fmt(c.cmBlended/2)"></span></div>
+            </div>
+          </div>
+          <div class="kpi-light" style="background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border-color:#7EF0DD;">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="l" style="color:#047857;">Margem 3:1 — Saudável</div>
+                <div class="sub">Padrão DTC. Sobra 2x de margem pra reinvestir e absorver ineficiência.</div>
+              </div>
+              <div class="v num">R$ <span x-text="fmt(c.cmBlended/3)"></span></div>
+            </div>
+          </div>
+          <div class="kpi-light">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="l">Margem 4:1 — Conservador</div>
+                <div class="sub">Margem alta de segurança. Difícil escalar volume.</div>
+              </div>
+              <div class="v num">R$ <span x-text="fmt(c.cmBlended/4)"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETALHE SUB -->
+      <details class="card collapsible" open>
+        <summary>
+          <div>
+            <h3 class="font-display text-lg font-semibold text-deep">Detalhe das curvas de assinatura</h3>
+            <p class="text-xs text-purple-500">Cohort survival e revenue acumulado</p>
+          </div>
+          <i data-lucide="chevron-down" class="w-5 h-5 text-purple-500 chev"></i>
+        </summary>
+        <div class="mt-4 space-y-5">
+          <template x-for="(t, idx) in c.subDetail" :key="'sd'+idx">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="font-semibold text-deep" x-text="t.label"></div>
+                <span class="pill pill-purple num" x-text="'LTV R$ '+fmt(t.ltv)"></span>
+              </div>
+              <table class="grid-table">
+                <thead>
+                  <tr>
+                    <th>Cobrança</th>
+                    <th>Cohort vivo</th>
+                    <th>Receita</th>
+                    <th>Custo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template x-for="(c, cIdx) in t.charges" :key="'c'+idx+'-'+cIdx">
+                    <tr>
+                      <td>
+                        <span class="font-semibold" x-text="'m'+c.month"></span>
+                        <span class="text-[11px] text-purple-400 ml-1" x-text="'(d'+c.day+')'"></span>
+                      </td>
+                      <td class="num" x-text="fmt(c.survival*100)+'%'"></td>
+                      <td class="num">R$ <span x-text="fmt(c.revenue)"></span></td>
+                      <td class="num text-purple-500">R$ <span x-text="fmt(c.cogs)"></span></td>
+                    </tr>
+                  </template>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Total ciclo</td>
+                    <td></td>
+                    <td class="num">R$ <span x-text="fmt(t.ltv)"></span></td>
+                    <td class="num">R$ <span x-text="fmt(t.totalCogs)"></span></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </template>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- CASHFLOW MODULE -->
+  <section id="projecao" class="scroll-mt-32 mt-12 pt-10 border-t border-purple-100">
+    <div class="mb-6">
+      <h2 class="font-display text-2xl font-semibold text-deep">Projeção de fluxo de caixa</h2>
+      <p class="text-sm text-purple-500 mt-1">
+        Cohort-on-cohort. Cada mês mostra a soma de receita/margem/caixa de todos os cohorts ativos. <strong>LTV/margem unit economics permanece sempre em 90d</strong> (base do CAC) — só a projeção de caixa estende.
+      </p>
+
+      <!-- Horizon selector + investor lens -->
+      <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div class="p-3 rounded-xl bg-purple-50 border border-purple-100">
+          <div class="label-tiny mb-2">Horizonte da projeção</div>
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <template x-for="opt in [{m:3, d:90}, {m:6, d:180}, {m:9, d:270}, {m:12, d:360}]" :key="opt.m">
+              <button
+                @click="setHorizon(opt.m)"
+                :class="i.cashflow.horizonMonths === opt.m ? 'bg-deep text-white border-deep' : 'bg-white text-deep border-purple-200 hover:bg-purple-100'"
+                class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition flex items-center gap-1.5">
+                <span class="num" x-text="opt.d + 'd'"></span>
+                <span class="opacity-60 font-normal" x-text="'· ' + opt.m + 'm'"></span>
+              </button>
+            </template>
+          </div>
+          <p class="text-[11px] text-purple-500 mt-2">Quanto maior o horizonte, mais cohorts conseguem rodar ciclos completos. Investimento e CAC são editáveis mês a mês.</p>
+        </div>
+
+        <!-- Lente do investidor -->
+        <div
+          class="p-3 rounded-xl border"
+          :style="cf.totals.selfSustaining
+            ? 'background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border-color:#7EF0DD;'
+            : (cf.totals.capitalRecovered
+              ? 'background: linear-gradient(135deg, #FAF6EC 0%, #FFFFFF 100%); border-color:#E8DFC9;'
+              : 'background: linear-gradient(135deg, #F4EFFA 0%, #FFFFFF 100%); border-color:#C9B6E0;')">
+          <div class="label-tiny mb-1">Lente do investidor</div>
+          <div class="text-[12px] leading-relaxed" :style="cf.totals.selfSustaining ? 'color:#065F46;' : 'color:#2A1640;'">
+            <template x-if="cf.totals.capitalRecovered && cf.totals.selfSustaining">
+              <div>
+                <strong>✓ Capital recuperado em <span x-text="(cf.months[cf.totals.capitalRecoveryMonthIdx]||{}).label || '—'"></span></strong>
+                · operação se sustenta sozinha (último mês: <span class="num">R$ <span x-text="fmt(cf.totals.lastMonthCash)"></span></span> de caixa positivo).
+                Investidor pode resgatar <strong class="num">R$ <span x-text="fmt(cf.initialCapital)"></span></strong> e deixa
+                <strong class="num">R$ <span x-text="fmt(cf.totals.surplusOverCapital)"></span></strong> de capital de giro próprio.
+              </div>
+            </template>
+            <template x-if="cf.totals.capitalRecovered && !cf.totals.selfSustaining">
+              <div>
+                <strong>~ Capital recuperado em <span x-text="(cf.months[cf.totals.capitalRecoveryMonthIdx]||{}).label || '—'"></span></strong>,
+                mas o último mês fechou com caixa de <span class="num">R$ <span x-text="fmt(cf.totals.lastMonthCash)"></span></span>.
+                Resgate dos <span class="num">R$ <span x-text="fmt(cf.initialCapital)"></span></span> só é seguro se o trend continuar positivo.
+              </div>
+            </template>
+            <template x-if="!cf.totals.capitalRecovered">
+              <div>
+                <strong>✗ Capital ainda não recuperado</strong> nesse horizonte.
+                Caixa gerado: <span class="num">R$ <span x-text="fmt(cf.totals.cash)"></span></span> de
+                <span class="num">R$ <span x-text="fmt(cf.initialCapital)"></span></span>.
+                Faltam <strong class="num">R$ <span x-text="fmt(Math.max(0, cf.initialCapital - cf.totals.cash))"></span></strong>
+                pra retornar o aporte do investidor.
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== SEÇÃO 1: PREMISSAS MENSAIS (full width) ============== -->
+    <div class="mb-8">
+      <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
+        <div>
+          <h3 class="font-display text-lg font-semibold text-deep">Premissas mensais — investimento, CAC e custo operacional</h3>
+          <p class="text-xs text-purple-500 mt-0.5">Edite cada mês independentemente. Esses números alimentam toda a projeção abaixo.</p>
+        </div>
+      </div>
+
+      <div class="card card-purple">
+        <!-- Top: capital + dias -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 mb-4 border-b border-purple-200">
+          <div class="p-3 rounded-lg bg-white border border-purple-200">
+            <div class="label-tiny mb-1">Capital de giro inicial</div>
+            <p class="text-[11px] text-purple-500 mb-2 leading-snug">Quanto você tem disponível pra bancar o investimento. O caixa que entra (margem) volta pra esse pote — quando estoura, precisa de aporte novo.</p>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-purple-500">R$</span>
+              <input type="number" min="0" step="1000" class="num-input" x-model.number="i.cashflow.initialCapital" @input="persist()">
+            </div>
+          </div>
+          <div class="p-3 rounded-lg bg-white border border-purple-200">
+            <div class="label-tiny mb-1">Dias por mês</div>
+            <p class="text-[11px] text-purple-500 mb-2 leading-snug">Multiplicador pra converter R$/dia em total mensal de investimento.</p>
+            <div class="flex items-center gap-2">
+              <input type="number" min="1" max="31" step="1" class="num-input" style="max-width:120px;" x-model.number="i.cashflow.daysPerMonth" @input="persist()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bulk fillers (CAC + opcost) -->
+        <div class="mb-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-2 rounded-lg bg-white border border-purple-100 text-[11px] text-purple-600 flex flex-wrap items-center gap-2">
+            <span class="font-semibold">CAC — preencher tudo:</span>
+            <button class="underline hover:text-deep" @click="fillCacAll(c.cmBlended/3); persist()" title="CAC 3:1 sobre margem">
+              3:1 (R$ <span class="num" x-text="fmt(c.cmBlended/3)"></span>)
+            </button>
+            <span class="text-purple-300">·</span>
+            <button class="underline hover:text-deep" @click="fillCacAll(c.cmBlended/2); persist()">
+              2:1 (R$ <span class="num" x-text="fmt(c.cmBlended/2)"></span>)
+            </button>
+            <span class="text-purple-300">·</span>
+            <button class="underline hover:text-deep" @click="fillCacAll(c.cmBlended); persist()">
+              1:1 (R$ <span class="num" x-text="fmt(c.cmBlended)"></span>)
+            </button>
+          </div>
+          <div class="p-2 rounded-lg bg-white border border-purple-100 text-[11px] text-purple-600 flex flex-wrap items-center gap-2">
+            <span class="font-semibold">Custo op. — preencher tudo:</span>
+            <button class="underline hover:text-deep" @click="fillOpCostAll(10000); persist()">R$ 10k</button>
+            <span class="text-purple-300">·</span>
+            <button class="underline hover:text-deep" @click="fillOpCostAll(20000); persist()">R$ 20k</button>
+            <span class="text-purple-300">·</span>
+            <button class="underline hover:text-deep" @click="fillOpCostAll(50000); persist()">R$ 50k</button>
+            <span class="text-purple-300">·</span>
+            <button class="underline hover:text-deep" @click="fillOpCostAll(0); persist()">zerar</button>
+          </div>
+        </div>
+
+        <!-- Per-month input table -->
+        <table class="grid-table compact w-full">
+          <thead>
+            <tr>
+              <th>Mês</th>
+              <th>R$/dia (ads)</th>
+              <th>CAC (R$)</th>
+              <th>Custo op. (R$/mês)</th>
+              <th>Total invest. mês</th>
+              <th>Clientes adquiridos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(_, idx) in i.cashflow.monthlySpend" :key="'imrow'+idx">
+              <tr>
+                <td>
+                  <span class="font-semibold font-mono text-purple-700" x-text="'m'+idx"></span>
+                </td>
+                <td>
+                  <input type="number" min="0" step="1" class="num-input" x-model.number="i.cashflow.monthlySpend[idx]" @input="persist()">
+                </td>
+                <td>
+                  <input type="number" min="0.01" step="0.01" class="num-input" x-model.number="i.cashflow.cacByMonth[idx]" @input="persist()">
+                </td>
+                <td>
+                  <input type="number" min="0" step="100" class="num-input" x-model.number="i.cashflow.monthlyOpCost[idx]" @input="persist()">
+                </td>
+                <td class="num text-purple-500" x-text="'R$ '+fmtK((i.cashflow.monthlySpend[idx]||0) * (i.cashflow.daysPerMonth||30))"></td>
+                <td class="num text-purple-500" x-text="fmtK(((i.cashflow.monthlySpend[idx]||0) * (i.cashflow.daysPerMonth||30)) / (Number(i.cashflow.cacByMonth[idx])||0.01))"></td>
+              </tr>
+            </template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Total / médio</td>
+              <td class="text-purple-400">—</td>
+              <td class="num text-purple-500" x-text="'R$ '+fmtK(cf.totals.avgCac)+' médio'"></td>
+              <td class="num" x-text="'R$ '+fmtK(cf.totals.opCost)"></td>
+              <td class="num" x-text="'R$ '+fmtK(cf.totals.invest)"></td>
+              <td class="num" x-text="fmtK(cf.totals.customers)+' clientes'"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============== SEÇÃO 2: DASHBOARD DE RESULTADO (full width) ============== -->
+    <div class="mb-8">
+      <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
+        <div>
+          <h3 class="font-display text-lg font-semibold text-deep">Dashboard de resultado</h3>
+          <p class="text-xs text-purple-500 mt-0.5">Resumo do horizonte: capital de giro, P&L, MRR previsível e valuation.</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+
+        <!-- BANNER de status de capital -->
+        <div
+          class="p-4 rounded-xl flex items-start gap-3"
+          :style="cf.totals.breach
+            ? 'background: linear-gradient(135deg, #FEE2E2 0%, #FFFFFF 100%); border:1px solid #FCA5A5;'
+            : 'background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border:1px solid #7EF0DD;'"
+        >
+          <div class="mt-0.5" :style="cf.totals.breach ? 'color:#B91C1C;' : 'color:#047857;'">
+            <i x-show="!cf.totals.breach" data-lucide="check-circle-2" class="w-5 h-5"></i>
+            <i x-show="cf.totals.breach" data-lucide="alert-triangle" class="w-5 h-5"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-sm" :style="cf.totals.breach ? 'color:#991B1B;' : 'color:#065F46;'"
+                 x-text="cf.totals.breach ? 'Capital de giro insuficiente' : 'Capital de giro suficiente'"></div>
+            <div class="text-[12px] mt-1 leading-relaxed" :style="cf.totals.breach ? 'color:#7F1D1D;' : 'color:#064E3B;'">
+              <template x-if="!cf.totals.breach">
+                <span>
+                  Capital inicial <strong class="num">R$ <span x-text="fmt(cf.initialCapital)"></span></strong>
+                  cobre o ciclo. Saldo mínimo no fim de
+                  <strong x-text="(cf.months[cf.totals.minSaldoMonthIdx]||cf.months[0]).label"></strong>:
+                  <strong class="num">R$ <span x-text="fmt(cf.totals.minSaldoFim)"></span></strong>
+                  · sobra <strong class="num">R$ <span x-text="fmt(cf.totals.reserveBuffer)"></span></strong> de buffer.
+                </span>
+              </template>
+              <template x-if="cf.totals.breach">
+                <span>
+                  O caixa estoura em <strong x-text="(cf.months[cf.totals.minSaldoMonthIdx]||cf.months[0]).label"></strong>
+                  (saldo: <strong class="num">R$ <span x-text="fmt(cf.totals.minSaldoFim)"></span></strong>).
+                  Precisa de mais <strong class="num">R$ <span x-text="fmt(cf.totals.additionalCapitalNeeded)"></span></strong> de aporte
+                  — ou capital total mínimo de <strong class="num">R$ <span x-text="fmt(cf.totals.minCapitalRequired)"></span></strong>.
+                </span>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPIs em 4 colunas -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="kpi-light">
+            <div class="l">Investimento total</div>
+            <div class="v num" style="color:#9B2C2C;">− R$ <span x-text="fmt(cf.totals.invest)"></span></div>
+            <div class="sub" x-text="'CAC médio R$ '+fmt(cf.totals.avgCac)+' · '+fmt(cf.totals.customers)+' clientes'"></div>
+          </div>
+          <div class="kpi-light">
+            <div class="l">Faturamento total</div>
+            <div class="v num">R$ <span x-text="fmt(cf.totals.faturamento)"></span></div>
+            <div class="sub" x-text="'receita acumulada em '+(cf.horizon*cf.days)+'d'"></div>
+          </div>
+          <div class="kpi-light">
+            <div class="l">Margem total</div>
+            <div class="v num">R$ <span x-text="fmt(cf.totals.margem)"></span></div>
+            <div class="sub" x-text="cf.totals.faturamento > 0 ? fmt(cf.totals.margem/cf.totals.faturamento*100)+'% do faturamento' : '—'"></div>
+          </div>
+          <div
+            class="kpi-light"
+            :style="cf.totals.cash >= 0
+              ? 'background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border-color:#7EF0DD;'
+              : 'background: linear-gradient(135deg, #FEE2E2 0%, #FFFFFF 100%); border-color:#FCA5A5;'">
+            <div class="l" :style="cf.totals.cash >= 0 ? 'color:#047857;' : 'color:#9B2C2C;'" x-text="'Caixa gerado em '+(cf.horizon*cf.days)+'d'"></div>
+            <div class="v num" :style="cf.totals.cash >= 0 ? 'color:#047857;' : 'color:#B91C1C;'">R$ <span x-text="fmt(cf.totals.cash)"></span></div>
+            <div class="sub" x-text="'Margem R$ '+fmt(cf.totals.margem)+' − Invest R$ '+fmt(cf.totals.invest)"></div>
+          </div>
+        </div>
+
+        <!-- Saldo final na empresa (após retirada de lucro pelos sócios) -->
+        <div class="kpi-light"
+             :style="cf.totals.finalSaldo >= 0
+               ? 'background: linear-gradient(135deg, #FFFFFF 0%, #F4EFFA 100%); border-color:#A89AC9;'
+               : 'background: linear-gradient(135deg, #FEE2E2 0%, #FFFFFF 100%); border-color:#FCA5A5;'">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <div class="l" x-text="'Saldo de caixa NA EMPRESA no fim do ciclo (m'+(cf.horizon-1)+')'"></div>
+              <div class="sub mt-1 leading-relaxed">
+                = Capital inicial <span class="num">R$ <span x-text="fmt(cf.initialCapital)"></span></span>
+                + Caixa gerado <span class="num">R$ <span x-text="fmt(cf.totals.cash)"></span></span>
+                − Lucro retirado pelos sócios <span class="num" style="color:#9B2C2C;">R$ <span x-text="fmt(cf.totals.finalProfit)"></span></span>
+              </div>
+            </div>
+            <div class="v num" :style="cf.totals.finalSaldo >= 0 ? 'color:#2A1640;' : 'color:#9B2C2C;'">
+              R$ <span x-text="fmt(cf.totals.finalSaldo)"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- VALUATION CARD -->
+        <div
+          class="p-4 rounded-xl border"
+          style="background: linear-gradient(135deg, #2A1640 0%, #6B3FA0 100%); border-color:#3A1F58; color:#FFFFFF;"
+          x-data="{ editMultiple: false }"
+        >
+          <div class="flex items-start justify-between mb-2 gap-2">
+            <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider" style="color:#C9B6E0;">Valuation projetado</div>
+              <p class="text-[11px] mt-0.5" style="color:#A89AC9;">EBITDA anual × múltiplo. EBITDA ≈ caixa líquido (sem juros/impostos/D&A).</p>
+            </div>
+            <button
+              @click="editMultiple = !editMultiple"
+              class="text-[11px] font-semibold px-2 py-1 rounded-md flex items-center gap-1 transition"
+              :style="editMultiple ? 'background:#5EEAD4; color:#064E3B;' : 'background:rgba(255,255,255,.12); color:#FFFFFF;'"
+            >
+              <i data-lucide="pencil" class="w-3 h-3"></i>
+              <span x-text="editMultiple ? 'Fechar' : 'Editar múltiplo'"></span>
+            </button>
+          </div>
+
+          <div class="font-display text-3xl font-semibold num">R$ <span x-text="fmt(cf.totals.valuation)"></span></div>
+
+          <div class="text-[12px] mt-2 num" style="color:#E5D9F0;">
+            EBITDA anual <span class="font-semibold">R$ <span x-text="fmt(cf.totals.ebitdaAnnual)"></span></span>
+            × <span class="font-semibold" x-text="fmt(cf.totals.valuationMultiple)+'x'"></span>
+            <template x-if="cf.horizon < 12">
+              <span class="text-[10px] block mt-0.5" style="color:#A89AC9;">
+                Anualizado: média mensal R$ <span x-text="fmt(cf.totals.ebitdaMonthlyAvg)"></span> × 12 (horizonte de <span x-text="cf.horizon"></span>m extrapolado)
+              </span>
+            </template>
+            <template x-if="cf.horizon === 12">
+              <span class="text-[10px] block mt-0.5" style="color:#A89AC9;">Ano completo de projeção, sem extrapolação.</span>
+            </template>
+          </div>
+
+          <div x-show="editMultiple" class="mt-3 pt-3" style="border-top:1px solid rgba(255,255,255,.15);">
+            <div class="flex items-center gap-2">
+              <span class="text-sm" style="color:#C9B6E0;">Múltiplo:</span>
+              <input
+                type="number" min="0" step="0.5"
+                style="background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#FFFFFF; max-width:80px; text-align:right;"
+                class="num-input"
+                x-model.number="i.cashflow.valuationMultiple"
+                @input="persist()">
+              <span class="text-sm" style="color:#C9B6E0;">x</span>
+            </div>
+            <p class="text-[11px] mt-2" style="color:#A89AC9;">Múltiplos típicos: DTC consumo 3–5x · marca consolidada 5–8x · SaaS 8–12x · marketplace 6–10x</p>
+          </div>
+        </div>
+
+        <!-- MRR previsto pós-horizonte -->
+        <div class="p-4 rounded-xl border border-purple-200" style="background: linear-gradient(135deg, #FFFFFF 0%, #F4EFFA 100%);">
+          <div class="flex items-start justify-between mb-3 gap-2">
+            <div>
+              <div class="label-tiny" style="color:#5A3A7F;">Receita previsível de ASSINATURAS pós-horizonte</div>
+              <p class="text-[11px] text-purple-500 mt-0.5">Faturamento <strong>recorrente de assinatura</strong> já contratado dos assinantes ativos no fim do m<span x-text="cf.horizon-1"></span> — projetado pra próximos 30/60/90 dias usando as curvas de retenção. <strong>Não inclui novos clientes, recompras OTP nem backend.</strong></p>
+            </div>
+            <i data-lucide="trending-up" class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"></i>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="p-3 rounded-lg bg-white border border-purple-100">
+              <div class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">1º mês <span class="text-purple-300 ml-1">(d+30)</span></div>
+              <div class="font-display text-xl font-semibold num text-deep mt-0.5">R$ <span x-text="fmt(cf.totals.mrrMonth1)"></span></div>
+              <div class="text-[10px] text-purple-400 mt-0.5">recorrência projetada do mês</div>
+            </div>
+            <div class="p-3 rounded-lg bg-white border border-purple-100">
+              <div class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">2º mês <span class="text-purple-300 ml-1">(d+60)</span></div>
+              <div class="font-display text-xl font-semibold num text-deep mt-0.5">R$ <span x-text="fmt(cf.totals.mrrMonth2)"></span></div>
+              <div class="text-[10px] text-purple-400 mt-0.5">recorrência projetada do mês</div>
+            </div>
+            <div class="p-3 rounded-lg bg-white border border-purple-100">
+              <div class="text-[10px] text-purple-500 font-bold uppercase tracking-wider">3º mês <span class="text-purple-300 ml-1">(d+90)</span></div>
+              <div class="font-display text-xl font-semibold num text-deep mt-0.5">R$ <span x-text="fmt(cf.totals.mrrMonth3)"></span></div>
+              <div class="text-[10px] text-purple-400 mt-0.5">recorrência projetada do mês</div>
+            </div>
+          </div>
+
+          <!-- Total summary -->
+          <div class="mt-3 pt-3 border-t border-purple-200 flex items-center justify-between">
+            <div class="text-[11px] text-purple-600">
+              <strong>Recorrência projetada — receita total nos próximos 90d</strong>
+              <div class="text-[10px] text-purple-400 mt-0.5">soma dos 3 meses · receita 100% contratada por assinaturas ativas</div>
+            </div>
+            <div class="num font-semibold text-deep text-base">R$ <span x-text="fmt(cf.totals.mrrD90)"></span></div>
+          </div>
+        </div>
+
+      </div>
+
+    <!-- DISTRIBUIÇÃO DO CAIXA EM 3 BUCKETS (dentro da Seção 2) -->
+    <div class="card mb-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-display text-lg font-semibold text-deep">Distribuição do EBITDA gerado</h3>
+          <p class="text-xs text-purple-500 mt-0.5">A cada mês com caixa positivo, o EBITDA é dividido em 3 partes: <strong>lucro</strong> sai da empresa (sócios), <strong>aquisição + operacional</strong> ficam reservados em caixa. Edite os % livremente.</p>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-1">
+            <input type="number" min="0" max="100" step="1" class="num-input" style="width:60px;" x-model.number="i.cashflow.cashSplit.profit" @input="persist()">
+            <span class="text-xs text-purple-500">% lucro</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <input type="number" min="0" max="100" step="1" class="num-input" style="width:60px;" x-model.number="i.cashflow.cashSplit.marketing" @input="persist()">
+            <span class="text-xs text-purple-500">% aquisição</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <input type="number" min="0" max="100" step="1" class="num-input" style="width:60px;" x-model.number="i.cashflow.cashSplit.operational" @input="persist()">
+            <span class="text-xs text-purple-500">% op.</span>
+          </div>
+          <span
+            class="text-[11px] num font-semibold px-2 py-1 rounded"
+            :class="(i.cashflow.cashSplit.profit + i.cashflow.cashSplit.marketing + i.cashflow.cashSplit.operational) === 100 ? 'bg-teal-deep text-white' : 'bg-coral text-deep'"
+            x-text="'Σ ' + (i.cashflow.cashSplit.profit + i.cashflow.cashSplit.marketing + i.cashflow.cashSplit.operational) + '%'"></span>
+        </div>
+      </div>
+
+      <!-- HERO: EBITDA gerado total -->
+      <div class="p-6 rounded-2xl mb-3" style="background: linear-gradient(135deg, #2A1640 0%, #6B3FA0 100%); color:#FFFFFF;">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-wider" style="color:#C9B6E0;">EBITDA gerado (total)</div>
+            <div class="text-[12px] mt-1" style="color:#A89AC9;">soma do caixa positivo do operacional ao longo do horizonte de <span x-text="cf.horizon"></span> meses</div>
+          </div>
+          <div class="font-display text-4xl font-semibold num">R$ <span x-text="fmt(cf.totals.bucketTotal)"></span></div>
+        </div>
+      </div>
+
+      <!-- Composições do EBITDA (3 partes) -->
+      <div class="text-[10px] font-bold uppercase tracking-wider text-purple-500 mb-2 ml-1">Composições do EBITDA (acumulado)</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="kpi-light" style="background: linear-gradient(135deg, #FFE4E4 0%, #FFFFFF 100%); border-color:#FFB8B8;">
+          <div class="l" style="color:#9B2C2C;">− Distribuído em lucro</div>
+          <div class="v num" style="color:#9B2C2C;">R$ <span x-text="fmt(cf.totals.finalProfit)"></span></div>
+          <div class="sub" x-text="fmt(cf.totals.profitPct*100)+'% do EBITDA — sai pra sócios · média R$ '+fmt(cf.totals.finalProfit / Math.max(1, cf.horizon))+'/mês'"></div>
+        </div>
+        <div class="kpi-light" style="background: linear-gradient(135deg, #F4EFFA 0%, #FFFFFF 100%); border-color:#C9B6E0;">
+          <div class="l" style="color:#5A3A7F;">+ Reservado pra caixa de aquisição</div>
+          <div class="v num" style="color:#5A3A7F;">R$ <span x-text="fmt(cf.totals.finalMarketing)"></span></div>
+          <div class="sub" x-text="fmt(cf.totals.marketingPct*100)+'% do EBITDA — fica em caixa pra próximos ciclos · média R$ '+fmt(cf.totals.finalMarketing / Math.max(1, cf.horizon))+'/mês'"></div>
+        </div>
+        <div class="kpi-light" style="background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border-color:#7EF0DD;">
+          <div class="l" style="color:#047857;">+ Reservado pra caixa operacional</div>
+          <div class="v num" style="color:#047857;">R$ <span x-text="fmt(cf.totals.finalOperational)"></span></div>
+          <div class="sub" x-text="fmt(cf.totals.operationalPct*100)+'% do EBITDA — folha, fornecedor, fixos · média R$ '+fmt(cf.totals.finalOperational / Math.max(1, cf.horizon))+'/mês'"></div>
+        </div>
+      </div>
+
+      <!-- Total reservado em caixa (resultado final) -->
+      <div class="mt-3 p-4 rounded-xl flex items-center justify-between flex-wrap gap-3" style="background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border:1px solid #7EF0DD;">
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider" style="color:#047857;">= Total reservado em caixa (fica na empresa)</div>
+          <div class="text-[11px] mt-0.5" style="color:#065F46;" x-text="'aquisição + operacional · '+fmt((cf.totals.marketingPct+cf.totals.operationalPct)*100)+'% do EBITDA'"></div>
+        </div>
+        <div class="font-display text-2xl font-semibold num" style="color:#047857;">R$ <span x-text="fmt(cf.totals.bucketReserved)"></span></div>
+      </div>
+
+      <div class="mt-3 p-3 rounded-lg bg-purple-50 border border-purple-100 text-[11px] text-purple-700 leading-relaxed">
+        <strong>Como ler:</strong> o <strong>EBITDA gerado</strong> é o caixa positivo total que o operacional produziu. Desse total, o lucro <strong>sai da empresa</strong> (vai pros sócios) e os outros dois ficam <strong>reservados em caixa</strong> pra alimentar próximos ciclos. Meses negativos não distribuem nem reservam — são cobertos pelo capital de giro. As <strong>colunas mensais na tabela</strong> mostram quanto cada mês contribuiu pra cada parte.
+      </div>
+    </div>
+
+      </div>
+    </div>
+    <!-- ============== FIM SEÇÃO 2 ============== -->
+
+    <!-- ============== SEÇÃO 3: ANÁLISE MENSAL COMPLETA (full width) ============== -->
+    <div>
+      <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
+        <div>
+          <h3 class="font-display text-lg font-semibold text-deep">Análise mês a mês</h3>
+          <p class="text-xs text-purple-500 mt-0.5">P&L mensal completo: cada cohort, cada gasto, cada bucket. Valores em K (mil) e M (milhão) pra caber na tela.</p>
+        </div>
+      </div>
+
+    <!-- MONTHLY P&L -->
+    <div class="card">
+      <table class="grid-table compact w-full">
+        <thead>
+          <tr>
+            <th>Mês</th>
+            <th>CAC</th>
+            <th>Novos clientes</th>
+            <th style="background:#FAF6EC;">Potes vendidos</th>
+            <th>Faturamento</th>
+            <th>Custo prod.</th>
+            <th style="color:#9B2C2C;">Imp. & taxas</th>
+            <th>Margem</th>
+            <th style="color:#9B2C2C;">Investimento</th>
+            <th style="color:#9B2C2C;">Custo op.</th>
+            <th style="border-left:2px solid #C9B6E0;">Caixa líquido</th>
+            <th>Saldo de caixa</th>
+            <th style="background:#FAF6EC; white-space:normal; max-width:90px;">Distribuído em lucro (mês)</th>
+            <th style="background:#F4EFFA; white-space:normal; max-width:90px;">Reservado mensal pra aquisição</th>
+            <th style="background:#D1FAF1; white-space:normal; max-width:90px;">Reservado mensal pra caixa op.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="(m, idx) in cf.months" :key="'cfm'+idx">
+            <tr>
+              <td>
+                <div class="font-semibold" x-text="m.label"></div>
+                <div class="text-[10px] text-purple-400" x-text="'d'+(idx*cf.days)+'–'+((idx+1)*cf.days-1)"></div>
+              </td>
+              <td class="num text-purple-500" x-text="fmtK(m.cac)"></td>
+              <td class="num text-purple-500" x-text="fmtK(m.newCustomers)"></td>
+              <td class="num" style="background:#FAF6EC; color:#5A3A7F;" x-text="fmtK(m.pots)"></td>
+              <td class="num" x-text="fmtK(m.faturamento)"></td>
+              <td class="num text-purple-500" x-text="fmtK(m.productCogs)"></td>
+              <td class="num" style="color:#9B2C2C;" x-text="'−'+fmtK(m.taxAdm)"></td>
+              <td class="num font-semibold" x-text="fmtK(m.margem)"></td>
+              <td class="num" style="color:#9B2C2C;" x-text="'−'+fmtK(m.invest)"></td>
+              <td class="num" style="color:#9B2C2C;" x-text="'−'+fmtK(m.opCost)"></td>
+              <td class="num font-semibold" :style="'border-left:2px solid #C9B6E0; color:'+(m.cash >= 0 ? '#047857' : '#9B2C2C')+';'" x-text="fmtK(m.cash)"></td>
+              <td class="num font-semibold" :style="m.saldoFim >= 0 ? 'color:#2A1640;' : 'color:#9B2C2C; background:#FEE2E2;'" x-text="fmtK(m.saldoFim)"></td>
+              <td class="num" style="background:#FAF6EC; color:#5A3A7F;">
+                <div x-text="fmtK(m.bucketProfit)"></div>
+                <div class="text-[9px] opacity-60 font-normal" x-text="'Σ '+fmtK(m.cumProfit)"></div>
+              </td>
+              <td class="num" style="background:#F4EFFA; color:#5A3A7F;">
+                <div x-text="fmtK(m.bucketMarketing)"></div>
+                <div class="text-[9px] opacity-60 font-normal" x-text="'Σ '+fmtK(m.cumMarketing)"></div>
+              </td>
+              <td class="num" style="background:#D1FAF1; color:#047857;">
+                <div x-text="fmtK(m.bucketOperational)"></div>
+                <div class="text-[9px] opacity-60 font-normal" x-text="'Σ '+fmtK(m.cumOperational)"></div>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td x-text="'Total '+(cf.horizon*cf.days)+'d'"></td>
+            <td class="num text-purple-500" x-text="fmtK(cf.totals.avgCac)"></td>
+            <td class="num text-purple-500" x-text="fmtK(cf.totals.customers)"></td>
+            <td class="num" style="background:#FAF6EC; color:#5A3A7F;" x-text="fmtK(cf.totals.pots)"></td>
+            <td class="num" x-text="fmtK(cf.totals.faturamento)"></td>
+            <td class="num" x-text="fmtK(cf.totals.faturamento - cf.totals.margem - cf.totals.taxAdm)"></td>
+            <td class="num" style="color:#9B2C2C;" x-text="'−'+fmtK(cf.totals.taxAdm)"></td>
+            <td class="num" x-text="fmtK(cf.totals.margem)"></td>
+            <td class="num" style="color:#9B2C2C;" x-text="'−'+fmtK(cf.totals.invest)"></td>
+            <td class="num" style="color:#9B2C2C;" x-text="'−'+fmtK(cf.totals.opCost)"></td>
+            <td class="num" style="border-left:2px solid #C9B6E0;" x-text="fmtK(cf.totals.cash)"></td>
+            <td class="num" :style="cf.totals.finalSaldo >= 0 ? '' : 'color:#9B2C2C;'" x-text="fmtK(cf.totals.finalSaldo)"></td>
+            <td class="num" style="background:#FAF6EC;" x-text="fmtK(cf.totals.finalProfit)"></td>
+            <td class="num" style="background:#F4EFFA;" x-text="fmtK(cf.totals.finalMarketing)"></td>
+            <td class="num" style="background:#D1FAF1;" x-text="fmtK(cf.totals.finalOperational)"></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <!-- Equação textual -->
+      <div class="mt-4 p-3 rounded-lg bg-paper border border-purple-100 text-[12px] num leading-relaxed">
+        <span class="text-purple-500">Faturamento</span> R$ <span x-text="fmt(cf.totals.faturamento)"></span>
+        <span class="text-purple-300 mx-1">−</span>
+        <span class="text-purple-500">Custo prod</span> R$ <span x-text="fmt(cf.totals.faturamento - cf.totals.margem - cf.totals.taxAdm)"></span>
+        <span class="text-purple-300 mx-1">−</span>
+        <span style="color:#9B2C2C;">Imp & taxas</span> <span style="color:#9B2C2C;">R$ <span x-text="fmt(cf.totals.taxAdm)"></span></span>
+        <span class="text-purple-300 mx-1">=</span>
+        <span class="text-deep font-semibold">Margem</span> R$ <span class="font-semibold" x-text="fmt(cf.totals.margem)"></span>
+        <span class="text-purple-300 mx-1">−</span>
+        <span style="color:#9B2C2C;">Invest</span> <span style="color:#9B2C2C;">R$ <span x-text="fmt(cf.totals.invest)"></span></span>
+        <span class="text-purple-300 mx-1">−</span>
+        <span style="color:#9B2C2C;">Custo op</span> <span style="color:#9B2C2C;">R$ <span x-text="fmt(cf.totals.opCost)"></span></span>
+        <span class="text-purple-300 mx-1">=</span>
+        <span class="font-semibold" :style="cf.totals.cash >= 0 ? 'color:#047857;' : 'color:#9B2C2C;'">Caixa líquido R$ <span x-text="fmt(cf.totals.cash)"></span></span>
+      </div>
+
+      <div class="mt-3 p-3 rounded-lg bg-cream-light border border-cream-dark text-[12px] text-purple-700 leading-relaxed">
+        <strong>Cohort-on-cohort:</strong> janela de
+        <span class="num font-semibold" x-text="cf.horizon * cf.days + 'd'"></span>
+        (m0 a m<span x-text="cf.horizon - 1"></span>).
+        Cohort adquirido em m<span x-text="cf.horizon - 1"></span> só contribui com a compra inicial; cohort de m0 roda o ciclo completo dentro do horizonte.
+        <strong>Saldo de caixa</strong> = capital inicial + caixa acumulado até o mês.
+        <strong>Buckets</strong> aplicam o split (% editável) sobre o caixa <em>positivo</em> de cada mês — meses negativos não aportam.
+      </div>
+    </div>
+    </div>
+    <!-- ============== FIM SEÇÃO 3 ============== -->
+
+    <!-- ============== SEÇÃO 4: ANÁLISE POR LEAD MÉDIO ============== -->
+    <div class="mt-8">
+      <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
+        <div>
+          <h3 class="font-display text-lg font-semibold text-deep">Análise por lead médio</h3>
+          <p class="text-xs text-purple-500 mt-0.5">
+            Como evolui um <strong>lead "médio"</strong> (mix ponderado de OTP + sub mensal/bimestral/trimestral) ao longo do horizonte.
+            Mostra o ciclo de vida econômico — receita, custo, margem e LTV cumulativo — pra entender quanto sobra por lead vs. CAC.
+          </p>
+        </div>
+      </div>
+
+      <!-- KPI strip por lead -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+        <div class="kpi-light">
+          <div class="l">LTV por lead</div>
+          <div class="v num">R$ <span x-text="fmt(leadJourney.totals.ltv)"></span></div>
+          <div class="sub" x-text="cf.horizon+'m de ciclo · receita acumulada'"></div>
+        </div>
+        <div class="kpi-light">
+          <div class="l">Margem por lead</div>
+          <div class="v num">R$ <span x-text="fmt(leadJourney.totals.margem)"></span></div>
+          <div class="sub" x-text="(leadJourney.totals.ltv > 0 ? fmt(leadJourney.totals.margem/leadJourney.totals.ltv*100) : '0,00')+'% do LTV'"></div>
+        </div>
+        <div class="kpi-light">
+          <div class="l">CAC médio</div>
+          <div class="v num" style="color:#9B2C2C;">− R$ <span x-text="fmt(leadJourney.avgCac)"></span></div>
+          <div class="sub">o que pagamos pra adquirir esse lead</div>
+        </div>
+        <div class="kpi-light"
+             :style="leadJourney.netPerLead >= 0
+               ? 'background: linear-gradient(135deg, #D1FAF1 0%, #FFFFFF 100%); border-color:#7EF0DD;'
+               : 'background: linear-gradient(135deg, #FEE2E2 0%, #FFFFFF 100%); border-color:#FCA5A5;'">
+          <div class="l" :style="leadJourney.netPerLead >= 0 ? 'color:#047857;' : 'color:#9B2C2C;'">Sobra líquida por lead</div>
+          <div class="v num" :style="leadJourney.netPerLead >= 0 ? 'color:#047857;' : 'color:#9B2C2C;'">R$ <span x-text="fmt(leadJourney.netPerLead)"></span></div>
+          <div class="sub">= margem − CAC médio</div>
+        </div>
+      </div>
+
+      <!-- Lifecycle table -->
+      <div class="card">
+        <table class="grid-table compact w-full">
+          <thead>
+            <tr>
+              <th>Mês</th>
+              <th>Receita / lead</th>
+              <th>Custo prod / lead</th>
+              <th style="color:#9B2C2C;">Imp. & taxas / lead</th>
+              <th>Margem / lead</th>
+              <th>LTV acum.</th>
+              <th>Margem acum.</th>
+              <th>Compara CAC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(lead, idx) in leadJourney.rows" :key="'lead'+idx">
+              <tr>
+                <td>
+                  <div class="font-semibold" x-text="lead.label"></div>
+                  <div class="text-[10px] text-purple-400" x-text="'d'+(idx*cf.days)+'–'+((idx+1)*cf.days-1)"></div>
+                </td>
+                <td class="num" x-text="fmt(lead.receita)"></td>
+                <td class="num text-purple-500" x-text="fmt(lead.cogs)"></td>
+                <td class="num" style="color:#9B2C2C;" x-text="'−'+fmt(lead.taxAdm)"></td>
+                <td class="num font-semibold" :style="lead.margem >= 0 ? '' : 'color:#9B2C2C;'" x-text="fmt(lead.margem)"></td>
+                <td class="num" x-text="fmt(lead.cumLtv)"></td>
+                <td class="num font-semibold" x-text="fmt(lead.cumMargem)"></td>
+                <td class="num font-semibold"
+                    :style="lead.cumMargem >= leadJourney.avgCac ? 'color:#047857;' : 'color:#9B2C2C;'"
+                    x-text="(lead.cumMargem - leadJourney.avgCac >= 0 ? '+' : '') + fmt(lead.cumMargem - leadJourney.avgCac)"></td>
+              </tr>
+            </template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Total</td>
+              <td class="num">R$ <span x-text="fmt(leadJourney.totals.ltv)"></span></td>
+              <td class="num">R$ <span x-text="fmt(leadJourney.totals.cogs)"></span></td>
+              <td class="num" style="color:#9B2C2C;">−R$ <span x-text="fmt(leadJourney.totals.taxAdm)"></span></td>
+              <td class="num">R$ <span x-text="fmt(leadJourney.totals.margem)"></span></td>
+              <td class="num">R$ <span x-text="fmt(leadJourney.totals.ltv)"></span></td>
+              <td class="num">R$ <span x-text="fmt(leadJourney.totals.margem)"></span></td>
+              <td class="num font-semibold" :style="leadJourney.netPerLead >= 0 ? 'color:#047857;' : 'color:#9B2C2C;'" x-text="(leadJourney.netPerLead >= 0 ? '+' : '') + fmt(leadJourney.netPerLead)"></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Breakeven indicator -->
+        <div class="mt-3 p-3 rounded-lg flex items-start gap-2"
+             :style="leadJourney.breakeven >= 0
+               ? 'background:#D1FAF1; border:1px solid #7EF0DD; color:#065F46;'
+               : 'background:#FFF5F5; border:1px solid #FCA5A5; color:#7F1D1D;'">
+          <i x-show="leadJourney.breakeven >= 0" data-lucide="check-circle-2" class="w-4 h-4 mt-0.5 shrink-0"></i>
+          <i x-show="leadJourney.breakeven < 0" data-lucide="alert-triangle" class="w-4 h-4 mt-0.5 shrink-0"></i>
+          <div class="text-[12px] leading-relaxed">
+            <template x-if="leadJourney.breakeven >= 0">
+              <span>
+                <strong>Lead vira positivo em <span x-text="'m'+leadJourney.breakeven"></span></strong> —
+                a margem acumulada ultrapassa o CAC médio (R$ <span class="num" x-text="fmt(leadJourney.avgCac)"></span>) nesse mês.
+                Antes disso, cada lead ainda tá em "déficit".
+              </span>
+            </template>
+            <template x-if="leadJourney.breakeven < 0">
+              <span>
+                <strong>Lead não vira positivo no horizonte de <span x-text="cf.horizon"></span>m</strong> —
+                margem acumulada (R$ <span class="num" x-text="fmt(leadJourney.totals.margem)"></span>) ainda não cobre o CAC médio (R$ <span class="num" x-text="fmt(leadJourney.avgCac)"></span>).
+                Falta R$ <span class="num" x-text="fmt(leadJourney.avgCac - leadJourney.totals.margem)"></span> por lead.
+              </span>
+            </template>
+          </div>
+        </div>
+
+        <div class="mt-3 p-3 rounded-lg bg-purple-50 border border-purple-100 text-[11px] text-purple-700 leading-relaxed">
+          <strong>Como ler:</strong> valores são <strong>por lead médio ponderado</strong> (mix OTP + sub). LTV cumulativo cresce a cada cobrança;
+          margem cumulativa também — mas começa baixa porque welcome kit, primeira cobrança e impostos pesam no m0.
+          O ciclo "vira no positivo" quando a margem acumulada ultrapassa o CAC médio.
+        </div>
+      </div>
+    </div>
+    <!-- ============== FIM SEÇÃO 4 ============== -->
+
+  </section>
+
+  <!-- METHOD NOTE -->
+  <section class="mt-10 p-5 rounded-xl bg-purple-50 border border-purple-100">
+    <details class="collapsible">
+      <summary>
+        <div class="flex items-center gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-purple-600"></i>
+          <span class="font-semibold text-deep">Como o cálculo funciona</span>
+        </div>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-purple-500 chev"></i>
+      </summary>
+      <div class="mt-3 text-sm text-purple-800 space-y-2 leading-relaxed">
+        <p><strong>Janela:</strong> 90 dias, contando a renovação que cai no dia 90/91.</p>
+        <p><strong>Mensal:</strong> 4 cobranças (d0, d30, d60, d90). Drops aplicados entre cobranças consecutivas: cohort vivo na cobrança N+1 = cohort N × (1 − drop).</p>
+        <p><strong>Bimestral:</strong> 2 cobranças (d0, d60). Drop único entre m0 e m2.</p>
+        <p><strong>Trimestral:</strong> 2 cobranças (d0, d90). Drop único entre m0 e m3.</p>
+        <p><strong>One-time:</strong> ticket médio inicial = soma ponderada por mix. Em 90d: aplica taxa de recompra → cada cliente paga (1 + recompra) tickets e (1 + recompra) backends. Custo escala junto.</p>
+        <p><strong>Backend (upsells/orderbumps):</strong> aplicado em toda transação inicial — one-time inicial, recompra one-time e sub inicial. <strong>Não</strong> é aplicado em renovações de assinatura (auto-charge silencioso, sem funil de upsell).</p>
+        <p><strong>LTV blended</strong> = mix_one-time × LTV_one-time_90d + mix_sub × LTV_sub_blended (LTV_one-time_90d já inclui recompra + backend).</p>
+        <p><strong>Margem blended</strong> = LTV blended − custo blended − custo do backend. Margem do backend = backend × margem%.</p>
+        <p><strong>CAC máx</strong>: margem 1:1 = breakeven. Margem 3:1 = padrão DTC saudável (sobra 2× pra reinvestir).</p>
+        <p class="pt-2 border-t border-purple-200"><strong>Projeção de fluxo de caixa:</strong> cohort-on-cohort dentro de 90d. Para cada mês M, somo a receita de TODOS os cohorts ativos: cohort K contribui o offset (M − K) do cronograma per-customer. Cohorts adquiridos tarde só contam o que cabe na janela — não extrapolo m4+. <strong>Caixa do mês</strong> = margem do mês − investimento do mês. <strong>Caixa acumulado</strong> = soma móvel — vai mostrar quando o ciclo "vira" no positivo.</p>
+        <p class="text-xs text-purple-500 pt-2 border-t border-purple-200">⚠ A premissa "1 pote = mensal, 2 = bimestral, 3 = trimestral" foi assumida porque a frequência não foi separada do bundle. Se a tua realidade for diferente, ajuste os campos "Cobranças em 90d" e "Curvas de retenção".</p>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<script>
+function defaultScenario(name = 'Default', id = null) {
+  return {
+    id: id || ('scn_' + Date.now() + '_' + Math.random().toString(36).slice(2,7)),
+    name,
+    inputs: {
+      mixOTP: 65,
+      mixSub: 35,
+      otp: [
+        { pots: 1, mixPct: 60, ticket: 169 },
+        { pots: 2, mixPct: 25, ticket: 289 },
+        { pots: 3, mixPct: 15, ticket: 379 },
+      ],
+      sub: [
+        { pots: 1, label: 'Mensal',     cycleDays: 30, mixPct: 60, ticket: 129.90, charges: 4, drops: [32, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] },
+        { pots: 2, label: 'Bimestral',  cycleDays: 60, mixPct: 25, ticket: 229.90, charges: 2, drops: [15, 15, 15, 15, 15, 15, 15] },
+        { pots: 3, label: 'Trimestral', cycleDays: 90, mixPct: 15, ticket: 289.90, charges: 2, drops: [32, 15, 15, 15] },
+      ],
+      cogsPerPot: 35,
+      welcomeKitCost: 25,
+      taxPct: 7,
+      adminFeePct: 4,
+      backend: { avgValue: 0, marginPct: 80 },
+      otpRepurchaseRate: 0,
+      cashflow: {
+        daysPerMonth: 30,
+        horizonMonths: 12,
+        monthlySpend:  [500, 500, 500, 1000, 1000, 1500, 1500, 2000, 2000, 2500, 2500, 3000],
+        cacByMonth:    [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+        monthlyOpCost: [10000,10000,10000,10000,10000,15000,15000,15000,20000,20000,20000,25000],
+        initialCapital: 500000,
+        cashSplit: { profit: 30, marketing: 50, operational: 20 },
+        valuationMultiple: 5,
+      },
+    },
+  };
+}
+
+// Calcula quantos drops uma tier de assinatura precisa pra cobrir o horizonte + 3m de MRR projection
+function requiredDropsForTier(tier, horizon) {
+  const cycleMonths = (tier.pots === 1) ? 1 : (tier.pots === 2 ? 2 : 3);
+  const effectiveWindow = horizon + 3;
+  let dropsNeeded = 0;
+  while ((dropsNeeded + 1) * cycleMonths < effectiveWindow) dropsNeeded++;
+  return dropsNeeded;
+}
+
+function resizeTierDrops(tier, horizon) {
+  const needed = requiredDropsForTier(tier, horizon);
+  if (!Array.isArray(tier.drops)) tier.drops = [];
+  const last = tier.drops.length > 0 ? tier.drops[tier.drops.length - 1] : 15;
+  while (tier.drops.length < needed) tier.drops.push(last);
+  // Não trunca — preserva valores extras se o user tiver setado
+}
+
+// Constrói o cronograma per-customer de receita e custo por mês (offsets 0..4)
+// considerando o mix OTP+sub, drops, recompra e backend.
+function buildPerCustomerSchedule(i, horizon = 4) {
+  const beAvg    = Number(i.backend?.avgValue) || 0;
+  const beMargin = (Number(i.backend?.marginPct) || 0) / 100;
+  const beCM     = beAvg * beMargin;
+  const beCost   = beAvg - beCM;
+  const repRate  = (Number(i.otpRepurchaseRate) || 0) / 100;
+  const cogsPerPot = i.cogsPerPot;
+  const wkCost     = Number(i.welcomeKitCost) || 0;
+
+  const otpTotalPct  = i.otp.reduce((a,t)=>a+t.mixPct,0) || 1;
+  const avgTicketOTP = i.otp.reduce((a,t)=>a + t.ticket * (t.mixPct/otpTotalPct), 0);
+  const avgPotsOTP   = i.otp.reduce((a,t)=>a + t.pots   * (t.mixPct/otpTotalPct), 0);
+  const otpCogsTrans = avgPotsOTP * cogsPerPot;
+
+  const wOTP = (i.mixOTP || 0) / 100;
+  const wSub = (i.mixSub || 0) / 100;
+  const subTotalPct = i.sub.reduce((a,t)=>a+t.mixPct,0) || 1;
+
+  const sched = Array.from({length: horizon}, () => ({ rev: 0, cogs: 0, beRev: 0, beCost: 0, pots: 0 }));
+
+  // OTP — inicial em offset 0, recompra distribuída em offsets 1..3
+  sched[0].rev    += wOTP * avgTicketOTP;
+  sched[0].cogs   += wOTP * otpCogsTrans;
+  sched[0].beRev  += wOTP * beAvg;
+  sched[0].beCost += wOTP * beCost;
+  sched[0].pots   += wOTP * avgPotsOTP;
+  const repPerMonth = repRate / 3;
+  for (let m = 1; m <= 3 && m < horizon; m++) {
+    sched[m].rev    += wOTP * repPerMonth * avgTicketOTP;
+    sched[m].cogs   += wOTP * repPerMonth * otpCogsTrans;
+    sched[m].beRev  += wOTP * repPerMonth * beAvg;
+    sched[m].beCost += wOTP * repPerMonth * beCost;
+    sched[m].pots   += wOTP * repPerMonth * avgPotsOTP;
+  }
+
+  // Sub — por tier; backend só na compra inicial
+  for (const t of i.sub) {
+    const tierWeight = wSub * (t.mixPct / subTotalPct);
+    const cycleMonths = (t.pots === 1) ? 1 : (t.pots === 2 ? 2 : 3);
+    let survival = 1;
+    for (let chargeIdx = 0; ; chargeIdx++) {
+      const m = chargeIdx * cycleMonths;
+      if (m >= horizon) break;
+      if (chargeIdx > 0) {
+        const dropPct = (t.drops[chargeIdx - 1] != null
+          ? t.drops[chargeIdx - 1]
+          : (t.drops[t.drops.length - 1] || 0)) / 100;
+        survival = survival * (1 - dropPct);
+      }
+      sched[m].rev  += tierWeight * t.ticket * survival;
+      sched[m].cogs += tierWeight * t.pots * cogsPerPot * survival;
+      sched[m].pots += tierWeight * t.pots * survival;
+      if (chargeIdx === 0) {
+        sched[m].cogs   += tierWeight * wkCost; // welcome kit só na compra inicial
+        sched[m].beRev  += tierWeight * beAvg;
+        sched[m].beCost += tierWeight * beCost;
+      }
+    }
+  }
+
+  // Imposto + taxa administrativa (% sobre receita total)
+  const taxAdmRate = ((Number(i.taxPct) || 0) + (Number(i.adminFeePct) || 0)) / 100;
+
+  // Conveniências por mês: faturamento, taxAdm, custo total e margem
+  return sched.map(s => {
+    const fat = s.rev + s.beRev;
+    const taxAdm = fat * taxAdmRate;
+    const cost = s.cogs + s.beCost + taxAdm;
+    return {
+      ...s,
+      faturamento: fat,
+      taxAdm,
+      custo: cost,
+      margem: fat - cost,
+    };
+  });
+}
+
+// Cronograma só de receita de SUB (pra MRR previsível futuro)
+function buildSubOnlySchedule(i, horizon) {
+  const cogsPerPot = i.cogsPerPot;
+  const wSub = (i.mixSub || 0) / 100;
+  const subTotalPct = i.sub.reduce((a,t)=>a+t.mixPct,0) || 1;
+  const sched = Array.from({length: horizon}, () => ({ rev: 0, cogs: 0 }));
+
+  for (const t of i.sub) {
+    const tierWeight = wSub * (t.mixPct / subTotalPct);
+    const cycleMonths = (t.pots === 1) ? 1 : (t.pots === 2 ? 2 : 3);
+    let survival = 1;
+    for (let chargeIdx = 0; ; chargeIdx++) {
+      const m = chargeIdx * cycleMonths;
+      if (m >= horizon) break;
+      if (chargeIdx > 0) {
+        const dropPct = (t.drops[chargeIdx - 1] != null
+          ? t.drops[chargeIdx - 1]
+          : (t.drops[t.drops.length - 1] || 0)) / 100;
+        survival = survival * (1 - dropPct);
+      }
+      sched[m].rev  += tierWeight * t.ticket * survival;
+      sched[m].cogs += tierWeight * t.pots * cogsPerPot * survival;
+    }
+  }
+  return sched;
+}
+
+function computeCashflow(s) {
+  const i = s.inputs;
+  const cf = i.cashflow || { daysPerMonth: 30, monthlySpend: [0,0,0,0], cacByMonth: [100,100,100,100], initialCapital: 0 };
+  const days = Number(cf.daysPerMonth) || 30;
+  const horizon = (cf.monthlySpend || []).length || 4;
+  const initialCapital = Number(cf.initialCapital) || 0;
+  const sched = buildPerCustomerSchedule(i, horizon);
+
+  // Por cohort — CAC por mês
+  const cohorts = [];
+  for (let K = 0; K < horizon; K++) {
+    const dailySpend = Number(cf.monthlySpend[K]) || 0;
+    const monthSpend = dailySpend * days;
+    const cacK = Math.max(Number(cf.cacByMonth?.[K]) || 0.01, 0.01);
+    const customers  = monthSpend / cacK;
+    cohorts.push({ dailySpend, monthSpend, cac: cacK, customers });
+  }
+
+  // Split do caixa positivo em 3 buckets — calculado dentro do loop pra abater lucro do saldo
+  const split = cf.cashSplit || { profit: 30, marketing: 50, operational: 20 };
+  const splitSum = (Number(split.profit)||0) + (Number(split.marketing)||0) + (Number(split.operational)||0) || 100;
+  const profitPct      = (Number(split.profit)||0)      / splitSum;
+  const marketingPct   = (Number(split.marketing)||0)   / splitSum;
+  const operationalPct = (Number(split.operational)||0) / splitSum;
+
+  // Mês a mês — inclui custo operacional fixo, saldo de caixa rolando (DESCONTANDO lucro retirado)
+  const opCostArr = cf.monthlyOpCost || [];
+  let cumCash = 0;          // caixa operacional acumulado (margem − invest − op cost), antes da retirada
+  let cumCashRetained = 0;  // caixa que FICA na empresa (após retirada de lucro)
+  let cumCashGross = 0;     // caixa BRUTO acumulado (margem - invest, sem custo op)
+  let cumInvest = 0;
+  let cumOpCost = 0;
+  let cumFaturamento = 0;
+  let cumMargem = 0;
+  let cumCustomers = 0;
+  let cumProfit = 0, cumMarketing = 0, cumOperational = 0;
+  let saldoFim = initialCapital;
+  let minSaldoFim = initialCapital;
+  let minSaldoMonthIdx = -1;
+  const months = [];
+  let cumTaxAdm = 0, cumPots = 0;
+  for (let M = 0; M < horizon; M++) {
+    let faturamento = 0, custo = 0, beFaturamento = 0, taxAdm = 0, productCogs = 0, pots = 0;
+    let newCustomers = cohorts[M].customers;
+    for (let K = 0; K <= M; K++) {
+      const offset = M - K;
+      if (offset >= horizon) continue;
+      const c = cohorts[K].customers;
+      faturamento   += c * sched[offset].faturamento;
+      custo         += c * sched[offset].custo;
+      beFaturamento += c * sched[offset].beRev;
+      taxAdm        += c * sched[offset].taxAdm;
+      productCogs   += c * (sched[offset].cogs + sched[offset].beCost);
+      pots          += c * (sched[offset].pots || 0);
+    }
+    const margem = faturamento - custo;
+    const invest = cohorts[M].monthSpend;
+    const opCost = Number(opCostArr[M]) || 0;
+    const cashGross = margem - invest;
+    const cash      = cashGross - opCost;        // caixa operacional (após op cost), antes da retirada de lucro
+    // Split em 3 buckets — só sobre cash positivo
+    const positive = Math.max(0, cash);
+    const bucketProfit      = positive * profitPct;
+    const bucketMarketing   = positive * marketingPct;
+    const bucketOperational = positive * operationalPct;
+    // Lucro sai da empresa (sócios retiram). Aquisição + operacional ficam.
+    const cashRetained = cash - bucketProfit;
+    const saldoInicio = saldoFim;
+    saldoFim = saldoInicio + cashRetained;
+    if (saldoFim < minSaldoFim) { minSaldoFim = saldoFim; minSaldoMonthIdx = M; }
+    cumCashGross    += cashGross;
+    cumCash         += cash;
+    cumCashRetained += cashRetained;
+    cumProfit       += bucketProfit;
+    cumMarketing    += bucketMarketing;
+    cumOperational  += bucketOperational;
+    cumInvest    += invest;
+    cumOpCost    += opCost;
+    cumTaxAdm    += taxAdm;
+    cumPots      += pots;
+    cumFaturamento += faturamento;
+    cumMargem    += margem;
+    cumCustomers += newCustomers;
+    months.push({
+      label: 'm' + M,
+      invest, newCustomers, cac: cohorts[M].cac,
+      faturamento, beFaturamento,
+      custo, margem, taxAdm, productCogs, pots,
+      opCost,
+      cashGross, cash, cashRetained,
+      cumCash,
+      bucketProfit, bucketMarketing, bucketOperational,
+      cumProfit, cumMarketing, cumOperational,
+      saldoInicio, saldoFim,
+    });
+  }
+
+  const avgCac = cumCustomers > 0 ? (cumInvest / cumCustomers) : 0;
+  const peakInvestment = months.reduce((a, m) => Math.max(a, m.invest), 0);
+  const additionalCapitalNeeded = Math.max(0, -minSaldoFim);
+  const breach = additionalCapitalNeeded > 0;
+  const minCapitalRequired = initialCapital + additionalCapitalNeeded;
+  const finalSaldo = saldoFim;
+  const reserveBuffer = initialCapital - additionalCapitalNeeded;
+
+  // Split já foi calculado mês a mês dentro do loop principal (pra subtrair lucro do saldo)
+  const finalProfit      = cumProfit;       // distribuído (sai da empresa)
+  const finalMarketing   = cumMarketing;    // reservado (fica)
+  const finalOperational = cumOperational;  // reservado (fica)
+  const bucketTotal      = finalProfit + finalMarketing + finalOperational; // EBITDA gerado
+  const bucketReserved   = finalMarketing + finalOperational;               // o que fica em caixa
+
+  // Recuperação do capital — primeiro mês em que o caixa gerado >= capital inicial
+  let capitalRecoveryMonthIdx = -1;
+  let cumCashRunning = 0;
+  for (let m = 0; m < months.length; m++) {
+    cumCashRunning += months[m].cash;
+    if (capitalRecoveryMonthIdx === -1 && cumCashRunning >= initialCapital && initialCapital > 0) {
+      capitalRecoveryMonthIdx = m;
+    }
+  }
+  const capitalRecovered = capitalRecoveryMonthIdx >= 0;
+  const lastMonthCash = months.length > 0 ? months[months.length - 1].cash : 0;
+  // Autossustentável = capital recuperado E último mês ainda gerando caixa positivo
+  const selfSustaining = capitalRecovered && lastMonthCash > 0;
+  const surplusOverCapital = Math.max(0, cumCash - initialCapital);
+
+  // MRR previsível pós-horizonte (só assinatura) — d+30, d+60, d+90 cumulativos
+  const subSched = buildSubOnlySchedule(i, horizon + 3);
+  const mrrFutures = [0, 0, 0]; // f=0: m_horizon (d+30), f=1: m_horizon+1 (d+60), f=2: m_horizon+2 (d+90)
+  for (let f = 0; f < 3; f++) {
+    const futureMonth = horizon + f;
+    for (let K = 0; K < horizon; K++) {
+      const offset = futureMonth - K;
+      if (offset >= subSched.length) continue;
+      mrrFutures[f] += cohorts[K].customers * subSched[offset].rev;
+    }
+  }
+  const mrrD30 = mrrFutures[0];
+  const mrrD60 = mrrFutures[0] + mrrFutures[1];
+  const mrrD90 = mrrFutures[0] + mrrFutures[1] + mrrFutures[2];
+  const mrrMonth1 = mrrFutures[0];
+  const mrrMonth2 = mrrFutures[1];
+  const mrrMonth3 = mrrFutures[2];
+
+  // Valuation = EBITDA anual × múltiplo
+  // EBITDA ≈ caixa líquido (não modelamos juros/impostos/D&A)
+  // Anualização: cumCash / horizon × 12
+  const valuationMultiple = Number(cf.valuationMultiple) || 5;
+  const annualizationFactor = horizon > 0 ? (12 / horizon) : 0;
+  const ebitdaAnnual = cumCash * annualizationFactor;
+  const ebitdaMonthlyAvg = horizon > 0 ? cumCash / horizon : 0;
+  const valuation = Math.max(0, ebitdaAnnual) * valuationMultiple;
+
+  return {
+    days, horizon, initialCapital,
+    sched,
+    cohorts,
+    months,
+    totals: {
+      invest: cumInvest,
+      opCost: cumOpCost,
+      taxAdm: cumTaxAdm,
+      pots: cumPots,
+      faturamento: cumFaturamento,
+      margem: cumMargem,
+      cash: cumCash,                 // caixa líquido total (após custos op)
+      cashGross: cumCashGross,       // caixa bruto total (sem custos op)
+      customers: cumCustomers,
+      avgCac,
+      peakInvestment,
+      minSaldoFim,
+      minSaldoMonthIdx,
+      additionalCapitalNeeded,
+      breach,
+      minCapitalRequired,
+      finalSaldo,
+      reserveBuffer,
+      finalProfit,
+      finalMarketing,
+      finalOperational,
+      bucketTotal,
+      bucketReserved,
+      profitPct, marketingPct, operationalPct,
+      capitalRecoveryMonthIdx,
+      capitalRecovered,
+      selfSustaining,
+      surplusOverCapital,
+      lastMonthCash,
+      mrrD30, mrrD60, mrrD90,
+      mrrMonth1, mrrMonth2, mrrMonth3,
+      valuation, valuationMultiple, ebitdaAnnual, ebitdaMonthlyAvg, annualizationFactor,
+    },
+  };
+}
+
+function computeScenario(s) {
+  const i = s.inputs;
+  const beAvg   = Number(i.backend?.avgValue) || 0;
+  const beMargin= (Number(i.backend?.marginPct) || 0) / 100;
+  const beCM    = beAvg * beMargin;
+  const repRate = (Number(i.otpRepurchaseRate) || 0) / 100;
+  const otpFactor = 1 + repRate; // 1 inicial + repRate recompras em 90d
+  const taxAdmRate = ((Number(i.taxPct) || 0) + (Number(i.adminFeePct) || 0)) / 100;
+
+  // OTP — single transaction
+  const otpTotalPct = i.otp.reduce((a,t)=>a+t.mixPct,0) || 1;
+  const avgTicketOTP = i.otp.reduce((a,t)=>a + t.ticket * (t.mixPct/otpTotalPct), 0);
+  const avgPotsOTP   = i.otp.reduce((a,t)=>a + t.pots   * (t.mixPct/otpTotalPct), 0);
+  const cogsOTPSingle= avgPotsOTP * i.cogsPerPot;
+  const cmOTPSingle  = avgTicketOTP - cogsOTPSingle;
+
+  // OTP — agregado em 90d (inicial + recompra) + backend em cada transação
+  const ltvOTP_product = avgTicketOTP * otpFactor;
+  const ltvOTP_backend = beAvg * otpFactor;
+  const ltvOTP         = ltvOTP_product + ltvOTP_backend;
+  const cogsOTP_total  = cogsOTPSingle * otpFactor;
+  const taxAdmOTP      = ltvOTP * taxAdmRate;
+  const cmOTP_product  = ltvOTP_product - cogsOTP_total - (ltvOTP_product * taxAdmRate);
+  const cmOTP_backend  = beCM * otpFactor - (ltvOTP_backend * taxAdmRate);
+  const cmOTP          = cmOTP_product + cmOTP_backend;
+
+  // Sub — per tier (backend só na compra inicial, não em renovações)
+  const wkCost = Number(i.welcomeKitCost) || 0;
+  const subTotalPct = i.sub.reduce((a,t)=>a+t.mixPct,0) || 1;
+  const subRows = i.sub.map(t => {
+    const charges = [];
+    let survival = 1.0;
+    let totalRevenue = 0, totalCogs = 0;
+    for (let n = 0; n < t.charges; n++) {
+      if (n > 0) {
+        const dropPct = (t.drops[n-1] != null ? t.drops[n-1] : 0) / 100;
+        survival = survival * (1 - dropPct);
+      }
+      const day = (n === 0) ? 0 : (t.pots === 1 ? n*30 : (t.pots === 2 ? n*60 : n*90));
+      const monthLabel = (t.pots === 1) ? n : (t.pots === 2 ? n*2 : n*3);
+      const revenue = t.ticket * survival;
+      // Welcome kit: custo único na compra inicial (n === 0, survival = 1)
+      const kitCost = (n === 0) ? wkCost : 0;
+      const cogs    = t.pots * i.cogsPerPot * survival + kitCost;
+      charges.push({ month: monthLabel, day, survival, revenue, cogs });
+      totalRevenue += revenue;
+      totalCogs    += cogs;
+    }
+    const baseLtv = totalRevenue;
+    const baseCm  = totalRevenue - totalCogs;
+    const ltv = baseLtv + beAvg;
+    // Imposto + taxa admin sobre a receita total (sub + backend)
+    const taxAdm = ltv * taxAdmRate;
+    return {
+      label: t.label,
+      pots: t.pots,
+      mixPct: t.mixPct,
+      baseLtv,
+      baseCm,
+      ltv,
+      cm:  baseCm + beCM - taxAdm,    // backend uma vez na compra inicial − impostos+taxas
+      taxAdm,
+      totalCogs,
+      charges,
+    };
+  });
+
+  const ltvSub = subRows.reduce((a,r)=>a + r.ltv * (r.mixPct/subTotalPct), 0);
+  const cmSub  = subRows.reduce((a,r)=>a + r.cm  * (r.mixPct/subTotalPct), 0);
+
+  // Blended
+  const wOTP = (i.mixOTP || 0) / 100;
+  const wSub = (i.mixSub || 0) / 100;
+  const ltvBlended = wOTP * ltvOTP + wSub * ltvSub;
+  const cmBlended  = wOTP * cmOTP  + wSub * cmSub;
+  const cmPct      = ltvBlended > 0 ? (cmBlended / ltvBlended) : 0;
+
+  // Contribuição do backend (pra exibir transparente)
+  const beRevBlended = wOTP * ltvOTP_backend + wSub * beAvg;
+  const beCMBlended  = wOTP * cmOTP_backend  + wSub * beCM;
+
+  return {
+    avgTicketOTP, avgPotsOTP,
+    ltvOTP, cmOTP, cmOTP_product, cmOTP_backend, ltvOTP_product, ltvOTP_backend,
+    otpFactor, repRate,
+    subRows, subDetail: subRows,
+    ltvSub, cmSub,
+    ltvBlended, cmBlended, cmPct,
+    beAvg, beCM, beRevBlended, beCMBlended,
+  };
+}
+
+function cenariosApp() {
+  return {
+    scenarios: [],
+    current: null,
+    compareModalOpen: false,
+    compareViewOpen: false,
+    selectedForCompare: [],
+
+    init() {
+      const saved = localStorage.getItem('slip_cenarios_v1');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed.scenarios && parsed.scenarios.length) {
+            this.scenarios = parsed.scenarios.map(s => {
+              if (!s.inputs.backend) s.inputs.backend = { avgValue: 0, marginPct: 80 };
+              if (s.inputs.otpRepurchaseRate == null) s.inputs.otpRepurchaseRate = 0;
+              if (s.inputs.welcomeKitCost == null) s.inputs.welcomeKitCost = 25;
+              if (s.inputs.taxPct == null) s.inputs.taxPct = 7;
+              if (s.inputs.adminFeePct == null) s.inputs.adminFeePct = 4;
+              if (!s.inputs.cashflow) {
+                s.inputs.cashflow = { daysPerMonth: 30, horizonMonths: 12, monthlySpend: [500,500,500,1000,1000,1500,1500,2000,2000,2500,2500,3000], cacByMonth: [100,100,100,100,100,100,100,100,100,100,100,100], initialCapital: 500000, cashSplit: { profit: 30, marketing: 50, operational: 20 } };
+              } else {
+                if (!s.inputs.cashflow.cacByMonth) {
+                  const oldCac = Number(s.inputs.cashflow.cac) || 100;
+                  const len = (s.inputs.cashflow.monthlySpend || [0,0,0,0]).length;
+                  s.inputs.cashflow.cacByMonth = Array(len).fill(oldCac);
+                  delete s.inputs.cashflow.cac;
+                }
+                if (s.inputs.cashflow.initialCapital == null) s.inputs.cashflow.initialCapital = 500000;
+                if (!s.inputs.cashflow.cashSplit) s.inputs.cashflow.cashSplit = { profit: 30, marketing: 50, operational: 20 };
+                if (s.inputs.cashflow.valuationMultiple == null) s.inputs.cashflow.valuationMultiple = 5;
+                if (!s.inputs.cashflow.horizonMonths) {
+                  s.inputs.cashflow.horizonMonths = (s.inputs.cashflow.monthlySpend || []).length || 4;
+                }
+                if (!s.inputs.cashflow.monthlyOpCost) {
+                  s.inputs.cashflow.monthlyOpCost = Array(s.inputs.cashflow.horizonMonths).fill(10000);
+                }
+                // Sincroniza arrays com horizonMonths (estende com último valor se necessário)
+                const h = s.inputs.cashflow.horizonMonths;
+                while (s.inputs.cashflow.monthlySpend.length < h) {
+                  const last = s.inputs.cashflow.monthlySpend[s.inputs.cashflow.monthlySpend.length - 1] || 500;
+                  s.inputs.cashflow.monthlySpend.push(last);
+                }
+                while (s.inputs.cashflow.cacByMonth.length < h) {
+                  const last = s.inputs.cashflow.cacByMonth[s.inputs.cashflow.cacByMonth.length - 1] || 100;
+                  s.inputs.cashflow.cacByMonth.push(last);
+                }
+                while (s.inputs.cashflow.monthlyOpCost.length < h) {
+                  const last = s.inputs.cashflow.monthlyOpCost[s.inputs.cashflow.monthlyOpCost.length - 1] || 0;
+                  s.inputs.cashflow.monthlyOpCost.push(last);
+                }
+              }
+              // Auto-redimensiona drops das tiers de sub conforme horizonte
+              if (s.inputs.sub && Array.isArray(s.inputs.sub)) {
+                const horizonForDrops = s.inputs.cashflow?.horizonMonths || 4;
+                for (const tier of s.inputs.sub) {
+                  resizeTierDrops(tier, horizonForDrops);
+                }
+              }
+              return s;
+            });
+            this.current = this.scenarios.find(s => s.id === parsed.currentId) || this.scenarios[0];
+          }
+        } catch(e) {}
+      }
+      if (!this.scenarios.length) {
+        const def = defaultScenario('Default');
+        this.scenarios = [def];
+        this.current = def;
+      }
+      this.$nextTick(() => lucide.createIcons());
+      this.$watch('current', () => this.$nextTick(() => lucide.createIcons()), { deep: true });
+      this.$watch('scenarios', () => this.$nextTick(() => lucide.createIcons()), { deep: true });
+    },
+
+    get i() { return this.current.inputs; },
+    get c() { return computeScenario(this.current); },
+    get cf() { return computeCashflow(this.current); },
+
+    get leadJourney() {
+      const sched = this.cf.sched || [];
+      let cumLtv = 0, cumMargem = 0, cumCogs = 0, cumTaxAdm = 0;
+      const rows = sched.map((s, idx) => {
+        const ltv    = s.faturamento;
+        const cogs   = (s.cogs || 0) + (s.beCost || 0);
+        const taxAdm = s.taxAdm || 0;
+        const margem = s.margem;
+        cumLtv    += ltv;
+        cumCogs   += cogs;
+        cumTaxAdm += taxAdm;
+        cumMargem += margem;
+        return {
+          label: 'm' + idx,
+          receita: ltv,
+          cogs,
+          taxAdm,
+          margem,
+          cumLtv,
+          cumMargem,
+        };
+      });
+      const avgCac = this.cf.totals.avgCac || 0;
+      const netPerLead = cumMargem - avgCac;
+      return {
+        rows,
+        totals: { ltv: cumLtv, cogs: cumCogs, taxAdm: cumTaxAdm, margem: cumMargem },
+        netPerLead,
+        avgCac,
+        breakeven: rows.findIndex(r => r.cumMargem >= avgCac),
+      };
+    },
+
+    fmt(n) {
+      if (n == null || isNaN(n)) return '0,00';
+      return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    },
+
+    fmtK(n) {
+      if (n == null || isNaN(n)) return '0';
+      const abs = Math.abs(n);
+      const sign = n < 0 ? '-' : '';
+      if (abs >= 1_000_000) {
+        return sign + (abs/1_000_000).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + 'M';
+      }
+      if (abs >= 10_000) {
+        return sign + (abs/1_000).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + 'k';
+      }
+      return n.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    },
+
+    sumPct(arr) {
+      return arr.reduce((a,t)=>a + (Number(t.mixPct)||0), 0);
+    },
+
+    computeFor(scn) { return computeScenario(scn); },
+
+    persist() {
+      const idx = this.scenarios.findIndex(s => s.id === this.current.id);
+      if (idx >= 0) this.scenarios[idx] = this.current;
+      localStorage.setItem('slip_cenarios_v1', JSON.stringify({
+        scenarios: this.scenarios,
+        currentId: this.current.id,
+      }));
+    },
+
+    loadScenario(id) {
+      const s = this.scenarios.find(x => x.id === id);
+      if (s) {
+        this.current = s;
+        this.persist();
+      }
+    },
+
+    newScenario() {
+      const n = defaultScenario('Cenário ' + (this.scenarios.length + 1));
+      this.scenarios.push(n);
+      this.current = n;
+      this.persist();
+    },
+
+    duplicateScenario() {
+      const copy = JSON.parse(JSON.stringify(this.current));
+      copy.id = 'scn_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      copy.name = this.current.name + ' (cópia)';
+      this.scenarios.push(copy);
+      this.current = copy;
+      this.persist();
+    },
+
+    deleteScenario(id) {
+      if (this.scenarios.length <= 1) return;
+      const wasCurrent = this.current.id === id;
+      this.scenarios = this.scenarios.filter(s => s.id !== id);
+      if (wasCurrent) this.current = this.scenarios[0];
+      this.persist();
+    },
+
+    openCompareModal() {
+      this.selectedForCompare = this.scenarios.map(s => s.id);
+      this.compareModalOpen = true;
+    },
+
+    closeCompareModal() {
+      this.compareModalOpen = false;
+    },
+
+    toggleScenarioSelection(id) {
+      if (this.selectedForCompare.includes(id)) {
+        this.selectedForCompare = this.selectedForCompare.filter(x => x !== id);
+      } else {
+        this.selectedForCompare = [...this.selectedForCompare, id];
+      }
+    },
+
+    generateCompare() {
+      if (this.selectedForCompare.length < 2) return;
+      this.compareModalOpen = false;
+      this.compareViewOpen = true;
+      this.$nextTick(() => lucide.createIcons());
+    },
+
+    closeCompareView() {
+      this.compareViewOpen = false;
+    },
+
+    get scenariosToCompare() {
+      return this.scenarios.filter(s => this.selectedForCompare.includes(s.id));
+    },
+
+    setHorizon(n) {
+      const cf = this.current.inputs.cashflow;
+      const target = Math.max(1, Math.min(24, Number(n) || 3));
+      const oldLen = cf.monthlySpend.length;
+      if (!cf.monthlyOpCost) cf.monthlyOpCost = Array(oldLen).fill(0);
+      if (target > oldLen) {
+        const lastSpend = cf.monthlySpend[oldLen - 1] || 500;
+        const lastCac   = cf.cacByMonth[oldLen - 1] || 100;
+        const lastOp    = cf.monthlyOpCost[oldLen - 1] || 0;
+        while (cf.monthlySpend.length  < target) cf.monthlySpend.push(lastSpend);
+        while (cf.cacByMonth.length    < target) cf.cacByMonth.push(lastCac);
+        while (cf.monthlyOpCost.length < target) cf.monthlyOpCost.push(lastOp);
+      } else if (target < oldLen) {
+        cf.monthlySpend.length  = target;
+        cf.cacByMonth.length    = target;
+        cf.monthlyOpCost.length = target;
+      }
+      cf.horizonMonths = target;
+      // Auto-redimensiona drops de cada tier de sub baseado no novo horizonte
+      for (const tier of this.current.inputs.sub) {
+        resizeTierDrops(tier, target);
+      }
+      this.persist();
+    },
+
+    fillCacAll(value) {
+      const v = Math.round((Number(value) || 0) * 100) / 100;
+      const len = this.current.inputs.cashflow.cacByMonth.length;
+      for (let i = 0; i < len; i++) {
+        this.current.inputs.cashflow.cacByMonth[i] = v;
+      }
+    },
+
+    fillSpendAll(value) {
+      const v = Number(value) || 0;
+      const len = this.current.inputs.cashflow.monthlySpend.length;
+      for (let i = 0; i < len; i++) {
+        this.current.inputs.cashflow.monthlySpend[i] = v;
+      }
+    },
+
+    fillOpCostAll(value) {
+      const v = Number(value) || 0;
+      const cf = this.current.inputs.cashflow;
+      if (!cf.monthlyOpCost) cf.monthlyOpCost = Array(cf.monthlySpend.length).fill(0);
+      for (let i = 0; i < cf.monthlyOpCost.length; i++) {
+        cf.monthlyOpCost[i] = v;
+      }
+    },
+
+    resetToDefault() {
+      const idx = this.scenarios.findIndex(s => s.id === this.current.id);
+      const fresh = defaultScenario(this.current.name, this.current.id);
+      this.scenarios[idx] = fresh;
+      this.current = fresh;
+      this.persist();
+    },
+  };
+}
+
+document.addEventListener('alpine:initialized', () => {
+  lucide.createIcons();
+});
+</script>
+
+<!-- ============== MODAL: SELECIONAR CENÁRIOS PRA COMPARAR ============== -->
+<div
+  x-show="compareModalOpen"
+  x-transition.opacity
+  @keydown.escape.window="closeCompareModal()"
+  class="fixed inset-0 z-50 flex items-center justify-center p-4"
+  style="background: rgba(26, 14, 44, 0.6); backdrop-filter: blur(4px);"
+  @click.self="closeCompareModal()"
+  x-cloak
+>
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <h3 class="font-display text-xl font-semibold text-deep">Comparar cenários</h3>
+        <p class="text-xs text-purple-500 mt-1">Selecione 2 ou mais cenários pra ver lado a lado</p>
+      </div>
+      <button @click="closeCompareModal()" class="text-purple-400 hover:text-deep transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-2 max-h-80 overflow-y-auto">
+      <template x-for="scn in scenarios" :key="'sel'+scn.id">
+        <label class="flex items-center gap-3 p-3 rounded-lg border border-purple-100 hover:bg-purple-50 cursor-pointer transition"
+               :class="selectedForCompare.includes(scn.id) ? 'border-purple-600 bg-purple-50' : ''">
+          <input
+            type="checkbox"
+            :checked="selectedForCompare.includes(scn.id)"
+            @change="toggleScenarioSelection(scn.id)"
+            class="w-4 h-4 accent-purple-600">
+          <div class="flex-1">
+            <div class="font-medium text-deep" x-text="scn.name"></div>
+            <div class="text-[10px] text-purple-400" x-text="scn.id === current.id ? 'cenário ativo' : 'cenário salvo'"></div>
+          </div>
+          <span x-show="scn.id === current.id" class="pill pill-teal">Ativo</span>
+        </label>
+      </template>
+    </div>
+
+    <div class="mt-5 pt-4 border-t border-purple-100 flex items-center justify-between gap-3">
+      <span class="text-xs text-purple-500" x-text="selectedForCompare.length + ' selecionado(s)'"></span>
+      <div class="flex gap-2">
+        <button @click="closeCompareModal()" class="btn btn-ghost">Cancelar</button>
+        <button
+          @click="generateCompare()"
+          :disabled="selectedForCompare.length < 2"
+          class="btn btn-primary"
+          :style="selectedForCompare.length < 2 ? 'opacity:.5; cursor:not-allowed;' : ''">
+          <i data-lucide="git-compare-arrows" class="w-4 h-4"></i>
+          Gerar comparativo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== FULL-SCREEN: TABELA DE COMPARATIVO ============== -->
+<div
+  x-show="compareViewOpen"
+  x-transition
+  @keydown.escape.window="closeCompareView()"
+  class="fixed inset-0 z-40 bg-paper overflow-y-auto"
+  x-cloak
+>
+  <header class="border-b border-purple-100 bg-white sticky top-0 z-10">
+    <div class="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-700 to-deep flex items-center justify-center">
+          <i data-lucide="git-compare-arrows" class="w-4 h-4 text-white"></i>
+        </div>
+        <div>
+          <h1 class="font-display text-xl font-semibold text-deep leading-none">Comparativo de cenários</h1>
+          <p class="text-[11px] text-purple-500 uppercase tracking-wider mt-0.5" x-text="scenariosToCompare.length + ' cenários · análise lado a lado'"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button @click="openCompareModal(); closeCompareView()" class="btn btn-ghost">
+          <i data-lucide="settings-2" class="w-4 h-4"></i> Trocar seleção
+        </button>
+        <button @click="closeCompareView()" class="btn btn-primary">
+          <i data-lucide="x" class="w-4 h-4"></i> Fechar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-6 py-8">
+    <div class="card overflow-x-auto">
+      <table class="grid-table" style="min-width: 700px;">
+        <thead>
+          <tr>
+            <th>Métrica</th>
+            <template x-for="scn in scenariosToCompare" :key="'ch'+scn.id">
+              <th>
+                <div class="flex flex-col items-end">
+                  <span class="text-deep" x-text="scn.name"></span>
+                  <span x-show="scn.id === current.id" class="pill pill-teal mt-1">Ativo</span>
+                </div>
+              </th>
+            </template>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="font-semibold">Mix one-time / sub</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cmx'+scn.id">
+              <td class="num" x-text="fmt(scn.inputs.mixOTP)+'% / '+fmt(scn.inputs.mixSub)+'%'"></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">Backend / margem</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cbe'+scn.id">
+              <td class="num" x-text="'R$ '+fmt(scn.inputs.backend?.avgValue||0)+' · '+fmt(scn.inputs.backend?.marginPct||0)+'%'"></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">Recompra one-time 90d</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'crep'+scn.id">
+              <td class="num" x-text="fmt(scn.inputs.otpRepurchaseRate||0)+'%'"></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">Welcome kit (sub)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cwk'+scn.id">
+              <td class="num">R$ <span x-text="fmt(scn.inputs.welcomeKitCost||0)"></span></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">Imposto + taxa admin</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cta'+scn.id">
+              <td class="num" x-text="fmt((scn.inputs.taxPct||0)+(scn.inputs.adminFeePct||0))+'%'"></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">Ticket médio one-time (1ª compra)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cto'+scn.id">
+              <td class="num">R$ <span x-text="fmt(computeFor(scn).avgTicketOTP)"></span></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">LTV one-time 90d (com recompra+backend)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'clo'+scn.id">
+              <td class="num">R$ <span x-text="fmt(computeFor(scn).ltvOTP)"></span></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">LTV sub blended</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cls'+scn.id">
+              <td class="num">R$ <span x-text="fmt(computeFor(scn).ltvSub)"></span></td>
+            </template>
+          </tr>
+          <tr style="background:#F4EFFA;">
+            <td><span class="font-semibold">LTV blended (90d)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'clb'+scn.id">
+              <td class="num font-semibold">R$ <span x-text="fmt(computeFor(scn).ltvBlended)"></span></td>
+            </template>
+          </tr>
+          <tr style="background:#F4EFFA;">
+            <td><span class="font-semibold">Margem blended (90d)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'ccm'+scn.id">
+              <td class="num font-semibold">R$ <span x-text="fmt(computeFor(scn).cmBlended)"></span></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">Margem %</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'ccmp'+scn.id">
+              <td class="num" x-text="fmt(computeFor(scn).cmPct*100)+'%'"></td>
+            </template>
+          </tr>
+          <tr>
+            <td><span class="font-semibold">CAC máx breakeven (1:1)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cc1'+scn.id">
+              <td class="num">R$ <span x-text="fmt(computeFor(scn).cmBlended)"></span></td>
+            </template>
+          </tr>
+          <tr style="background:#D1FAF1;">
+            <td><span class="font-semibold" style="color:#047857;">CAC alvo (3:1)</span></td>
+            <template x-for="scn in scenariosToCompare" :key="'cc3'+scn.id">
+              <td class="num font-semibold" style="color:#047857;">R$ <span x-text="fmt(computeFor(scn).cmBlended/3)"></span></td>
+            </template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-4 text-xs text-purple-500">
+      Todos os números são calculados sobre a janela de 90 dias (CPA limite). Pra comparar projeção de caixa em horizontes maiores, abra cada cenário individualmente na tela principal.
+    </p>
+  </main>
+</div>
+
+</body>
+</html>

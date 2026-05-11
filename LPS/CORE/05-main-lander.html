@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Você tem problemas de sono e o Slip resolve cada um deles | Slip</title>
+<meta name="description" content="Sem hormônio. Sem dependência. Sem ressaca. Magnésio inteligente em 3 formas + 7 bioativos clínicos — num chocolate quente cremoso antes de dormir." />
+<meta property="og:title" content="Você tem problemas de sono e o Slip resolve cada um deles" />
+<meta property="og:description" content="Magnésio afeta tudo: sono, energia, retenção de líquido e humor. 3 formas inteligentes + 7 bioativos clínicos." />
+<meta property="og:image" content="../../assets/mockup/CHOCOLATE.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer src="../../assets/promo-header.js"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          deep:  '#2A1640',
+          ink:   '#1A0E2C',
+          purple: {
+            DEFAULT: '#6B3FA0',
+            900: '#1A0E2C', 800: '#2A1640', 700: '#3A1F58',
+            600: '#6B3FA0', 500: '#5A3A7F', 400: '#8372AF',
+            300: '#A89AC9', 200: '#C9B6E0', 100: '#E5D9F0', 50: '#F4EFFA',
+          },
+          cream: { DEFAULT: '#F4EEE1', dark: '#E8DFC9', light: '#FAF6EC' },
+          paper: '#FAFAF5',
+          teal:  { DEFAULT: '#5EEAD4', deep: '#14B8A6' },
+          rose:  '#F43F5E',
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          sans:    ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #1A0E2C;
+    background: #FAFAF5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  img { max-width: 100%; height: auto; }
+  .font-display   { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+  .italic-display { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; }
+
+  /* ============== PROMO HEADER V1 — institutional 2-row (teal top + deep bottom) ============== */
+  .promo-header-v1 { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .promo-header-v1 .promo-top {
+    background: #14B8A6;
+    color: #0A2A28;
+    padding: 7px 12px;
+    text-align: center;
+    font-weight: 800; font-size: 12px;
+    letter-spacing: .04em; text-transform: uppercase;
+    line-height: 1.2;
+  }
+  @media (min-width: 768px) { .promo-header-v1 .promo-top { font-size: 13px; padding: 8px 16px; } }
+  .promo-header-v1 .promo-bottom {
+    background: #1A0E2C;
+    color: #FAFAF5;
+    padding: 11px 14px;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    flex-wrap: wrap;
+  }
+  @media (min-width: 768px) { .promo-header-v1 .promo-bottom { padding: 13px 18px; gap: 22px; } }
+  .promo-header-v1 .promo-text {
+    font-weight: 800; font-size: 12px;
+    letter-spacing: .03em; text-transform: uppercase;
+    line-height: 1.25;
+    text-align: center;
+  }
+  @media (min-width: 768px) { .promo-header-v1 .promo-text { font-size: 13.5px; text-align: left; } }
+  .promo-header-v1 .promo-text .discount-num { color: #FCD34D; }
+  .promo-header-v1 .promo-text .promo-sub {
+    display: block;
+    font-weight: 500; font-size: 11px; letter-spacing: 0;
+    text-transform: none; color: rgba(250,250,245,.7);
+    margin-top: 2px;
+  }
+  @media (min-width: 768px) { .promo-header-v1 .promo-text .promo-sub { font-size: 12px; } }
+  .promo-header-v1 .countdown-card {
+    background: #FAFAF5;
+    border-radius: 8px;
+    padding: 6px 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #2A1640;
+  }
+  .promo-header-v1 .cd-cell {
+    display: flex; flex-direction: column; align-items: center; line-height: 1;
+    min-width: 22px;
+  }
+  .promo-header-v1 .cd-cell > span {
+    font-family: 'Fraunces', serif;
+    font-weight: 800; font-size: 16px;
+  }
+  .promo-header-v1 .cd-cell > small {
+    font-size: 8px; font-weight: 700; letter-spacing: .08em;
+    color: rgba(42,22,64,.55);
+    margin-top: 2px;
+  }
+  .promo-header-v1 .cd-sep {
+    color: rgba(42,22,64,.3);
+    font-weight: 700; font-size: 14px;
+    margin-bottom: 8px;
+  }
+  @media (min-width: 768px) {
+    .promo-header-v1 .cd-cell > span { font-size: 18px; }
+    .promo-header-v1 .cd-cell > small { font-size: 9px; }
+  }
+
+  /* ============== ITEM LAYOUT (stacked: eyebrow → H2 → img → desc — Gruns pattern) ============== */
+  .item-row {
+    display: block;
+  }
+  .item-img-wrap {
+    margin: 1rem 0 1.1rem;
+  }
+  @media (min-width: 768px) {
+    .item-img-wrap { margin: 1.1rem 0 1.25rem; }
+  }
+  .item-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    object-fit: cover;
+    background: linear-gradient(135deg, #F4EFFA 0%, #FAF6EC 100%);
+    border: 1px solid #E5D9F0;
+    display: block;
+  }
+  @media (min-width: 768px) { .item-img { aspect-ratio: 2 / 1; border-radius: 14px; } }
+  .item-img-ph {
+    background:
+      linear-gradient(135deg, rgba(107,63,160,.06), rgba(94,234,212,.05)),
+      repeating-linear-gradient(45deg, #F4EFFA 0 12px, #FAF6EC 12px 24px);
+    border: 1px dashed rgba(107,63,160,.28);
+    color: rgba(20,9,46,.55);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 1.25rem;
+    font-size: 11px;
+    letter-spacing: .12em;
+  }
+
+  /* Item header: eyebrow só, separator line (número migra pra H2) */
+  .item-head {
+    margin-bottom: .9rem;
+    border-bottom: 1px solid #E5D9F0;
+    padding-bottom: .8rem;
+  }
+  .item-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: #6B3FA0;
+  }
+  @media (min-width: 768px) { .item-eyebrow { font-size: 12.5px; } }
+  /* Número inline com H2 — mesma fonte/tamanho do headline, levemente tonal */
+  .item-h2-num {
+    color: #6B3FA0;
+    opacity: .55;
+    margin-right: .4em;
+  }
+  [x-cloak] { display: none !important; }
+
+  /* ============== BOTAO ============== */
+  .btn-primary {
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    padding: 1.1rem 2.25rem;
+    border-radius: 999px;
+    font-weight: 700; font-size: 1rem; letter-spacing: -.005em;
+    color: #FAFAF5;
+    background: linear-gradient(135deg, #8372AF 0%, #6B3FA0 100%);
+    box-shadow: 0 4px 0 0 #2A1640, 0 10px 30px -8px rgba(107,63,160,.6), inset 0 1px 0 rgba(255,255,255,.2);
+    transition: all .15s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 #2A1640, 0 16px 40px -8px rgba(107,63,160,.75); }
+  .btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #2A1640, 0 4px 12px -4px rgba(107,63,160,.6); }
+
+  /* CTA card final */
+  .price-callout {
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+    color: #2A1640;
+    font-weight: 900;
+    letter-spacing: -.02em;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 2px 8px rgba(245,158,11,.35), inset 0 1px 0 rgba(255,255,255,.4);
+    display: inline-block;
+  }
+
+  .cta-mockup {
+    display: block;
+    margin: 0 auto 1.25rem;
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 12px 24px rgba(107,63,160,.18));
+  }
+  @media (min-width: 768px) {
+    .cta-mockup { max-width: 400px; margin-bottom: 1.75rem; }
+  }
+
+  /* ============== HERO PASTEL — bg lilás claro slip + image overlays ============== */
+  .hero-pastel {
+    background:
+      radial-gradient(at 15% 0%,  rgba(168,154,201,.18) 0, transparent 55%),
+      radial-gradient(at 85% 100%, rgba(94,234,212,.08) 0, transparent 55%),
+      #F4EFFA;
+  }
+  /* Imagem hero contida (com margens laterais), 5:4, levemente arredondada */
+  .hero-image-contained {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    aspect-ratio: 5 / 4;
+    overflow: visible; /* visible pra starburst poder pop fora da borda */
+    border-radius: 16px;
+    background: linear-gradient(180deg, #F4EEE1 0%, #E8DFC9 100%);
+  }
+  .hero-image-contained .hero-img-clip {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+  .hero-image-contained img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 50%;
+    display: block;
+  }
+  .hero-image-contained-ph {
+    position: absolute; inset: 0;
+    color: rgba(255,255,255,.85);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    text-align: center; padding: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 16px;
+  }
+
+  /* STARBURST BADGE desconto top-left (Gruns "52% OFF" pattern) */
+  .starburst-badge {
+    position: absolute;
+    top: -10px; left: -10px;
+    z-index: 5;
+    width: 92px; height: 92px;
+    transform: rotate(-10deg);
+    filter: drop-shadow(0 6px 14px rgba(245,158,11,.4));
+  }
+  @media (min-width: 768px) {
+    .starburst-badge { top: -12px; left: -12px; width: 112px; height: 112px; }
+  }
+  .starburst-badge .sb-shape { fill: #FCD34D; stroke: #2A1640; stroke-width: 0.6; stroke-linejoin: round; }
+  .starburst-badge .sb-ring  { fill: none; stroke: #2A1640; stroke-width: 0.5; stroke-dasharray: 1 1.8; opacity: .5; }
+  .starburst-badge text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    fill: #2A1640;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .starburst-badge .sb-text-top {
+    font-size: 7.5px;
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+  .starburst-badge .sb-text-bignum {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: -.04em;
+  }
+  .starburst-badge .sb-text-smollabel {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: .14em;
+  }
+
+  /* Medic claim discreto bottom da imagem (não rouba foco) */
+  .medic-claim {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    z-index: 4;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(250,250,245,.96);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(229,217,240,.7);
+    border-radius: 10px;
+    padding: 7px 12px 7px 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10.5px;
+    color: #1A0E2C;
+    box-shadow: 0 6px 14px -6px rgba(42,22,64,.25);
+    max-width: calc(100% - 24px);
+  }
+  @media (min-width: 768px) {
+    .medic-claim { bottom: 16px; left: 16px; font-size: 11.5px; padding: 8px 14px 8px 11px; }
+  }
+  .medic-claim svg { width: 16px; height: 16px; color: #2A1640; flex-shrink: 0; }
+  @media (min-width: 768px) { .medic-claim svg { width: 18px; height: 18px; } }
+  .medic-claim strong { color: #2A1640; font-weight: 800; }
+
+  /* Wrapper que faz a sales pill flutuar SOBREPOSTA no topo do botão (igual #03) */
+  .cta-with-pill {
+    position: relative;
+    margin-top: 2.75rem;
+  }
+  @media (min-width: 768px) { .cta-with-pill { margin-top: 3rem; } }
+  .cta-with-pill .sales-pill {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .sales-pill {
+    display: inline-block;
+    background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+    color: #2A1640;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: .02em;
+    padding: 5px 16px;
+    border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(245,158,11,.4), inset 0 1px 0 rgba(255,255,255,.45);
+    white-space: nowrap;
+  }
+  @media (min-width: 768px) { .sales-pill { font-size: 13px; padding: 6px 18px; } }
+
+  /* ============== TESTIMONIAL CAROUSEL ============== */
+  .testimonial-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 16px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .testimonial-track::-webkit-scrollbar { display: none; }
+  .testimonial-card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    background: #FFFFFF;
+    border: 1px solid #E5D9F0;
+    border-radius: 16px;
+    padding: 22px 22px 24px;
+    box-shadow: 0 4px 14px -6px rgba(42,22,64,.1);
+  }
+  @media (min-width: 768px) {
+    .testimonial-card { padding: 28px 28px 30px; border-radius: 18px; }
+  }
+  .testimonial-quote-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    color: #6B3FA0;
+    font-size: 17px;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    margin-bottom: 10px;
+  }
+  @media (min-width: 768px) { .testimonial-quote-title { font-size: 20px; } }
+  .testimonial-body {
+    color: #1A0E2C;
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 768px) { .testimonial-body { font-size: 15px; } }
+  .testimonial-body strong { color: #2A1640; font-weight: 700; }
+  .testimonial-meta {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 4px;
+  }
+  .testimonial-meta img.avatar-sm {
+    width: 38px !important;
+    height: 38px !important;
+    max-width: 38px !important;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 2px solid #FAFAF5;
+    display: block !important;
+    flex-shrink: 0;
+  }
+  .testimonial-meta-info .stars {
+    display: inline-flex; gap: 1px;
+    color: #F59E0B;
+  }
+  .testimonial-meta-info .name {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    color: #2A1640;
+    font-size: 13.5px;
+    line-height: 1.2;
+    margin-top: 2px;
+  }
+  .testimonial-meta-info .city {
+    display: inline;
+    font-weight: 500;
+    color: rgba(20,9,46,.6);
+    margin-left: 4px;
+  }
+
+  .carousel-controls {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px;
+    margin-top: 32px;
+  }
+  @media (min-width: 768px) { .carousel-controls { margin-top: 36px; } }
+  .carousel-btn {
+    width: 36px; height: 36px;
+    border-radius: 999px;
+    background: #FFFFFF;
+    border: 1px solid #E5D9F0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #2A1640;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .carousel-btn:hover { background: #F4EFFA; border-color: #C9B6E0; }
+  .carousel-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .carousel-dots {
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .carousel-dots .dot {
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: #C9B6E0;
+    transition: all .15s ease;
+    cursor: pointer;
+  }
+  .carousel-dots .dot.active {
+    background: #6B3FA0;
+    width: 22px;
+  }
+
+  /* ============== PRESS BAR ROXA (abaixo dos depoimentos) ============== */
+  .press-bar-purple {
+    background: #2A1640;
+    color: #FAFAF5;
+    padding: 36px 12px;
+  }
+  @media (min-width: 768px) {
+    .press-bar-purple { padding: 44px 16px; }
+  }
+  .press-bar-purple .press-marquee-track {
+    animation: marqueeScroll 50s linear infinite;
+  }
+  .press-bar-purple .press-name {
+    color: rgba(250,250,245,.85);
+    font-size: 1.1rem;
+  }
+  @media (min-width: 768px) {
+    .press-bar-purple .press-name { font-size: 1.2rem; }
+  }
+  .press-bar-purple .press-dot {
+    background: rgba(250,250,245,.35);
+  }
+
+  /* Branded mesh-cream para hero e CTA */
+  .mesh-cream {
+    background:
+      radial-gradient(at 20% 0%,  rgba(168,154,201,.32) 0, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(94,234,212,.14) 0, transparent 50%),
+      #FAF6EC;
+  }
+  .grain::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.3 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .06; pointer-events: none; mix-blend-mode: overlay;
+  }
+
+  /* ============== STICKY BOTTOM CTA ============== */
+  .sticky-cta {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 80;
+    background: linear-gradient(180deg, rgba(58,31,88,.98) 0%, rgba(74,42,108,.98) 100%);
+    backdrop-filter: blur(8px);
+    padding: 22px 16px 16px;
+    box-shadow: 0 -8px 24px -6px rgba(42,22,64,.25);
+    transform: translateY(110%);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+  }
+  .sticky-cta.visible { transform: translateY(0); pointer-events: auto; }
+  .sticky-cta-inner { max-width: 600px; margin: 0 auto; text-align: center; position: relative; }
+  .sticky-cta .cta-with-pill { margin-top: 0; }
+  .sticky-cta .btn-primary {
+    width: 100%;
+    padding: .85rem 1.25rem;
+    border-radius: 999px;
+    font-size: 15px;
+    box-shadow: 0 4px 0 0 #000, 0 8px 22px -6px rgba(107,63,160,.55), inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  @media (min-width: 768px) { .sticky-cta .btn-primary { padding: .95rem 1.5rem; font-size: 16px; } }
+  .sticky-cta-trust {
+    margin-top: 8px;
+    color: rgba(250,250,245,.78);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11.5px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    flex-wrap: wrap;
+  }
+  .sticky-cta-trust strong { color: #FAFAF5; font-weight: 700; }
+  .sticky-cta-trust .stars { color: #FCD34D; display: inline-flex; gap: 1px; }
+  body.sticky-active { padding-bottom: 110px; }
+  @media (min-width: 768px) { body.sticky-active { padding-bottom: 120px; } }
+
+  /* ============== HERO IMAGE + CLINICIAN BADGE ============== */
+  /* Wrap = 5:3 TOTAL (imagem + badge). Badge é fixo abaixo, imagem ocupa espaço restante. */
+  .hero-img-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 1.75rem;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -20px rgba(42,22,64,.32), 0 8px 20px -8px rgba(42,22,64,.18);
+    aspect-ratio: 5 / 3;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-img-ratio {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    background: linear-gradient(135deg, #C9B6E0 0%, #8372AF 50%, #6B3FA0 100%);
+    overflow: hidden;
+  }
+  .hero-img-ratio img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 72%;  /* corta TOPO (rosto/ombros) — produto preenche o espaço visível */
+    display: block;
+  }
+
+  /* Clinician badge floating bottom of hero image — Gruns ref pattern */
+  .clinician-badge {
+    position: relative;
+    flex-shrink: 0;
+    background: #FAFAF5;
+    border-top: 1px solid rgba(229,217,240,.7);
+    padding: 7px 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  @media (min-width: 768px) {
+    .clinician-badge { padding: 8px 14px; gap: 12px; }
+  }
+  .clinician-badge-section-award {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 6px;
+    border-right: 1px solid #E5D9F0;
+    padding-right: 9px;
+  }
+  .clinician-badge-laurel {
+    width: 20px; height: 20px;
+    color: #2A1640;
+    flex-shrink: 0;
+  }
+  .clinician-badge-award-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 9.5px;
+    line-height: 1.1;
+    color: #2A1640;
+    white-space: nowrap;
+  }
+  @media (min-width: 768px) {
+    .clinician-badge-laurel { width: 24px; height: 24px; }
+    .clinician-badge-award-text { font-size: 11px; }
+    .clinician-badge-section-award { gap: 7px; padding-right: 12px; }
+  }
+  .clinician-badge-info {
+    flex: 1;
+    min-width: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    line-height: 1.35;
+    color: #1A0E2C;
+  }
+  @media (min-width: 768px) { .clinician-badge-info { font-size: 11px; } }
+  .clinician-badge-info strong { color: #2A1640; font-weight: 700; }
+
+  /* ============== PRESS MARQUEE ============== */
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .press-marquee { overflow: hidden; position: relative; }
+  .press-marquee-track {
+    display: flex; align-items: center; gap: 2.5rem;
+    width: max-content;
+    animation: marqueeScroll 45s linear infinite;
+    will-change: transform;
+  }
+  .press-marquee:hover .press-marquee-track { animation-play-state: paused; }
+  .press-name { color: rgba(20,9,46,.55); font-size: 1.05rem; line-height: 1; white-space: nowrap; }
+  .press-dot  { width: 4px; height: 4px; border-radius: 999px; background: #A89AC9; opacity: .5; flex-shrink: 0; }
+  .press-name-forbes  { font-family: 'Fraunces', serif; font-weight: 800; letter-spacing: -.01em; }
+  .press-name-veja    { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; letter-spacing: .04em; font-size: 1.1rem; }
+  .press-name-gq      { font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; }
+  .press-name-mens    { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; letter-spacing: -.01em; }
+  .press-name-mbg     { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; letter-spacing: -.02em; }
+  .press-name-drauzio { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-aos] { transition: none !important; transform: none !important; opacity: 1 !important; }
+    .press-marquee-track { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- SALES URGENCY BANNER — 2 linhas (Gruns pattern) -->
+<!-- ============================================= -->
+<div class="promo-header-v1">
+  <div class="promo-top">
+    <span data-promo-label>Promo Semanal Slip</span>
+  </div>
+  <div class="promo-bottom">
+    <p class="promo-text">
+      Até <span class="discount-num" data-promo-discount>44%</span> OFF + Frete Grátis
+      <span class="promo-sub">Termina no domingo, à meia-noite</span>
+    </p>
+    <div class="countdown-card" aria-label="Tempo restante">
+      <div class="cd-cell"><span data-countdown-days>00</span><small>DIAS</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-cell"><span data-countdown-hours>00</span><small>HRS</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-cell"><span data-countdown-minutes>00</span><small>MIN</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-cell"><span data-countdown-seconds>00</span><small>SEG</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================= -->
+<!-- HERO — Gruns first-order template adaptado     -->
+<!-- (pastel lilás bg + wordmark + image full-bleed -->
+<!--  + overlays + content card)                    -->
+<!-- ============================================= -->
+<section class="hero-pastel">
+  <!-- WORDMARK SLIP centralizado -->
+  <div class="text-center pt-5 md:pt-7 pb-5 md:pb-6">
+    <a href="../../pdp.html" class="inline-block" aria-label="Slip" data-aos="fade-up">
+      <img src="../../assets/logos/LOGO - SLIP ROXO PRIMÁRIO.png" alt="Slip" class="h-12 md:h-16 w-auto block mx-auto" />
+    </a>
+  </div>
+
+  <!-- IMAGEM contained 5:4 (com margens laterais) + starburst desconto + medic claim -->
+  <div class="px-4 md:px-8" data-aos="fade-up">
+    <div class="hero-image-contained">
+      <div class="hero-img-clip">
+        <img src="../../assets/listcle-4/LT4_HERO.png" alt="Pote Slip Magnésio Inteligente + 7 Bioativos na cozinha" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTENT CARD -->
+  <div class="px-4 md:px-8 pt-7 md:pt-9 pb-10 md:pb-14">
+    <div class="max-w-2xl mx-auto">
+
+      <!-- Review row inline -->
+      <div class="flex items-center gap-2.5 flex-wrap text-[13px] md:text-[14px]" data-aos="fade-up">
+        <span class="inline-flex" aria-hidden="true">
+          <img class="avatar-pill" width="22" height="22" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" loading="lazy" style="width:22px!important;height:22px!important;max-width:22px!important;border-radius:999px;border:1.5px solid #FAFAF5;display:inline-block!important;object-fit:cover;background:#E5D9F0;vertical-align:middle;" />
+          <img class="avatar-pill" width="22" height="22" src="https://randomuser.me/api/portraits/men/41.jpg" alt="" loading="lazy" style="width:22px!important;height:22px!important;max-width:22px!important;border-radius:999px;border:1.5px solid #FAFAF5;display:inline-block!important;object-fit:cover;background:#E5D9F0;vertical-align:middle;margin-left:-6px;" />
+          <img class="avatar-pill" width="22" height="22" src="https://randomuser.me/api/portraits/women/52.jpg" alt="" loading="lazy" style="width:22px!important;height:22px!important;max-width:22px!important;border-radius:999px;border:1.5px solid #FAFAF5;display:inline-block!important;object-fit:cover;background:#E5D9F0;vertical-align:middle;margin-left:-6px;" />
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="inline-flex gap-px text-[#F59E0B]">
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+          </span>
+          <span class="text-ink/80"><strong class="text-deep">4,9</strong> · 30k+ avaliações verificadas</span>
+        </span>
+      </div>
+
+      <!-- H1 -->
+      <h1 class="mt-4 md:mt-5 font-display font-bold text-deep text-[35px] sm:text-[43px] md:text-[60px] leading-[1.04] tracking-[-.02em]" data-aos="fade-up" data-aos-delay="60">
+        Você tem <span class="text-purple-600">problemas de sono</span> e o Slip resolve <span class="italic-display text-purple-600">cada um deles</span>.
+      </h1>
+
+      <!-- Subhead bullet (4 checks — outcomes específicos) -->
+      <ul class="mt-6 md:mt-7 space-y-2.5 text-[15.5px] md:text-[17px]" data-aos="fade-up" data-aos-delay="120">
+        <li class="flex items-start gap-2.5">
+          <span class="inline-flex flex-shrink-0 w-5 h-5 rounded-full bg-teal-deep text-paper items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </span>
+          <span><strong class="text-deep">Acorde com sensação de descansado</strong> — sono profundo restaurado no 1º dia.</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="inline-flex flex-shrink-0 w-5 h-5 rounded-full bg-teal-deep text-paper items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </span>
+          <span><strong class="text-deep">Não acorde mais durante a noite</strong> — reduz o hormônio do alerta (cortisol).</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="inline-flex flex-shrink-0 w-5 h-5 rounded-full bg-teal-deep text-paper items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </span>
+          <span><strong class="text-deep">Cara desinchada, barriga sem pochete</strong> — corpo para de reter líquido em 14 dias.</span>
+        </li>
+        <li class="flex items-start gap-2.5">
+          <span class="inline-flex flex-shrink-0 w-5 h-5 rounded-full bg-teal-deep text-paper items-center justify-center mt-0.5">
+            <i data-lucide="check" class="w-3 h-3"></i>
+          </span>
+          <span><strong class="text-deep">Menos ansiedade, libido voltando</strong> — regula o hormônio do humor e da libido.</span>
+        </li>
+      </ul>
+
+      <!-- CTA com pill sobreposta -->
+      <div class="cta-with-pill" data-aos="fade-up" data-aos-delay="220">
+        <span class="sales-pill">+30 mil doses vendidas</span>
+        <a href="#cta" id="hero-cta" class="btn-primary w-full !rounded-full !py-4 !text-[14.5px] sm:!text-[15.5px] md:!text-[17px] whitespace-nowrap">
+          Economize até 44% + Frete Grátis
+        </a>
+      </div>
+
+      <!-- Trust line abaixo -->
+      <p class="mt-5 md:mt-6 text-center text-[14px] md:text-[15px] text-ink/70" data-aos="fade-up" data-aos-delay="260">
+        <i data-lucide="check-circle-2" class="inline w-4 h-4 text-teal-deep align-text-bottom"></i>
+        Experimente sem risco por <a href="../../pdp.html" class="underline underline-offset-2 font-semibold text-deep">30 dias</a>
+      </p>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================= -->
+<!-- SECTION 2 — DEPOIMENTOS (carrossel) + PRESS BAR -->
+<!-- ============================================= -->
+<section class="px-4 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 bg-paper">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-7 md:mb-9" data-aos="fade-up">
+      <h2 class="font-display font-bold text-deep text-[30px] md:text-[42px] leading-[1.08] tracking-[-.02em]">
+<span class="italic-display text-purple-600">+30 mil pessoas</span> dormindo melhor.
+      </h2>
+    </div>
+
+    <!-- Carousel container -->
+    <div class="testimonial-carousel" data-aos="fade-up" data-aos-delay="80">
+      <div class="testimonial-track" id="testi-track">
+
+        <!-- Slide 1 -->
+        <div class="testimonial-card">
+          <p class="testimonial-quote-title">"Senti diferença no primeiro dia. Não esperava."</p>
+          <p class="testimonial-body">Tomava melatonina há 2 anos e ainda assim acordava cansada. Quando comecei o Slip, não esperava muito. <strong>No primeiro dia</strong>, dormi bem e não tinha aquele peso pra acordar. Meu marido também comentou, ele tomou junto comigo!</p>
+          <div class="testimonial-meta">
+            <img class="avatar-sm" width="38" height="38" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" loading="lazy" />
+            <div class="testimonial-meta-info">
+              <span class="stars">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+              <span class="name">Mariana A.<span class="city">· São Paulo</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="testimonial-card">
+          <p class="testimonial-quote-title">"Não acordo mais às 3 da manhã. Sono fica inteiro."</p>
+          <p class="testimonial-body">Aquele despertar das 2/3 da manhã me mexendo na cama era diário. Achei que era estresse — não era. Hoje durmo até o despertador, sem fragmentação. Meu Apple Watch confirma: sono profundo dobrou.</p>
+          <div class="testimonial-meta">
+            <img class="avatar-sm" width="38" height="38" src="https://randomuser.me/api/portraits/men/41.jpg" alt="" loading="lazy" />
+            <div class="testimonial-meta-info">
+              <span class="stars">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+              <span class="name">Rafael M.<span class="city">· Rio de Janeiro</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="testimonial-card">
+          <p class="testimonial-quote-title">"O sono melhorou — e o dia inteiro mudou junto."</p>
+          <p class="testimonial-body">Eu nem percebia o quanto dormia mal — achava que era só estresse, vida adulta. <strong>Numa quarta</strong> lembro de notar: a paciência tinha voltado. Era o sono virando.</p>
+          <div class="testimonial-meta">
+            <img class="avatar-sm" width="38" height="38" src="https://randomuser.me/api/portraits/women/52.jpg" alt="" loading="lazy" />
+            <div class="testimonial-meta-info">
+              <span class="stars">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+              <span class="name">Camila B.<span class="city">· Curitiba</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="testimonial-card">
+          <p class="testimonial-quote-title">"A cabeça desliga sem precisar de remédio."</p>
+          <p class="testimonial-body">Eu rolava na cama até meia-noite no celular sem conseguir desligar. Slip não me dá <em>sono</em> — me deixa <strong>calmo o suficiente</strong> pra dormir natural. Em ~20 min apago. E acordo limpo, sem ressaca de nada.</p>
+          <div class="testimonial-meta">
+            <img class="avatar-sm" width="38" height="38" src="https://randomuser.me/api/portraits/men/52.jpg" alt="" loading="lazy" />
+            <div class="testimonial-meta-info">
+              <span class="stars">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+              <span class="name">Daniel S.<span class="city">· Brasília</span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls: prev / dots / next -->
+      <div class="carousel-controls">
+        <button type="button" class="carousel-btn" id="testi-prev" aria-label="Anterior">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        </button>
+        <div class="carousel-dots" id="testi-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+        </div>
+        <button type="button" class="carousel-btn" id="testi-next" aria-label="Próximo">
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS BAR ROXA — fina, logo abaixo dos depoimentos -->
+<!-- [ASPIRACIONAL] menções de mídia — substituir por reais quando confirmado -->
+<section class="press-bar-purple">
+  <div class="max-w-5xl mx-auto">
+    <div class="press-marquee">
+      <div class="press-marquee-track">
+        <span class="press-name press-name-forbes">NÚCLEO</span><span class="press-dot"></span>
+        <span class="press-name press-name-veja">VITAL</span><span class="press-dot"></span>
+        <span class="press-name press-name-gq">Cosmo Bem-estar</span><span class="press-dot"></span>
+        <span class="press-name press-name-mens">Hábito Diário</span><span class="press-dot"></span>
+        <span class="press-name press-name-drauzio">Dr. Henrique Lima</span><span class="press-dot"></span>
+        <span class="press-name press-name-mbg">bemviver.br</span><span class="press-dot"></span>
+        <!-- loop duplicado -->
+        <span class="press-name press-name-forbes">NÚCLEO</span><span class="press-dot"></span>
+        <span class="press-name press-name-veja">VITAL</span><span class="press-dot"></span>
+        <span class="press-name press-name-gq">Cosmo Bem-estar</span><span class="press-dot"></span>
+        <span class="press-name press-name-mens">Hábito Diário</span><span class="press-dot"></span>
+        <span class="press-name press-name-drauzio">Dr. Henrique Lima</span><span class="press-dot"></span>
+        <span class="press-name press-name-mbg">bemviver.br</span><span class="press-dot"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 3 — Slip resolve (head→sub→img→bullets)-->
+<!-- ============================================= -->
+<section class="px-4 md:px-8 py-10 md:py-14 bg-paper">
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Headline + subheadline (centered, foco no Slip) -->
+    <div class="text-center mb-6 md:mb-8" data-aos="fade-up">
+      <h2 class="font-display font-bold text-deep text-[30px] md:text-[42px] leading-[1.08] tracking-[-.02em] max-w-2xl mx-auto">
+        As <span class="italic-display text-purple-600">6 transformações</span> que o Slip destrava.
+      </h2>
+    </div>
+
+    <!-- Imagem do produto centralizada (CHOCOLATE 1.png) -->
+    <div class="flex flex-col items-center my-7 md:my-10" data-aos="fade-up" data-aos-delay="80">
+      <img src="../../assets/mockup/CHOCOLATE.png" alt="Pote Slip Chocolate Quente" class="w-auto h-[180px] md:h-[240px] block" style="filter: drop-shadow(0 18px 32px rgba(107,63,160,.22));" />
+
+      <!-- Fórmula por trás: stat cards (teal accent — diferencia dos cards de transformação roxos) -->
+      <div class="mt-5 md:mt-6 max-w-[280px] w-full">
+        <p class="text-center text-[11.5px] md:text-[12.5px] uppercase tracking-[.22em] text-teal-deep font-bold mb-2.5">A fórmula por trás</p>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="bg-teal/10 border border-teal-deep/25 rounded-xl px-3 py-2.5 text-center">
+            <p class="font-display font-bold text-ink/70 text-[24px] md:text-[28px] leading-none">3</p>
+            <p class="text-[11px] md:text-[12px] text-ink/70 mt-1 font-semibold leading-tight">tipos de magnésio</p>
+          </div>
+          <div class="bg-teal/10 border border-teal-deep/25 rounded-xl px-3 py-2.5 text-center">
+            <p class="font-display font-bold text-ink/70 text-[24px] md:text-[28px] leading-none">7</p>
+            <p class="text-[11px] md:text-[12px] text-ink/70 mt-1 font-semibold leading-tight">bioativos clínicos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 cards de outcome (head do card = oq Slip melhora; body = problema/mecanismo) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 md:gap-4">
+      <div class="flex items-start gap-3 bg-cream-light/60 border border-purple-100 rounded-xl p-4 md:p-5" data-aos="fade-up" data-aos-delay="40">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+          <i data-lucide="sunrise" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-deep text-[17.5px] md:text-[19px] leading-tight mb-1">Acordar descansado</h3>
+          <p class="text-[14.5px] md:text-[15.5px] text-ink/75 leading-[1.5]">Sono reparador real — não só horas na cama.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 bg-cream-light/60 border border-purple-100 rounded-xl p-4 md:p-5" data-aos="fade-up" data-aos-delay="80">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+          <i data-lucide="moon" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-deep text-[17.5px] md:text-[19px] leading-tight mb-1">Sono profundo sem acordar</h3>
+          <p class="text-[14.5px] md:text-[15.5px] text-ink/75 leading-[1.5]">Acaba o despertar das 3h da manhã.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 bg-cream-light/60 border border-purple-100 rounded-xl p-4 md:p-5" data-aos="fade-up" data-aos-delay="120">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+          <i data-lucide="brain" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-deep text-[17.5px] md:text-[19px] leading-tight mb-1">Pegar no sono em minutos</h3>
+          <p class="text-[14.5px] md:text-[15.5px] text-ink/75 leading-[1.5]">Sem cabeça acelerada, sem ansiedade pré-cama.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 bg-cream-light/60 border border-purple-100 rounded-xl p-4 md:p-5" data-aos="fade-up" data-aos-delay="160">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-deep text-[17.5px] md:text-[19px] leading-tight mb-1">Cara desinchada, papada menor</h3>
+          <p class="text-[14.5px] md:text-[15.5px] text-ink/75 leading-[1.5]">O corpo para de reter líquido — em 14 dias muda no espelho.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 bg-cream-light/60 border border-purple-100 rounded-xl p-4 md:p-5" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+          <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-deep text-[17.5px] md:text-[19px] leading-tight mb-1">Menos ansiedade, humor estável</h3>
+          <p class="text-[14.5px] md:text-[15.5px] text-ink/75 leading-[1.5]">Cortisol baixo regula o hormônio do humor.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 bg-cream-light/60 border border-purple-100 rounded-xl p-4 md:p-5" data-aos="fade-up" data-aos-delay="240">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+          <i data-lucide="flame" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-deep text-[17.5px] md:text-[19px] leading-tight mb-1">Libido voltando</h3>
+          <p class="text-[14.5px] md:text-[15.5px] text-ink/75 leading-[1.5]">Cortisol baixo libera o hormônio da libido.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- COMO FUNCIONA — dual mechanism slim            -->
+<!-- ============================================= -->
+<section class="px-4 md:px-8 py-10 md:py-14 bg-paper">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-7 md:mb-9" data-aos="fade-up">
+      <h2 class="font-display font-bold text-deep text-[30px] md:text-[42px] leading-[1.08] tracking-[-.02em] max-w-2xl mx-auto">
+        É o magnésio do Slip que <span class="italic-display text-purple-600">destrava seu sono.</span>
+      </h2>
+      <p class="mt-4 md:mt-5 text-ink/75 text-[16.5px] md:text-[17.5px] leading-[1.55] max-w-xl mx-auto">
+        Ele baixa o cortisol (hormônio do alerta) e estimula sua melatonina natural (hormônio do sono).
+      </p>
+    </div>
+
+    <div class="bg-cream-light/40 border border-purple-100 rounded-2xl p-5 md:p-7" data-aos="fade-up" data-aos-delay="80">
+
+      <!-- Legenda HTML — compacta -->
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-8 mb-5">
+        <div class="flex items-start gap-2.5">
+          <span class="w-3 h-3 rounded-full bg-teal-deep shrink-0 mt-1.5"></span>
+          <div class="leading-tight">
+            <p class="font-bold text-teal-deep text-[16.5px] md:text-[18px] flex items-baseline gap-2">
+              Cortisol
+              <span class="text-[12px] md:text-[13px] tracking-wider font-extrabold">CAI ↓</span>
+            </p>
+            <p class="text-[13px] md:text-[14px] text-ink/60 mt-0.5">Hormônio do alerta/estresse</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="w-3 h-3 rounded-full bg-purple-600 shrink-0 mt-1.5"></span>
+          <div class="leading-tight">
+            <p class="font-bold text-purple-600 text-[16.5px] md:text-[18px] flex items-baseline gap-2">
+              Melatonina
+              <span class="text-[12px] md:text-[13px] tracking-wider font-extrabold">SOBE ↑</span>
+            </p>
+            <p class="text-[13px] md:text-[14px] text-ink/60 mt-0.5">Hormônio do sono</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SVG: curvas + janela de sono + horários -->
+      <svg viewBox="0 0 600 280" preserveAspectRatio="xMidYMid meet" class="w-full h-auto" role="img" aria-label="Cortisol cai e melatonina sobe à noite com Slip">
+        <defs>
+          <linearGradient id="sleepGradML" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(107,63,160,.16)"/>
+            <stop offset="100%" stop-color="rgba(107,63,160,.03)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Sleep window -->
+        <rect x="180" y="0" width="290" height="220" fill="url(#sleepGradML)"/>
+        <text x="325" y="22" fill="#6B3FA0" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" letter-spacing="3">JANELA DE SONO</text>
+
+        <line x1="0" y1="220" x2="600" y2="220" stroke="rgba(107,63,160,.18)" stroke-width="1.5"/>
+
+        <!-- Marca: você toma Slip aqui -->
+        <line x1="180" y1="48" x2="180" y2="220" stroke="#1A0E2C" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.65"/>
+        <g transform="translate(180 48)">
+          <rect x="-50" y="-26" width="100" height="22" rx="11" fill="#1A0E2C"/>
+          <text x="0" y="-11" fill="#FAFAF5" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1.5">TOMOU SLIP</text>
+        </g>
+
+        <!-- Cortisol curve -->
+        <path d="M 50 80 C 110 85, 130 100, 165 115 S 250 160, 300 185 S 380 140, 435 115 S 530 85, 560 80"
+              fill="none" stroke="#0D9488" stroke-width="5" stroke-linecap="round"/>
+
+        <!-- Melatonin curve -->
+        <path d="M 50 200 C 110 195, 130 180, 165 165 S 250 90, 300 70 S 380 130, 435 165 S 530 195, 560 200"
+              fill="none" stroke="#6B3FA0" stroke-width="5" stroke-linecap="round"/>
+
+        <!-- Highlight points -->
+        <circle cx="300" cy="185" r="7" fill="#0D9488"/>
+        <circle cx="300" cy="185" r="16" fill="none" stroke="#0D9488" stroke-width="2" opacity=".4"/>
+        <circle cx="300" cy="70" r="7" fill="#6B3FA0"/>
+        <circle cx="300" cy="70" r="16" fill="none" stroke="#6B3FA0" stroke-width="2" opacity=".4"/>
+
+        <!-- Time markers -->
+        <g font-family="'Plus Jakarta Sans', sans-serif" font-size="15" fill="rgba(20,9,46,.6)" text-anchor="middle" font-weight="700">
+          <text x="50" y="260">18h</text>
+          <text x="180" y="260" fill="#6B3FA0">22h</text>
+          <text x="325" y="260" fill="#6B3FA0">02h</text>
+          <text x="470" y="260" fill="#6B3FA0">06h</text>
+          <text x="560" y="260">10h</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- +7 bioativos claim — fora do card, com brincadeira tipográfica -->
+    <p class="mt-6 md:mt-7 text-center text-[16px] md:text-[18px] text-ink/75 leading-[1.55] max-w-xl mx-auto">
+      <span class="font-display italic font-semibold text-purple-600">+7 bioativos</span> pra acalmar, relaxar, estabilizar o humor, desligar a mente e melhorar o metabolismo.
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 4 — BULA COMPACTA (10 ativos canonical) -->
+<!-- ============================================= -->
+<section class="px-4 md:px-8 py-10 md:py-14 bg-cream-light/40 border-y border-purple-100">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-6 md:mb-8" data-aos="fade-up">
+      <h2 class="font-display font-bold text-deep text-[30px] md:text-[42px] leading-[1.08] tracking-[-.02em]">
+        Tabela <span class="italic-display text-purple-600">Nutricional</span>
+      </h2>
+    </div>
+
+    <!-- Tabela nutricional compacta -->
+    <div class="bg-paper border border-purple-100 rounded-2xl p-5 md:p-7" data-aos="fade-up" data-aos-delay="80">
+      <div class="flex items-baseline justify-between border-b border-purple-100 pb-3 mb-4">
+        <p class="font-display font-bold text-deep text-[16px] md:text-[18px]">Por dose · 10g</p>
+        <p class="text-[13px] md:text-[14px] text-ink/65">30 doses por pote</p>
+      </div>
+
+      <!-- Grupo: Magnésio Inteligente (550mg) -->
+      <div class="mb-5">
+        <div class="flex items-baseline justify-between mb-2">
+          <p class="font-display font-bold text-purple-600 text-[15.5px] md:text-[17px] uppercase tracking-wider">3 Tipos de Magnésio</p>
+          <p class="font-display font-bold text-deep text-[15px] md:text-[16px]">550mg</p>
+        </div>
+        <ul class="space-y-1.5 pl-3 border-l-2 border-purple-200">
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">L-Treonato</strong> · sono profundo</span>
+            <span class="text-ink/65 flex-shrink-0">150mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">Dimalato</strong> · energia celular</span>
+            <span class="text-ink/65 flex-shrink-0">200mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">Bisglicinato</strong> · relaxamento muscular</span>
+            <span class="text-ink/65 flex-shrink-0">200mg</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Grupo: 7 Bioativos -->
+      <div>
+        <div class="flex items-baseline justify-between mb-2">
+          <p class="font-display font-bold text-purple-600 text-[15.5px] md:text-[17px] uppercase tracking-wider">7 Bioativos</p>
+          <p class="font-display font-bold text-deep text-[15px] md:text-[16px]">1.315mg</p>
+        </div>
+        <ul class="space-y-1.5 pl-3 border-l-2 border-purple-200">
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">Taurina</strong> · calma nervosa</span>
+            <span class="text-ink/65 flex-shrink-0">500mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">Passiflora</strong> · calmante natural</span>
+            <span class="text-ink/65 flex-shrink-0">250mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">L-Teanina</strong> · relaxamento mental</span>
+            <span class="text-ink/65 flex-shrink-0">200mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">L-Triptofano</strong> · estimula hormônio do humor</span>
+            <span class="text-ink/65 flex-shrink-0">200mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">GABA</strong> · desliga a mente</span>
+            <span class="text-ink/65 flex-shrink-0">100mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">Apigenina</strong> · melhora efeito do GABA</span>
+            <span class="text-ink/65 flex-shrink-0">50mg</span>
+          </li>
+          <li class="flex items-baseline justify-between gap-3 text-[14px] md:text-[15px]">
+            <span class="text-ink/85"><strong class="text-deep">Vitamina B6</strong> · melhora metabolismo</span>
+            <span class="text-ink/65 flex-shrink-0">15mg</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Clean food claims -->
+    <div class="mt-6 md:mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2.5 text-[13px] md:text-[14px]" data-aos="fade-up" data-aos-delay="160">
+      <span class="inline-flex items-center gap-1.5 text-ink/70 font-semibold bg-paper border border-purple-100 rounded-full px-3 py-1.5">
+        <i data-lucide="leaf" class="w-3.5 h-3.5 text-teal-deep"></i> Vegano
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-ink/70 font-semibold bg-paper border border-purple-100 rounded-full px-3 py-1.5">
+        <i data-lucide="wheat-off" class="w-3.5 h-3.5 text-teal-deep"></i> Sem glúten
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-ink/70 font-semibold bg-paper border border-purple-100 rounded-full px-3 py-1.5">
+        <i data-lucide="trending-down" class="w-3.5 h-3.5 text-teal-deep"></i> Low carb
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-ink/70 font-semibold bg-paper border border-purple-100 rounded-full px-3 py-1.5">
+        <i data-lucide="ban" class="w-3.5 h-3.5 text-teal-deep"></i> Sem açúcar
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-ink/70 font-semibold bg-paper border border-purple-100 rounded-full px-3 py-1.5">
+        <i data-lucide="palette" class="w-3.5 h-3.5 text-teal-deep"></i> Sem corante artificial
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-ink/70 font-semibold bg-paper border border-purple-100 rounded-full px-3 py-1.5">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-teal-deep"></i> Testado por terceiros
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 4 — OUTCOME STATS SLIP                 -->
+<!-- ============================================= -->
+<section class="px-4 md:px-8 py-10 md:py-14 bg-paper">
+  <div class="max-w-5xl mx-auto text-center" data-aos="fade-up">
+    <h2 class="font-display font-bold text-deep text-[30px] md:text-[42px] leading-[1.08] tracking-[-.02em] mb-10 md:mb-12 max-w-2xl mx-auto">
+      Os números de <span class="italic-display text-purple-600">+30 mil pessoas</span> que tomam Slip.
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
+      <div data-aos="fade-up" data-aos-delay="40">
+        <p class="font-display font-bold text-purple-600 text-[44px] md:text-[60px] leading-[.95] tracking-[-.03em]">4,9<span class="text-[24px] md:text-[32px] align-top">★</span></p>
+        <p class="mt-1.5 text-[14.5px] md:text-[16px] text-ink/75 leading-[1.4]">avaliação média</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="80">
+        <p class="font-display font-bold text-purple-600 text-[44px] md:text-[60px] leading-[.95] tracking-[-.03em]">30k<span class="text-[24px] md:text-[32px] align-top">+</span></p>
+        <p class="mt-1.5 text-[14.5px] md:text-[16px] text-ink/75 leading-[1.4]">avaliações verificadas</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="120">
+        <p class="font-display font-bold text-purple-600 text-[44px] md:text-[60px] leading-[.95] tracking-[-.03em]">32<span class="text-[24px] md:text-[32px] align-top">%</span></p>
+        <p class="mt-1.5 text-[14.5px] md:text-[16px] text-ink/75 leading-[1.4]">recomendam pra um amigo</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="160">
+        <p class="font-display font-bold text-purple-600 text-[44px] md:text-[60px] leading-[.95] tracking-[-.03em]">92<span class="text-[24px] md:text-[32px] align-top">%</span></p>
+        <p class="mt-1.5 text-[14.5px] md:text-[16px] text-ink/75 leading-[1.4]">reportam mudança em 3 dias</p>
+      </div>
+    </div>
+
+    <!-- Mini-comparison bridge — diferenciais vs concorrentes (compacto, não substitui PDP) -->
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- SECTION 6 — Comparison table (Slip vs concorrentes) -->
+<!-- ============================================= -->
+<section class="px-4 md:px-8 py-10 md:py-14 pb-20 md:pb-24 bg-cream-light/40 border-t border-purple-100">
+  <div class="max-w-2xl mx-auto" data-aos="fade-up">
+    <div class="text-center mb-7 md:mb-9">
+      <h2 class="font-display font-bold text-deep text-[30px] md:text-[42px] leading-[1.08] tracking-[-.02em]">
+        O que separa o Slip do que <span class="italic-display text-purple-600">existia até agora</span>.
+      </h2>
+    </div>
+
+    <div class="overflow-hidden rounded-2xl border border-purple-100 bg-paper">
+      <table class="w-full text-[13px] md:text-[15px]">
+        <thead>
+          <tr class="border-b border-purple-100">
+            <th class="text-left p-3 md:p-4 font-semibold text-ink/55 text-[11px] md:text-[12px] uppercase tracking-wider"></th>
+            <th class="text-center p-3 md:p-4 bg-purple-50 font-display font-bold text-purple-600 text-[14px] md:text-[16px]">Slip</th>
+            <th class="text-center p-3 md:p-4 font-semibold text-ink/55 text-[12px] md:text-[13px]">Melatonina<br>em cápsula</th>
+            <th class="text-center p-3 md:p-4 font-semibold text-ink/55 text-[12px] md:text-[13px]">Magnésio comum</th>
+          </tr>
+        </thead>
+        <tbody class="text-ink/80">
+          <tr class="border-b border-purple-100/60">
+            <td class="p-3 md:p-4 font-semibold text-deep">Ingredientes</td>
+            <td class="text-center p-3 md:p-4 bg-purple-50/60 font-semibold text-teal-deep">3 tipos de magnésio + 7 bioativos</td>
+            <td class="text-center p-3 md:p-4 text-rose">1 só</td>
+            <td class="text-center p-3 md:p-4 text-rose">1 só</td>
+          </tr>
+          <tr class="border-b border-purple-100/60">
+            <td class="p-3 md:p-4 font-semibold text-deep">Atua no cortisol</td>
+            <td class="text-center p-3 md:p-4 bg-purple-50/60 font-semibold text-teal-deep">✓ Sim</td>
+            <td class="text-center p-3 md:p-4 text-rose">✗ Não</td>
+            <td class="text-center p-3 md:p-4 text-ink/55">— Leve</td>
+          </tr>
+          <tr class="border-b border-purple-100/60">
+            <td class="p-3 md:p-4 font-semibold text-deep">Rosto desinchado</td>
+            <td class="text-center p-3 md:p-4 bg-purple-50/60 font-semibold text-teal-deep">✓ Diminui</td>
+            <td class="text-center p-3 md:p-4 text-rose">✗ Não age</td>
+            <td class="text-center p-3 md:p-4 text-rose">✗ Não age</td>
+          </tr>
+          <tr class="border-b border-purple-100/60">
+            <td class="p-3 md:p-4 font-semibold text-deep">Energia ao acordar</td>
+            <td class="text-center p-3 md:p-4 bg-purple-50/60 font-semibold text-teal-deep">✓ Sim</td>
+            <td class="text-center p-3 md:p-4 text-rose">✗ Ressaca</td>
+            <td class="text-center p-3 md:p-4 text-ink/55">— Leve</td>
+          </tr>
+          <tr>
+            <td class="p-3 md:p-4 font-semibold text-deep">Dependência</td>
+            <td class="text-center p-3 md:p-4 bg-purple-50/60 font-semibold text-teal-deep">✓ Zero</td>
+            <td class="text-center p-3 md:p-4 text-rose">✗ Em 2 meses</td>
+            <td class="text-center p-3 md:p-4 text-teal-deep">✓ Zero</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- DROPPED — itens do listicle abaixo (substituídos pelas sections acima) -->
+<div style="display:none">
+<!-- #01 SONO PROFUNDO — acordar descansado -->
+<section id="r1" class="px-4 md:px-8 py-5 md:py-7 bg-paper">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+
+    <div class="item-head">
+      <p class="item-eyebrow">Sono Profundo</p>
+    </div>
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[40px] leading-[1.1] tracking-[-.015em]">
+      <span class="item-h2-num">01.</span>Acordar <span class="italic-display text-purple-600">realmente descansado</span>, todo dia
+    </h2>
+
+    <div class="item-img-wrap">
+      <!-- IMG BRIEF (#01): Foto editorial — mulher 30-40 acordando descansada de manhã, luz natural suave entrando pela janela, expressão serena com leve sorriso, lençol branco. Lifestyle aspiracional warm. --ar 16:10 -->
+      <div class="item-img item-img-ph">
+        <div>
+          <div class="uppercase">Imagem · acordar descansada, luz natural manhã</div>
+          <div class="mt-1.5 font-display italic text-ink/45 normal-case tracking-normal text-[10.5px]">(gerar via IA)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-[14.5px] md:text-[15.5px] leading-[1.65] text-ink/85 space-y-3">
+      <p>8 horas na cama não significa nada se você não chega no <strong class="text-deep">deep sleep</strong> — a fase em que o corpo de fato restaura. Magnésio é cofator dos neurotransmissores que ativam essa fase. Sem dose suficiente, você dorme e não restaura.</p>
+      <p>O Slip repõe magnésio inteligente em 3 formas — <strong class="text-deep">L-treonato (150mg)</strong>, <strong class="text-deep">dimalato (200mg)</strong> e <strong class="text-deep">bisglicinato (200mg)</strong>. Você acorda como se tivesse tirado férias, mesmo dormindo as mesmas horas.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- #02 NOITE INTEIRA — sem despertar 3h -->
+<section id="r2" class="px-4 md:px-8 py-5 md:py-7 bg-cream-light/40">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+
+    <div class="item-head">
+      <p class="item-eyebrow">Noite Inteira</p>
+    </div>
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[40px] leading-[1.1] tracking-[-.015em]">
+      <span class="item-h2-num">02.</span>Não acordar mais às <span class="italic-display text-purple-600">3 da manhã</span> sem motivo
+    </h2>
+
+    <div class="item-img-wrap">
+      <!-- IMG BRIEF (#02): Foto editorial — mulher dormindo serena de lado, lençol branco, despertador analógico ao fundo desfocado marcando 3h17. Tom warm/midnight, luz baixa azulada-roxa. Atmosfera de sono ininterrupto. --ar 2:1 -->
+      <div class="item-img item-img-ph">
+        <div>
+          <div class="uppercase">Imagem · dormindo profundo enquanto relógio marca 3h</div>
+          <div class="mt-1.5 font-display italic text-ink/45 normal-case tracking-normal text-[10.5px]">(gerar via IA)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-[14.5px] md:text-[15.5px] leading-[1.65] text-ink/85 space-y-3">
+      <p>O despertar constante às 3 da manhã não é só você trocando de posição ou de travesseiro pra dormir melhor — é <strong class="text-deep">cortisol disparando no horário errado</strong>. Quando o magnésio tá baixo, o cortisol perde o ritmo: sobe à noite quando devia estar no chão.</p>
+      <p>Magnésio inteligente + L-teanina + apigenina mantêm o cortisol estável a noite toda. O sono fica contínuo — você dorme até o despertador, sem fragmentação.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- #03 PEGAR NO SONO — adormecer rápido -->
+<section id="r3" class="px-4 md:px-8 py-5 md:py-7 bg-paper">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+
+    <div class="item-head">
+      <p class="item-eyebrow">Pegar no Sono</p>
+    </div>
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[40px] leading-[1.1] tracking-[-.015em]">
+      <span class="item-h2-num">03.</span>Pegar no sono em <span class="italic-display text-purple-600">20 minutos</span>, sem ruminar
+    </h2>
+
+    <div class="item-img-wrap">
+      <!-- IMG BRIEF (#03): Foto editorial — close de mulher na cama de olhos fechados, expressão calma desligando, mão segurando caneca de chocolate quente do Slip ao lado. Iluminação baixa âmbar/violeta. --ar 2:1 -->
+      <div class="item-img item-img-ph">
+        <div>
+          <div class="uppercase">Imagem · desligando a mente, caneca Slip na cabeceira</div>
+          <div class="mt-1.5 font-display italic text-ink/45 normal-case tracking-normal text-[10.5px]">(gerar via IA)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-[14.5px] md:text-[15.5px] leading-[1.65] text-ink/85 space-y-3">
+      <p>Cabeça acelerada na hora de dormir, lista mental rolando — é <strong class="text-deep">GABA baixo + cortisol alto</strong>. O cérebro não desliga porque não tem o neurotransmissor inibitório no nível certo.</p>
+      <p>O Slip combina GABA (100mg), L-triptofano (200mg) e magnésio bisglicinato pra desligar o ruído mental. Sem efeito ressaca, sem zumbi de manhã — só um deslizamento natural pro sono em ~20 min.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- #04 ENERGIA DIURNA — acordar com energia -->
+<section id="r4" class="px-4 md:px-8 py-5 md:py-7 bg-cream-light/40">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+
+    <div class="item-head">
+      <p class="item-eyebrow">Energia Diurna</p>
+    </div>
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[40px] leading-[1.1] tracking-[-.015em]">
+      <span class="item-h2-num">04.</span>Energia natural pela manhã, <span class="italic-display text-purple-600">sem precisar de café</span>
+    </h2>
+
+    <div class="item-img-wrap">
+      <!-- IMG BRIEF (#04): Foto editorial lifestyle — mulher 30-40 de manhã na cozinha, luz natural forte, café NÃO está na mão (xícara de chá ou água), expressão de energia genuína, sem cara de cansada. Tom warm cream. --ar 2:1 -->
+      <div class="item-img item-img-ph">
+        <div>
+          <div class="uppercase">Imagem · acordar com energia natural, manhã cozinha</div>
+          <div class="mt-1.5 font-display italic text-ink/45 normal-case tracking-normal text-[10.5px]">(gerar via IA)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-[14.5px] md:text-[15.5px] leading-[1.65] text-ink/85 space-y-3">
+      <p>Cortisol funciona em ciclo: <strong class="text-deep">alto pela manhã</strong> (te levanta), <strong class="text-deep">baixo à noite</strong> (te desliga). Quando esse ciclo inverte por estresse crônico ou magnésio baixo, você acorda destruída e fica ligada de noite.</p>
+      <p>Slip recoloca o cortisol no eixo: magnésio dimalato gera energia celular real, L-treonato normaliza o ritmo. Você acorda com energia genuína — sem precisar de café antes das 10h pra funcionar.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- #05 DESINCHAÇO — retenção, papada, pochete -->
+<section id="r5" class="px-4 md:px-8 py-5 md:py-7 bg-paper">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+
+    <div class="item-head">
+      <p class="item-eyebrow">Desinchaço</p>
+    </div>
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[40px] leading-[1.1] tracking-[-.015em]">
+      <span class="item-h2-num">05.</span>Cara desinchada, papada menor, <span class="italic-display text-purple-600">barriga sem pochete</span>
+    </h2>
+
+    <div class="item-img-wrap">
+      <!-- IMG BRIEF (#05): Foto editorial close — mulher 30-40 de manhã olhando no espelho do banheiro, rosto desinchado, traços leves, expressão de surpresa positiva. Luz natural de janela, tom warm cream. --ar 2:1 -->
+      <div class="item-img item-img-ph">
+        <div>
+          <div class="uppercase">Imagem · cara desinchada espelho banheiro de manhã</div>
+          <div class="mt-1.5 font-display italic text-ink/45 normal-case tracking-normal text-[10.5px]">(gerar via IA)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-[14.5px] md:text-[15.5px] leading-[1.65] text-ink/85 space-y-3">
+      <p>Cortisol alto à noite = <strong class="text-deep">retenção de líquido pesada</strong>. É por isso que você acorda com a cara inchada, papada que não estava ali ontem, e a barriga "de pochete" que não cede mesmo treinando.</p>
+      <p>Magnésio inteligente normaliza o cortisol noturno — o corpo para de reter água como mecanismo de stress. Em 14 dias, o rosto fica mais definido de manhã e a retenção abdominal desaparece.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- #06 HUMOR & LIBIDO — ansiedade reduzida -->
+<section id="r6" class="px-4 md:px-8 py-5 md:py-7 bg-cream-light/40">
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
+
+    <div class="item-head">
+      <p class="item-eyebrow">Humor & Libido</p>
+    </div>
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[40px] leading-[1.1] tracking-[-.015em]">
+      <span class="item-h2-num">06.</span>Menos ansiedade, humor estável e <span class="italic-display text-purple-600">libido voltando</span>
+    </h2>
+
+    <div class="item-img-wrap">
+      <!-- IMG BRIEF (#06): Foto editorial — casal 30-40 em momento íntimo cotidiano (rindo juntos no sofá, abraço espontâneo, mãos dadas em close). Tom warm, luz natural âmbar, expressão genuína. --ar 2:1 -->
+      <div class="item-img item-img-ph">
+        <div>
+          <div class="uppercase">Imagem · casal rindo juntos / momento de conexão</div>
+          <div class="mt-1.5 font-display italic text-ink/45 normal-case tracking-normal text-[10.5px]">(gerar via IA)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-[14.5px] md:text-[15.5px] leading-[1.65] text-ink/85 space-y-3">
+      <p>Cortisol cronicamente alto rouba <strong class="text-deep">serotonina</strong> (o hormônio do humor) e <strong class="text-deep">testosterona</strong> (o hormônio da libido — sim, em homem e mulher). Dormir mal vira pavio curto, irritação por nada, zero vontade pra qualquer coisa.</p>
+      <p>Magnésio + L-triptofano + GABA acalmam o estresse: ansiedade cai, humor estabiliza. Quando o estresse recolhe, a libido reaparece naturalmente — sem suplemento de testosterona, sem nada extra.</p>
+    </div>
+
+  </div>
+</section>
+
+</div>
+<!-- /DROPPED -->
+
+<!-- ============================================= -->
+<!-- CTA FINAL — branded mesh-cream + mockup pote   -->
+<!-- ============================================= -->
+<section id="cta" class="relative mesh-cream grain overflow-hidden px-4 md:px-8 pt-20 md:pt-24 pb-12 md:pb-20 border-t border-purple-100">
+  <div class="relative max-w-3xl mx-auto text-center" data-aos="fade-up">
+
+    <!-- Mockup pote chocolate (signature CTA) -->
+    <img src="../../assets/mockup/Chocolate + Morango + Doce de Leite.png" alt="Slip — 3 sabores: Chocolate Quente, Doce de Leite e Morango" class="cta-mockup" />
+
+    <p class="inline-flex items-center gap-2 text-[11px] md:text-[12px] uppercase tracking-[.2em] text-purple-700 font-bold mb-4">
+      <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+      Tempo limitado
+    </p>
+
+    <h2 class="font-display font-bold text-deep text-[28px] md:text-[44px] leading-[1.04] tracking-[-.02em]">
+      Comece esta noite com <span class="price-callout text-[24px] md:text-[36px] align-baseline">até 44% OFF</span> + Frete Grátis
+    </h2>
+
+    <p class="mt-5 max-w-[560px] mx-auto text-ink/75 text-[16.5px] md:text-[18px] leading-[1.55]">
+      3 Tipos de Magnésio + 7 bioativos clínicos em um chocolate quente cremoso.
+    </p>
+
+    <a href="../../pdp.html" class="btn-primary mt-8 md:mt-10 w-full sm:w-auto !text-[14px] sm:!text-base !px-5 sm:!px-8 md:!px-12 whitespace-nowrap">
+      <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"></i>
+      Economize até 44% + Frete Grátis
+    </a>
+
+    <div class="mt-7 flex items-center justify-center gap-4 md:gap-6 flex-wrap text-[13px] md:text-[14px] text-ink/65">
+      <span class="inline-flex items-center gap-1.5 font-semibold">
+        <i data-lucide="shield-check" class="w-4 h-4 text-teal-deep"></i>
+        30 dias de garantia
+      </span>
+      <span class="text-ink/30">·</span>
+      <span class="inline-flex items-center gap-1.5 font-semibold">
+        <i data-lucide="package-check" class="w-4 h-4 text-teal-deep"></i>
+        Inclusive pote vazio
+      </span>
+      <span class="text-ink/30">·</span>
+      <span class="inline-flex items-center gap-1.5 font-semibold">
+        <i data-lucide="leaf" class="w-4 h-4 text-teal-deep"></i>
+        Sem melatonina
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- FOOTER                                          -->
+<!-- ============================================= -->
+<footer class="px-4 md:px-8 py-9 md:py-12 border-t border-purple-100 bg-paper">
+  <div class="max-w-3xl mx-auto text-center space-y-4">
+    <img src="../../assets/logos/LOGO - SLIP ROXO PRIMÁRIO.png" alt="Slip" class="h-6 mx-auto opacity-60">
+    <div class="flex items-center justify-center gap-3 text-[11.5px] md:text-[13px] text-ink/55">
+      <a href="#" class="hover:text-deep">Termos de Uso</a>
+      <span>·</span>
+      <a href="#" class="hover:text-deep">Política de Privacidade</a>
+    </div>
+    <p class="text-[11.5px] text-ink/45">Slip 2026 · Todos os direitos reservados</p>
+    <p class="text-[10.5px] md:text-[12px] italic text-ink/55 leading-[1.55] max-w-[600px] mx-auto">
+      *Este produto não se destina a diagnosticar, tratar, curar ou prevenir qualquer doença. Resultados podem variar. Estatísticas referenciam pesquisas independentes sobre população brasileira.
+    </p>
+  </div>
+</footer>
+
+<!-- STICKY BOTTOM CTA -->
+<div class="sticky-cta" id="sticky-cta" aria-hidden="true">
+  <div class="sticky-cta-inner">
+    <div class="cta-with-pill">
+      <span class="sales-pill">+30 mil doses vendidas</span>
+      <a href="#cta" class="btn-primary">
+        Economize até 44% + Frete Grátis
+      </a>
+    </div>
+    <div class="sticky-cta-trust">
+      <span class="stars">
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+      </span>
+      <span><strong>4,9</strong> · 30k+ avaliações</span>
+      <span class="opacity-50">|</span>
+      <span><strong>1.400+</strong> médicos</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  AOS.init({ once: true, duration: 600, easing: 'ease-out-cubic', offset: 50 });
+  if (window.lucide) lucide.createIcons();
+
+  // Testimonial carousel — scroll-snap + arrows + dots
+  (function() {
+    const track = document.getElementById('testi-track');
+    const prevBtn = document.getElementById('testi-prev');
+    const nextBtn = document.getElementById('testi-next');
+    const dotsWrap = document.getElementById('testi-dots');
+    if (!track || !prevBtn || !nextBtn || !dotsWrap) return;
+
+    const cards = track.querySelectorAll('.testimonial-card');
+    const dots = dotsWrap.querySelectorAll('.dot');
+    const total = cards.length;
+
+    function getIndex() {
+      // largura do card (incluindo gap) — usa o offsetWidth do 1º card + gap
+      const cardW = cards[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap || '16');
+      return Math.round(track.scrollLeft / (cardW + gap));
+    }
+    function updateDots(i) {
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      prevBtn.disabled = i <= 0;
+      nextBtn.disabled = i >= total - 1;
+    }
+    function goTo(i) {
+      i = Math.max(0, Math.min(total - 1, i));
+      const cardW = cards[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap || '16');
+      track.scrollTo({ left: i * (cardW + gap), behavior: 'smooth' });
+    }
+    prevBtn.addEventListener('click', () => goTo(getIndex() - 1));
+    nextBtn.addEventListener('click', () => goTo(getIndex() + 1));
+    dots.forEach((d, idx) => d.addEventListener('click', () => goTo(idx)));
+
+    let raf;
+    track.addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        updateDots(getIndex());
+        raf = null;
+      });
+    }, { passive: true });
+
+    // estado inicial
+    updateDots(0);
+  })();
+
+  // Sticky bottom CTA — aparece quando user passa do hero E NÃO tá no CTA final
+  (function() {
+    const heroCta = document.getElementById('hero-cta');
+    const finalCtaSection = document.getElementById('cta');
+    const sticky = document.getElementById('sticky-cta');
+    if (!heroCta || !finalCtaSection || !sticky) return;
+
+    let heroPassed = false;
+    let finalVisible = false;
+
+    function update() {
+      const shouldShow = heroPassed && !finalVisible;
+      sticky.classList.toggle('visible', shouldShow);
+      document.body.classList.toggle('sticky-active', shouldShow);
+      sticky.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+    }
+
+    const obsHero = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        heroPassed = e.target.getBoundingClientRect().bottom < 0;
+        update();
+      });
+    }, { threshold: 0 });
+    obsHero.observe(heroCta);
+
+    const obsFinal = new IntersectionObserver((entries) => {
+      entries.forEach(e => { finalVisible = e.isIntersecting; update(); });
+    }, { threshold: 0.05 });
+    obsFinal.observe(finalCtaSection);
+
+    let raf;
+    window.addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        heroPassed = heroCta.getBoundingClientRect().bottom < 0;
+        update();
+        raf = null;
+      });
+    }, { passive: true });
+  })();
+</script>
+
+</body>
+</html>
