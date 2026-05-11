@@ -1828,8 +1828,10 @@
 
         <!-- CTA -->
         <button id="main-cta"
-                class="btn-primary w-full !text-base"
+                type="button"
+                @click="goToCheckout()"
                 :disabled="!isComplete"
+                class="btn-primary w-full !text-base"
                 :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span x-text="isComplete ? 'Adicionar ao carrinho' : (packQty === 1 ? 'Falta escolher o sabor' : 'Falta escolher os sabores')"></span>
@@ -2074,6 +2076,33 @@
           './assets/pdp/kitsboasvindas/kit1.avif',
         ],
 
+        // Checkout Yampi — 19 combinações (packQty | letras ordenadas por C,M,D)
+        checkoutBase: 'https://gudreams.pay.yampi.com.br/r/',
+        checkoutUrls: {
+          // 1 pote
+          '1|C':   'N41V4YK2FY',
+          '1|M':   'KSJUOH8L1Q',
+          '1|D':   'EXQKSI6W9Z',
+          // 2 potes
+          '2|CC':  'TL3Q64ONY3',
+          '2|MM':  'SSMMXFSF7U',
+          '2|DD':  'LD5F19UB71',
+          '2|CM':  '6UW2NPHRT9',
+          '2|CD':  'DBRPZ39JT1',
+          '2|MD':  'BVMLWY8L8Y',
+          // 3 potes
+          '3|CCC': 'DMP7L0L1W4',
+          '3|MMM': 'TBMMQS15IX',
+          '3|DDD': 'QW4GAEQ1HT',
+          '3|CCM': 'P15PJFYHDK',
+          '3|CCD': '51KSR5JWHC',
+          '3|CMM': 'T9DOLXKRJB',
+          '3|MMD': '8087Y4WO36',
+          '3|CDD': 'EI5KB18QON',
+          '3|MDD': '7WMRK03O4Q',
+          '3|CMD': 'R9VFV51I53',
+        },
+
         get packQty() { return this.packs[this.selectedPack].qty; },
         get totalSelected() { return this.flavorCounts.reduce((a, b) => a + b, 0); },
         get remaining() { return Math.max(0, this.packQty - this.totalSelected); },
@@ -2102,6 +2131,25 @@
           if (!this.kitEligible) return 'Frete liberado em pedidos com 2+ potes (via kit boas-vindas)';
           if (this.subscribe) return 'Incluso no kit boas-vindas, no 1º pedido';
           return 'Selecione o kit boas-vindas pra liberar o frete grátis';
+        },
+
+        // Chave determinística: 'packQty|letras' (C, M, D na ordem fixa de flavors[])
+        get checkoutKey() {
+          const letters = ['C', 'M', 'D'];
+          let key = this.packQty + '|';
+          for (let i = 0; i < this.flavorCounts.length; i++) {
+            key += letters[i].repeat(this.flavorCounts[i]);
+          }
+          return key;
+        },
+        get checkoutUrl() {
+          const slug = this.checkoutUrls[this.checkoutKey];
+          return slug ? (this.checkoutBase + slug) : null;
+        },
+        goToCheckout() {
+          if (!this.isComplete) return;
+          const url = this.checkoutUrl;
+          if (url) window.location.href = url;
         },
 
         prevImage() {
