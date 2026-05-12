@@ -1819,13 +1819,16 @@
         </div>
 
         <!-- CTA -->
-        <button id="main-cta"
-                class="btn-primary w-full !text-base"
-                :disabled="!isComplete"
-                :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
+        <a id="main-cta"
+           role="button"
+           :href="checkoutUrl || '#'"
+           :aria-disabled="!isComplete"
+           @click="if (!isComplete || !checkoutUrl) $event.preventDefault()"
+           class="btn-primary w-full !text-base"
+           :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span x-text="isComplete ? 'Adicionar ao carrinho' : (packQty === 1 ? 'Falta escolher o sabor' : 'Falta escolher os sabores')"></span>
-        </button>
+        </a>
 
         <!-- Trust seals — logos reais (compra segura) -->
         <div class="trust-seals">
@@ -2094,6 +2097,49 @@
         },
         get paymentLabel() {
           return this.subscribe ? 'Apenas cartão de crédito' : 'Pix, cartão ou boleto';
+        },
+
+        // Checkout Yampi — 19 combinações (packQty | letras ordenadas por C,M,D)
+        checkoutBase: 'https://gudreams.pay.yampi.com.br/r/',
+        checkoutUrls: {
+          // 1 pote
+          '1|C':   'N41V4YK2FY',
+          '1|M':   'KSJUOH8L1Q',
+          '1|D':   'EXQKSI6W9Z',
+          // 2 potes
+          '2|CC':  'TL3Q64ONY3',
+          '2|MM':  'SSMMXFSF7U',
+          '2|DD':  'LD5F19UB71',
+          '2|CM':  '6UW2NPHRT9',
+          '2|CD':  'DBRPZ39JT1',
+          '2|MD':  'BVMLWY8L8Y',
+          // 3 potes
+          '3|CCC': 'DMP7L0L1W4',
+          '3|MMM': 'TBMMQS15IX',
+          '3|DDD': 'QW4GAEQ1HT',
+          '3|CCM': 'P15PJFYHDK',
+          '3|CCD': '51KSR5JWHC',
+          '3|CMM': 'T9DOLXKRJB',
+          '3|MMD': '8087Y4WO36',
+          '3|CDD': 'EI5KB18QON',
+          '3|MDD': '7WMRK03O4Q',
+          '3|CMD': 'R9VFV51I53',
+        },
+
+        get checkoutKey() {
+          const letters = ['C', 'M', 'D'];
+          let key = this.packQty + '|';
+          for (let i = 0; i < this.flavorCounts.length; i++) {
+            key += letters[i].repeat(this.flavorCounts[i]);
+          }
+          return key;
+        },
+        get checkoutUrl() {
+          const slug = this.checkoutUrls[this.checkoutKey];
+          if (!slug) return null;
+          const base = this.checkoutBase + slug;
+          const qs = (typeof window !== 'undefined' && window.location.search) ? window.location.search : '';
+          return qs ? (base + qs) : base;
         },
 
         prevImage() {

@@ -2148,7 +2148,10 @@
         },
         get checkoutUrl() {
           const slug = this.checkoutUrls[this.checkoutKey];
-          return slug ? (this.checkoutBase + slug) : null;
+          if (!slug) return null;
+          const base = this.checkoutBase + slug;
+          const qs = (typeof window !== 'undefined' && window.location.search) ? window.location.search : '';
+          return qs ? (base + qs) : base;
         },
         goToCheckout() {
           if (!this.isComplete) return;
