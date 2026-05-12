@@ -1830,15 +1830,16 @@
         </div>
 
         <!-- CTA -->
-        <button id="main-cta"
-                type="button"
-                @click="goToCheckout()"
-                :disabled="!isComplete"
-                class="btn-primary w-full !text-base"
-                :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
+        <a id="main-cta"
+           role="button"
+           :href="checkoutUrl || '#'"
+           :aria-disabled="!isComplete"
+           @click="if (!isComplete || !checkoutUrl) $event.preventDefault()"
+           class="btn-primary w-full !text-base"
+           :class="{ '!opacity-50 !cursor-not-allowed hover:!transform-none': !isComplete }">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span x-text="isComplete ? 'Adicionar ao carrinho' : (packQty === 1 ? 'Falta escolher o sabor' : 'Falta escolher os sabores')"></span>
-        </button>
+        </a>
 
         <!-- Trust seals — logos reais (compra segura) -->
         <div class="trust-seals">
@@ -4188,7 +4189,7 @@
   function smartScrollToCta(e) {
     if (e) e.preventDefault();
     const cta = document.getElementById('main-cta');
-    if (cta && !cta.disabled) {
+    if (cta && cta.getAttribute('aria-disabled') !== 'true') {
       cta.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
       const picker = document.getElementById('pack-picker');
