@@ -1,17 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/01-magnesio", "destination": "/LPS/CORE/01-magnesio.html" },
-    { "source": "/02-vs-melatonina", "destination": "/LPS/CORE/02-vs-melatonina.html" },
-    { "source": "/03-viral-tiktok", "destination": "/LPS/CORE/03-viral-tiktok.html" },
-    { "source": "/05-main-lander", "destination": "/LPS/CORE/05-main-lander.html" }
-  ],
   "redirects": [
-    { "source": "/", "destination": "/pdp-2", "permanent": false },
-    { "source": "/LPS/CORE/01-magnesio", "destination": "/01-magnesio", "permanent": true },
-    { "source": "/LPS/CORE/02-vs-melatonina", "destination": "/02-vs-melatonina", "permanent": true },
-    { "source": "/LPS/CORE/03-viral-tiktok", "destination": "/03-viral-tiktok", "permanent": true },
-    { "source": "/LPS/CORE/05-main-lander", "destination": "/05-main-lander", "permanent": true }
+    { "source": "/", "destination": "/pdp-2", "permanent": false }
   ]
 }
